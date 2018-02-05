@@ -1,0 +1,35 @@
+
+.words-container {
+  height:45vh;
+  overflow:hidden;
+}
+.tag {
+  margin-right:20px;
+}
+.active {
+}
+.SUCCESS {
+  color: hsl(141, 71%, 48%)
+}
+.FAILED {
+  color: hsl(348, 100%, 61%)
+}
+.NEUTRAL {
+  color: hsl(0, 0%, 21%)
+}
+.word {
+  font-size:100px;
+  color:black;
+  display: inline-block;
+}
+.correct-word {
+  background-color:green;
+}
+
+.incorrect-word {
+  background-color:red;
+}
+
+.space {
+  font-size:100px;
+}
