@@ -18,11 +18,11 @@ class App extends Component {
       scrollIndex: 0,
       words: generateLoremIpsum()
     }
-    setInterval(() => {
-      this.setState({
-        timeLeft: this.getCurrentTimeLeft()
-      })
-    }, 1000)
+    // setInterval(() => {
+    //   this.setState({
+    //     timeLeft: this.getCurrentTimeLeft()
+    //   })
+    // }, 1000)
 
   }
   currentWord = () => {
@@ -53,14 +53,15 @@ class App extends Component {
     })
   }
   onKeyPressed = (event) => {
-    const { words, index } = this.state;
+    const { words, index,scrollIndex } = this.state;
     const currentWord = words[index];
     switch (event.which) {
       case 8:
         /** backspace clicked */
         if (currentWord.isEmpty) {
           this.setState({
-            index: index - 1
+            index: index - 1,
+            scrollIndex: scrollIndex - 1
           })
         }
         break;
@@ -68,7 +69,8 @@ class App extends Component {
         /** space clicked - if the typing of the word is compelted - move on. */
         if (currentWord.isCompleted) {
           this.setState({
-            index: index + 1
+            index: index + 1,
+            scrollIndex: scrollIndex + 1
           })
         }
         break;
@@ -86,13 +88,10 @@ class App extends Component {
     })
   }
   shouldFocusWord = (index) => {
-    if (index === this.state.index && index !== this.state.scrollIndex)
+    console.log(this.state.index,index === this.state.index)
+    if (index === this.state.index)
       return (nodeDom) => {
         if (nodeDom) {
-          console.log(nodeDom.offsetTop)
-          this.setState({
-            scrollIndex: this.state.scrollIndex + 1
-          })
           scrollIntoView(nodeDom, {
             time: 100,
             align: {
@@ -175,7 +174,9 @@ function createWordObject({ challenge = '', typed = '' }) {
       return trimmedTyped.length === 0
     },
     get isCorrect() {
-      return this.challenge === this.typed
+      const {challenge,typed} = this
+      const relevantTyped = typed.substr(0,challenge.length)
+      return challenge === relevantTyped
     },
     get wordArray() {
       return this.challenge.split('')
