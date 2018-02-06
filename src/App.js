@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Word from './components/Word.jsx'
+import Word from './components/word.jsx'
 import scrollIntoView from 'scroll-into-view'
 import randomWords from 'random-words'
 import './App.css';
@@ -75,7 +75,6 @@ class App extends Component {
         }
         break;
       default:
-        console.log("nothing");
     }
   }
   isIndexShouldIncrement = (nextWordsArray, nextGameStatus) => {
@@ -86,23 +85,6 @@ class App extends Component {
     return nextWordsArray.some(element => {
       return element.isCompleted === false
     })
-  }
-  shouldFocusWord = (index) => {
-    console.log(this.state.index,index === this.state.index)
-    if (index === this.state.index)
-      return (nodeDom) => {
-        if (nodeDom) {
-          scrollIntoView(nodeDom, {
-            time: 100,
-            align: {
-              top: 1
-            },
-            isScrollable: () => true
-          })
-
-        }
-      }
-    return null
   }
   getCurrentTimeLeft = () => {
     const millisecondsPassed = Date.now() - this.state.startTime
@@ -132,7 +114,6 @@ class App extends Component {
           isCompleted={word.isCompleted}
           isCorrect={word.isCorrect}
           getDomElement={this.assignRef}
-          shouldFocusWord={this.shouldFocusWord(index)}
           isActive={index === this.state.index}
         />
         <span className="space">{' '}</span>
