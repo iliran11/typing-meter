@@ -34,24 +34,47 @@ class App extends Component {
   }
   handleChange = (event) => {
     if (this.state.isGameActive === false) return ''
-    const currentIndex = this.state.index
+    /** useful when incrementing the index with a space - and then the space will not be counted as a typed character. */
+    const newInputValue = event.target.value.trim()
     const nextWordsArray = this.state.words.map((element, index) => {
+      /** update the current active word with the typed value.*/
       if (index === this.state.index) {
         return new createWordObject({
           challenge: element.challenge,
-          typed: event.target.value
+          typed: newInputValue
         })
       }
       return element
     })
     const nextGameStatus = this.isGameActive(nextWordsArray)
-    const isIndexShouldIncrement = this.isIndexShouldIncrement(nextWordsArray, nextGameStatus)
-    const nextIndex = isIndexShouldIncrement ? currentIndex + 1 : currentIndex
     this.setState({
       words: nextWordsArray,
-      index: nextIndex,
       isGameActive: nextGameStatus
     })
+  }
+  onKeyPressed = (event) => {
+    const { words, index } = this.state;
+    const currentWord = words[index];
+    switch (event.which) {
+      case 8:
+        /** backspace clicked */
+        if (currentWord.isEmpty) {
+          this.setState({
+            index: index - 1
+          })
+        }
+        break;
+      case 32:
+        /** space clicked - if the typing of the word is compelted - move on. */
+        if (currentWord.isCompleted) {
+          this.setState({
+            index: index + 1
+          })
+        }
+        break;
+      default:
+        console.log("nothing");
+    }
   }
   isIndexShouldIncrement = (nextWordsArray, nextGameStatus) => {
     if (nextGameStatus === false) return false
@@ -125,6 +148,10 @@ class App extends Component {
         <input
           value={this.getInputValue()}
           onChange={this.handleChange}
+          onKeyPress={this.handleKeyPress}
+          onKeyDown={this.onKeyPressed}
+          tabIndex="0"
+
         />
         <div className="words-container">
           {this.state.words.map(this.renderWords)}
@@ -139,7 +166,13 @@ function createWordObject({ challenge = '', typed = '' }) {
     challenge,
     typed,
     get isCompleted() {
-      return this.challenge.length === this.typed.length
+      const { challenge, typed } = this
+      return challenge.length <= typed.length
+    },
+    get isEmpty() {
+      const { typed } = this;
+      const trimmedTyped = typed.trim();
+      return trimmedTyped.length === 0
     },
     get isCorrect() {
       return this.challenge === this.typed
