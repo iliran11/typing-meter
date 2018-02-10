@@ -6,14 +6,10 @@ import scrollIntoView from 'scroll-into-view'
 class Word extends React.Component {
     constructor(props) {
         super(props);
+        this.isNowActive = false;
     }
     shouldComponentUpdate = (nextProps, nextState) => {
         return nextProps.isActive
-    }
-    componentWillUpdate(nextProps, nextState) {
-        // if before it wasn't active, and next props indicating it's going to be active - focus it.
-        const isNowActive = this.props.isActive === false && nextProps.isActive === true;
-        this.shouldFocus = isNowActive;
     }
     getContainerStyle = () => {
         const { isCompleted, isCorrect } = this.props
@@ -61,14 +57,14 @@ class Word extends React.Component {
     }
     focusWord = () => {
         const nextWord = this.nodeDom.parentNode.nextSibling;
-        scrollIntoView(nextWord, {
-            time: 200,
-            align: {
-                top: 0.9
-            },
-            isScrollable: () => true
-        }, () => {
-        })
+            scrollIntoView(nextWord, {
+                time: 200,
+                align: {
+                    top: 0.9
+                },
+                isScrollable: () => true
+            }, () => {
+            })      
     }
     getNode = (nodeDom) => {
         this.nodeDom = nodeDom
