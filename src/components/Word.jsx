@@ -7,6 +7,14 @@ class Word extends React.Component {
     constructor(props) {
         super(props);
     }
+    shouldComponentUpdate = (nextProps, nextState) => {
+        return nextProps.isActive
+    }
+    componentWillUpdate(nextProps, nextState) {
+        // if before it wasn't active, and next props indicating it's going to be active - focus it.
+        const isNowActive = this.props.isActive === false && nextProps.isActive === true;
+        this.shouldFocus = isNowActive;
+    }
     getContainerStyle = () => {
         const { isCompleted, isCorrect } = this.props
         /** if word is marked as completed - return completed badly, or completely correct */
@@ -59,7 +67,7 @@ class Word extends React.Component {
                 top: 0.9
             },
             isScrollable: () => true
-        },()=>{
+        }, () => {
         })
     }
     getNode = (nodeDom) => {

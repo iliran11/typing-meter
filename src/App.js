@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Word from './components/word.jsx'
+import Word from './components/Word.jsx'
 import scrollIntoView from 'scroll-into-view'
 import randomWords from 'random-words'
 import './App.css';
