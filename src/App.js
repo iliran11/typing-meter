@@ -52,14 +52,17 @@ class App extends Component {
     })
   }
   onKeyPressed = (event) => {
-    const { words, index,scrollIndex } = this.state;
+    const { words, index, scrollIndex } = this.state;
     const currentWord = words[index];
     switch (event.which) {
       case 8:
         /** backspace clicked */
+        /** handle a situation when there is a backspace, when the index is 0, which result in -1 */
         if (currentWord.isEmpty) {
+          const nextIndex = index - 1
+          const nextIndexNormalized = nextIndex < 0 ? 0 : nextIndex
           this.setState({
-            index: index - 1,
+            index: nextIndexNormalized,
             scrollIndex: scrollIndex - 1
           })
         }
@@ -133,7 +136,7 @@ class App extends Component {
 
         />
         <div className="words-container">
-    
+
           {this.state.words.map(this.renderWords)}
         </div>
       </div>
@@ -155,8 +158,8 @@ function createWordObject({ challenge = '', typed = '' }) {
       return trimmedTyped.length === 0
     },
     get isCorrect() {
-      const {challenge,typed} = this
-      const relevantTyped = typed.substr(0,challenge.length)
+      const { challenge, typed } = this
+      const relevantTyped = typed.substr(0, challenge.length)
       return challenge === relevantTyped
     },
     get wordArray() {
