@@ -19,7 +19,6 @@ class Word extends React.Component {
         return 'word'
     }
     compareTypedToDisplayed = () => {
-        console.log('compare')
         /** to be refactored!! */
         const { displayedLetters, typedLetters } = this.props;
         return displayedLetters.map((displayedElement, index) => {
@@ -50,14 +49,31 @@ class Word extends React.Component {
             return <Letter value={element.letter} status={element.status} key={index} />
         })
     }
-    componentWillReceiveProps = (nextProps) => {
-        const { isCompleted } = nextProps;
-        if (isCompleted) {
+    componentWillUpdate = (nextProps) => {
+        const { isActive: nextIsActive } = nextProps;
+        const { isActive: previousIsActive } = this.props;
+        /** check if unactive word, is going into active state. */
+        const beingActivated = previousIsActive === false && nextIsActive
+        if (beingActivated) {
             this.focusWord()
         }
     }
     focusWord = () => {
-        const nextWord = this.nodeDom.parentNode.nextSibling;
+        const nextWord = this.nodeDom.parentNode;
+        const wordsContainer = this.nodeDom.parentNode.parentNode
+        /** height of the words container */
+        const containerHeight = wordsContainer.clientHeight;
+        /** amount from the upper point of the scorlling window, to the top of the actual element */
+        const containerScorllingOffset = wordsContainer.scrollTop
+        /** number of pixels from the top of the element to the bottom of the scrolling window */
+        const distanceFromHeadtoBottomScrollViewPort = (containerHeight + containerScorllingOffset)
+        /** check if the next active word is below the viewport of the scrolling window */
+        const isNextWordBelowScrolling = nextWord.offsetTop > distanceFromHeadtoBottomScrollViewPort
+        /** check if the next active word is above the viewport of the scrolling window */
+        const isNextWordAboveScrolling = containerScorllingOffset > nextWord.offsetTop
+        /** detect if a work */
+        if (isNextWordBelowScrolling || isNextWordAboveScrolling) {
+            console.log('focus!')
             scrollIntoView(nextWord, {
                 time: 200,
                 align: {
@@ -65,7 +81,8 @@ class Word extends React.Component {
                 },
                 isScrollable: () => true
             }, () => {
-            })      
+            })
+        }
     }
     getNode = (nodeDom) => {
         this.nodeDom = nodeDom
