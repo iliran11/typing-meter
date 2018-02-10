@@ -72,7 +72,6 @@ class Word extends React.Component {
         const isNextWordOutsideThreshold = nextWord.offsetTop != threshold
         /** if the word is below or above the thresehold - make it higher */
         if (isNextWordOutsideThreshold) {
-            console.log('focus!')
             scrollIntoView(nextWord, {
                 time: 200,
                 align: {

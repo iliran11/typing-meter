@@ -32,6 +32,7 @@ class App extends Component {
     return this.currentWord().typed
   }
   handleChange = (event) => {
+    const { index } = this.state;
     if (this.state.isGameActive === false) return ''
     /** useful when incrementing the index with a space - and then the space will not be counted as a typed character. */
     const newInputValue = event.target.value.trim()
@@ -46,9 +47,13 @@ class App extends Component {
       return element
     })
     const nextGameStatus = this.isGameActive(nextWordsArray)
+    const currentWord = nextWordsArray[index];
+    const nextIndex = currentWord.isCompleted ? index + 1 : index
+
     this.setState({
       words: nextWordsArray,
-      isGameActive: nextGameStatus
+      isGameActive: nextGameStatus,
+      index:nextIndex
     })
   }
   onKeyPressed = (event) => {
