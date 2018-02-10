@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Word from './components/Word.jsx'
-import scrollIntoView from 'scroll-into-view'
 import randomWords from 'random-words'
 import './App.css';
 import 'bulma/css/bulma.css'
@@ -106,7 +105,7 @@ class App extends Component {
   }
   renderWords = (word, index) => {
     return (
-      <span>
+      <span key={index}>
         <Word
           displayedLetters={word.challenge.split('')}
           typedLetters={word.typed.split('')}
@@ -134,6 +133,7 @@ class App extends Component {
 
         />
         <div className="words-container">
+    
           {this.state.words.map(this.renderWords)}
         </div>
       </div>

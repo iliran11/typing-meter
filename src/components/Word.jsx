@@ -19,6 +19,7 @@ class Word extends React.Component {
         return 'word'
     }
     compareTypedToDisplayed = () => {
+        console.log('compare')
         /** to be refactored!! */
         const { displayedLetters, typedLetters } = this.props;
         return displayedLetters.map((displayedElement, index) => {
