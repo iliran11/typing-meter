@@ -9,7 +9,8 @@ class Word extends React.Component {
         this.isNowActive = false;
     }
     shouldComponentUpdate = (nextProps, nextState) => {
-        return nextProps.isActive
+        return true;
+        // return nextProps.isActive
     }
     getContainerStyle = () => {
         const { isCompleted, isCorrect } = this.props
@@ -65,19 +66,17 @@ class Word extends React.Component {
         const containerHeight = wordsContainer.clientHeight;
         /** amount from the upper point of the scorlling window, to the top of the actual element */
         const containerScorllingOffset = wordsContainer.scrollTop
-        /** number of pixels from the top of the element to the bottom of the scrolling window */
-        const distanceFromHeadtoBottomScrollViewPort = (containerHeight + containerScorllingOffset)
-        /** check if the next active word is below the viewport of the scrolling window */
-        const isNextWordBelowScrolling = nextWord.offsetTop > distanceFromHeadtoBottomScrollViewPort
-        /** check if the next active word is above the viewport of the scrolling window */
-        const isNextWordAboveScrolling = containerScorllingOffset > nextWord.offsetTop
-        /** detect if a work */
-        if (isNextWordBelowScrolling || isNextWordAboveScrolling) {
+        /** number of pixels from the top of the element to the center of the scrolling window */
+        const threshold = (containerHeight * 0.5 + containerScorllingOffset)
+        /** check if the next active word is not aligned with threshold */
+        const isNextWordOutsideThreshold = nextWord.offsetTop != threshold
+        /** if the word is below or above the thresehold - make it higher */
+        if (isNextWordOutsideThreshold) {
             console.log('focus!')
             scrollIntoView(nextWord, {
                 time: 200,
                 align: {
-                    top: 0.9
+                    top: 0.5
                 },
                 isScrollable: () => true
             }, () => {
