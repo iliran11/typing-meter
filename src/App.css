@@ -1,7 +1,10 @@
 
 .words-container {
-  height:45vh;
-  overflow:hidden;
+  /* line-height: 5vh; */
+  height: 45vh;
+  font-size: 60px;
+  line-height: 103px;
+    overflow:hidden;
   box-shadow:inset 0 0 10px #000000;
 
 }
@@ -20,16 +23,18 @@
   color: hsl(0, 0%, 21%)
 }
 .word {
-  font-size:100px;
   color:black;
   display: inline-block;
+  font-family: 'Fredoka One', cursive;
 }
 .correct-word {
-  background-color:green;
+  background-color: #0080001a;
+  color: #008000d1;
 }
 
 .incorrect-word {
-  background-color:red;
+  background-color: #ff000017;
+  color: #ff0000f2;
 }
 
 .space {
