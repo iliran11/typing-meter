@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import Word from './Word.jsx'
-import randomWords from 'random-words'
-import ScoreBoard from './scoreBoard'
+import Word from './Word.jsx';
+import randomWords from 'random-words';
+import ScoreBoard from './scoreBoard';
 import '../App.css';
-import 'bulma/css/bulma.css'
+import 'bulma/css/bulma.css';
 
-class GameContainer extends Component  {
+class GameContainer extends Component {
   constructor() {
-    const overallTime = secondstoMillisecond(60)
-    super()
+    const overallTime = secondstoMillisecond(2);
+    super();
     this.state = {
       overallTime,
       startTime: Date.now(),
@@ -17,47 +17,63 @@ class GameContainer extends Component  {
       index: 0,
       scrollIndex: 0,
       words: generateLoremIpsum()
-    }
-    setInterval(() => {
-      this.setState({
-        timeLeft: this.getCurrentTimeLeft()
-      })
-    }, 1000)
-
+    };
+    this.timeLeftInterval = setInterval(() => {
+      const nextTimeLeft = this.getCurrentTimeLeft();
+      if (nextTimeLeft < 0) {
+        clearInterval(this.timeLeftInterval);
+        this.onRunningOutTime();
+      } else {
+        this.setState({
+          timeLeft: nextTimeLeft
+        });
+      }
+    }, 1000);
   }
   currentWord = () => {
-    return this.state.words[this.state.index]
-  }
+    return this.state.words[this.state.index];
+  };
   getInputValue = () => {
-    if (this.state.isGameActive === false) return ''
-    return this.currentWord().typed
-  }
-  handleChange = (event) => {
+    if (this.state.isGameActive === false) return '';
+    return this.currentWord().typed;
+  };
+  countCorrectWords = () => {
+    const { words } = this.state;
+    /** filter the words array and get an array only containting isCorrect=true. */
+    const correctWordsArray = words.filter(element => {
+      return element.isCorrect;
+    });
+    return correctWordsArray.length;
+  };
+  onRunningOutTime = () => {
+    console.log('hello');
+  };
+  handleChange = event => {
     const { index } = this.state;
-    if (this.state.isGameActive === false) return ''
+    if (this.state.isGameActive === false) return '';
     /** useful when incrementing the index with a space - and then the space will not be counted as a typed character. */
-    const newInputValue = event.target.value.trim()
+    const newInputValue = event.target.value.trim();
     const nextWordsArray = this.state.words.map((element, index) => {
       /** update the current active word with the typed value.*/
       if (index === this.state.index) {
         return new createWordObject({
           challenge: element.challenge,
           typed: newInputValue
-        })
+        });
       }
-      return element
-    })
-    const nextGameStatus = this.isGameActive(nextWordsArray)
+      return element;
+    });
+    const nextGameStatus = this.isGameActive(nextWordsArray);
     const currentWord = nextWordsArray[index];
-    const nextIndex = currentWord.isCompleted ? index + 1 : index
+    const nextIndex = currentWord.isCompleted ? index + 1 : index;
 
     this.setState({
       words: nextWordsArray,
       isGameActive: nextGameStatus,
       index: nextIndex
-    })
-  }
-  onKeyPressed = (event) => {
+    });
+  };
+  onKeyPressed = event => {
     const { words, index, scrollIndex } = this.state;
     const currentWord = words[index];
     switch (event.which) {
@@ -65,12 +81,12 @@ class GameContainer extends Component  {
         /** backspace clicked */
         /** handle a situation when there is a backspace, when the index is 0, which result in -1 */
         if (currentWord.isEmpty) {
-          const nextIndex = index - 1
-          const nextIndexNormalized = nextIndex < 0 ? 0 : nextIndex
+          const nextIndex = index - 1;
+          const nextIndexNormalized = nextIndex < 0 ? 0 : nextIndex;
           this.setState({
             index: nextIndexNormalized,
             scrollIndex: scrollIndex - 1
-          })
+          });
         }
         break;
       case 32:
@@ -79,39 +95,39 @@ class GameContainer extends Component  {
           this.setState({
             index: index + 1,
             scrollIndex: scrollIndex + 1
-          })
+          });
         }
         break;
       default:
     }
-  }
+  };
   isIndexShouldIncrement = (nextWordsArray, nextGameStatus) => {
-    if (nextGameStatus === false) return false
-    return nextWordsArray[this.state.index].isCompleted
-  }
-  isGameActive = (nextWordsArray) => {
+    if (nextGameStatus === false) return false;
+    return nextWordsArray[this.state.index].isCompleted;
+  };
+  isGameActive = nextWordsArray => {
     return nextWordsArray.some(element => {
-      return element.isCompleted === false
-    })
-  }
+      return element.isCompleted === false;
+    });
+  };
   getCurrentTimeLeft = () => {
-    const millisecondsPassed = Date.now() - this.state.startTime
-    const millisecondsLeft = this.state.overallTime - millisecondsPassed
-    return millisecondsToSeconds(millisecondsLeft)
-  }
+    const millisecondsPassed = Date.now() - this.state.startTime;
+    const millisecondsLeft = this.state.overallTime - millisecondsPassed;
+    return millisecondsToSeconds(millisecondsLeft);
+  };
   numberOfCorrectWords = () => {
     return this.state.words.reduce((accumulator, currentValue) => {
       if (currentValue.isCorrect) {
-        return accumulator + 1
+        return accumulator + 1;
       }
-      return accumulator
-    }, 0)
-  }
+      return accumulator;
+    }, 0);
+  };
   calculateCpm = () => {
-    const millisecondsPassed = Date.now() - this.state.startTime
-    const minutesPassed = millisecondsToMinutes(millisecondsPassed)
-    return this.numberOfCorrectWords() / minutesPassed
-  }
+    const millisecondsPassed = Date.now() - this.state.startTime;
+    const minutesPassed = millisecondsToMinutes(millisecondsPassed);
+    return this.numberOfCorrectWords() / minutesPassed;
+  };
   renderWords = (word, index) => {
     return (
       <span key={index}>
@@ -124,30 +140,25 @@ class GameContainer extends Component  {
           getDomElement={this.assignRef}
           isActive={index === this.state.index}
         />
-        <span className="space">{' '}</span>
+        <span className="space"> </span>
       </span>
-    )
-  }
+    );
+  };
   render() {
-    const {timeLeft} = this.state
+    const { countCorrectWords, state: { timeLeft } } = this;
+    const correctTypedWords = countCorrectWords()
     return (
       <div className="content">
-        <ScoreBoard
-          timeLeft={timeLeft}
-          cpm={20}
-          correctTypedWords={1}
+        <ScoreBoard timeLeft={timeLeft} cpm={20} correctTypedWords={correctTypedWords} />
+        <div className="words-container">{this.state.words.map(this.renderWords)}</div>
+        <input
+          value={this.getInputValue()}
+          onChange={this.handleChange}
+          onKeyPress={this.handleKeyPress}
+          onKeyDown={this.onKeyPressed}
+          tabIndex="0"
+          className="input is-large is-primary"
         />
-        <div className="words-container">
-          {this.state.words.map(this.renderWords)}
-        </div>
-        <input 
-            value={this.getInputValue()}
-            onChange={this.handleChange}
-            onKeyPress={this.handleKeyPress}
-            onKeyDown={this.onKeyPressed}
-            tabIndex="0"
-            className = "input is-large is-primary"
-          />
       </div>
     );
   }
@@ -158,45 +169,44 @@ function createWordObject({ challenge = '', typed = '' }) {
     challenge,
     typed,
     get isCompleted() {
-      const { challenge, typed } = this
-      return challenge.length <= typed.length
+      const { challenge, typed } = this;
+      return challenge.length <= typed.length;
     },
     get isEmpty() {
       const { typed } = this;
       const trimmedTyped = typed.trim();
-      return trimmedTyped.length === 0
+      return trimmedTyped.length === 0;
     },
     get isCorrect() {
-      const { challenge, typed } = this
-      const relevantTyped = typed.substr(0, challenge.length)
-      return challenge === relevantTyped
+      const { challenge, typed } = this;
+      const relevantTyped = typed.substr(0, challenge.length);
+      return challenge === relevantTyped;
     },
     get wordArray() {
-      return this.challenge.split('')
+      return this.challenge.split('');
     }
-  }
+  };
 }
 function generateWordsArray() {
   return Array.from(new Array(100), () => {
-    return randomWords()
-  })
+    return randomWords();
+  });
 }
 function generateLoremIpsum() {
-  const text = generateWordsArray()
-  return text
-    .map((word) => {
-      return createWordObject({ challenge: word })
-    })
+  const text = generateWordsArray();
+  return text.map(word => {
+    return createWordObject({ challenge: word });
+  });
 }
 
 function secondstoMillisecond(number) {
-  return number * 1000
+  return number * 1000;
 }
 function millisecondsToSeconds(number) {
-  const seconds = number / 1000
-  return Math.ceil(seconds)
+  const seconds = number / 1000;
+  return Math.ceil(seconds);
 }
 function millisecondsToMinutes(number) {
-  return number / 60000
+  return number / 60000;
 }
-export default  GameContainer
+export default GameContainer;
