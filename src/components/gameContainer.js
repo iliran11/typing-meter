@@ -29,6 +29,7 @@ class GameContainer extends Component {
         });
       }
     }, 1000);
+    this.correctTypedWords =0
   }
   currentWord = () => {
     return this.state.words[this.state.index];
@@ -45,9 +46,14 @@ class GameContainer extends Component {
     });
     return correctWordsArray.length;
   };
+  /** Events */
   onRunningOutTime = () => {
-    console.log('hello');
   };
+  onIndexChange = (index,nextIndex) => {
+    if (index !== nextIndex) {
+      this.correctTypedWords = this.countCorrectWords()
+    }
+  }
   handleChange = event => {
     const { index } = this.state;
     if (this.state.isGameActive === false) return '';
@@ -66,13 +72,12 @@ class GameContainer extends Component {
     const nextGameStatus = this.isGameActive(nextWordsArray);
     const currentWord = nextWordsArray[index];
     const nextIndex = currentWord.isCompleted ? index + 1 : index;
-
     this.setState({
       words: nextWordsArray,
       isGameActive: nextGameStatus,
       index: nextIndex
-    });
-  };
+    },() => this.onIndexChange(index,nextIndex));
+  }
   onKeyPressed = event => {
     const { words, index, scrollIndex } = this.state;
     const currentWord = words[index];
@@ -82,20 +87,22 @@ class GameContainer extends Component {
         /** handle a situation when there is a backspace, when the index is 0, which result in -1 */
         if (currentWord.isEmpty) {
           const nextIndex = index - 1;
+          /** nextIndexNormalized - don't allow negative, if user keep click on backspace when index is 0. */
           const nextIndexNormalized = nextIndex < 0 ? 0 : nextIndex;
           this.setState({
             index: nextIndexNormalized,
             scrollIndex: scrollIndex - 1
-          });
+          },() => this.onIndexChange(index,nextIndexNormalized));
         }
         break;
       case 32:
         /** space clicked - if the typing of the word is compelted - move on. */
         if (currentWord.isCompleted) {
+          const nextIndex = index + 1
           this.setState({
-            index: index + 1,
+            index: nextIndex,
             scrollIndex: scrollIndex + 1
-          });
+          },this.onIndexChange(index,nextIndex));
         }
         break;
       default:
@@ -128,6 +135,7 @@ class GameContainer extends Component {
     const minutesPassed = millisecondsToMinutes(millisecondsPassed);
     return this.numberOfCorrectWords() / minutesPassed;
   };
+
   renderWords = (word, index) => {
     return (
       <span key={index}>
@@ -145,8 +153,7 @@ class GameContainer extends Component {
     );
   };
   render() {
-    const { countCorrectWords, state: { timeLeft } } = this;
-    const correctTypedWords = countCorrectWords()
+    const { countCorrectWords,correctTypedWords, state: { timeLeft } } = this;
     return (
       <div className="content">
         <ScoreBoard timeLeft={timeLeft} cpm={20} correctTypedWords={correctTypedWords} />
