@@ -41,3 +41,15 @@
 .space {
   font-size:100px;
 }
+#scoreboard th{
+  text-align: center;
+  width: calc(100%/3);
+  font-size:30px;
+  font-family: 'Fredoka One', cursive;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+
+}
+input {
+  font-family: 'Roboto', sans-serif;
+}

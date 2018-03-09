@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Word from './components/Word.jsx'
 import randomWords from 'random-words'
+import ScoreBoard from './components/scoreBoard'
 import './App.css';
 import 'bulma/css/bulma.css'
 
@@ -17,11 +18,11 @@ class App extends Component {
       scrollIndex: 0,
       words: generateLoremIpsum()
     }
-    // setInterval(() => {
-    //   this.setState({
-    //     timeLeft: this.getCurrentTimeLeft()
-    //   })
-    // }, 1000)
+    setInterval(() => {
+      this.setState({
+        timeLeft: this.getCurrentTimeLeft()
+      })
+    }, 1000)
 
   }
   currentWord = () => {
@@ -53,7 +54,7 @@ class App extends Component {
     this.setState({
       words: nextWordsArray,
       isGameActive: nextGameStatus,
-      index:nextIndex
+      index: nextIndex
     })
   }
   onKeyPressed = (event) => {
@@ -130,20 +131,22 @@ class App extends Component {
   render() {
     return (
       <div className="content">
-        <div>{this.state.timeLeft}</div>
-        <div>{this.calculateCpm()}</div>
-        <input
-          value={this.getInputValue()}
-          onChange={this.handleChange}
-          onKeyPress={this.handleKeyPress}
-          onKeyDown={this.onKeyPressed}
-          tabIndex="0"
-
+        <ScoreBoard
+          timeLeft={10}
+          cpm={20}
+          correctTypedWords={1}
         />
         <div className="words-container">
-
           {this.state.words.map(this.renderWords)}
         </div>
+        <input 
+            value={this.getInputValue()}
+            onChange={this.handleChange}
+            onKeyPress={this.handleKeyPress}
+            onKeyDown={this.onKeyPressed}
+            tabIndex="0"
+            className = "input is-large is-primary"
+          />
       </div>
     );
   }

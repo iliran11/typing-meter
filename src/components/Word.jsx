@@ -75,7 +75,7 @@ class Word extends React.Component {
             scrollIntoView(nextWord, {
                 time: 200,
                 align: {
-                    top: 0
+                    top: 0.5
                 },
                 isScrollable: () => true
             }, () => {
