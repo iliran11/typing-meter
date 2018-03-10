@@ -9,8 +9,7 @@ class Word extends React.Component {
         this.isNowActive = false;
     }
     shouldComponentUpdate = (nextProps, nextState) => {
-        return true;
-        // return nextProps.isActive
+        return nextProps.isActive
     }
     getContainerStyle = () => {
         const { isCompleted, isCorrect } = this.props

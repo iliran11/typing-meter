@@ -171,7 +171,7 @@ class GameContainer extends Component {
   }
 }
 
-function createWordObject({ challenge = '', typed = '' }) {
+function createWordObject({ challenge = '', typed = '',id }) {
   return {
     challenge,
     typed,
@@ -192,6 +192,7 @@ function createWordObject({ challenge = '', typed = '' }) {
     get wordArray() {
       return this.challenge.split('');
     }
+    
   };
 }
 function generateWordsArray() {
@@ -215,5 +216,8 @@ function millisecondsToSeconds(number) {
 }
 function millisecondsToMinutes(number) {
   return number / 60000;
+}
+function getUniqueNumber() {
+  return 
 }
 export default GameContainer;
