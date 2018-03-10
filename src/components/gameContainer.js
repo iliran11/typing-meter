@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Word from './Word.jsx';
 import randomWords from 'random-words';
 import ScoreBoard from './scoreBoard';
-import { CPM_NULL,CPM_PERCISION,METRICS_INTERVAL_DELAY,GAME_DURATION,DEBUG_MODE } from '../constants';
+import { CPM_NULL, CPM_PERCISION, METRICS_INTERVAL_DELAY, GAME_DURATION, DEBUG_MODE } from '../constants';
 import '../App.css';
 import 'bulma/css/bulma.css';
 
@@ -22,6 +22,7 @@ class GameContainer extends Component {
       words: generateLoremIpsum(),
       cpm: this.cpm
     };
+    this.setMetricIntervals();
   }
   setMetricIntervals = () => {
     if (DEBUG_MODE === false) {
@@ -39,7 +40,7 @@ class GameContainer extends Component {
       /** interval to re-calculate the CPM. */
       this.cpmInterval = setInterval(this.calculateCpm, METRICS_INTERVAL_DELAY);
     }
-  }
+  };
   currentWord = () => {
     return this.state.words[this.state.index];
   };
@@ -155,7 +156,7 @@ class GameContainer extends Component {
     const millisecondsPassed = Date.now() - this.state.startTime;
     const minutesPassed = millisecondsToMinutes(millisecondsPassed);
     const rawCpm = this.numberOfCorrectWords() / minutesPassed;
-    const nextCpm = Math.round(rawCpm)
+    const nextCpm = Math.round(rawCpm);
     if (cpm === CPM_NULL && nextCpm === 0) return;
     this.setState({
       cpm: nextCpm
