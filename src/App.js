@@ -1,11 +1,13 @@
-import React, {Component} from 'react'
-import GameContainer from './components/gameContainer'
+import React, { Component } from 'react';
+import GameContainer from './components/gameContainer';
+import 'normalize.css';
 import './App.css';
-import 'animate.css'
+import 'bulma/css/bulma.css';
+import 'animate.css';
 
 class App extends Component {
   render() {
-    return <GameContainer/>
+    return <GameContainer />;
   }
 }
-export default App
+export default App;
