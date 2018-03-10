@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Word from './Word.jsx';
 import randomWords from 'random-words';
 import ScoreBoard from './scoreBoard';
-import { CPM_NULL, CPM_PERCISION, METRICS_INTERVAL_DELAY, GAME_DURATION, DEBUG_MODE } from '../constants';
+import { CPM_NULL, METRICS_INTERVAL_DELAY, GAME_DURATION, DEBUG_MODE } from '../constants';
 import '../App.css';
 import 'bulma/css/bulma.css';
 
@@ -181,7 +181,7 @@ class GameContainer extends Component {
     );
   };
   render() {
-    const { countCorrectWords, correctTypedWords, state: { timeLeft, cpm } } = this;
+    const { correctTypedWords, state: { timeLeft, cpm } } = this;
     return (
       <div className="content">
         <ScoreBoard timeLeft={timeLeft} cpm={cpm} correctTypedWords={correctTypedWords} />
@@ -243,8 +243,5 @@ function millisecondsToSeconds(number) {
 }
 function millisecondsToMinutes(number) {
   return number / 60000;
-}
-function getUniqueNumber() {
-  return;
 }
 export default GameContainer;

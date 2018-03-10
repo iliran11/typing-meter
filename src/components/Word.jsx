@@ -67,7 +67,7 @@ class Word extends React.Component {
     /** number of pixels from the top of the element to the center of the scrolling window */
     const threshold = containerHeight * 0.5 + containerScorllingOffset;
     /** check if the next active word is not aligned with threshold */
-    const isNextWordOutsideThreshold = nextWord.offsetTop != threshold;
+    const isNextWordOutsideThreshold = nextWord.offsetTop !== threshold;
     /** if the word is below or above the thresehold - make it higher */
     if (isNextWordOutsideThreshold) {
       scrollIntoView(
