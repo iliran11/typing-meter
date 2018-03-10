@@ -23,6 +23,12 @@
 .NEUTRAL {
   color: hsl(0, 0%, 21%)
 }
+.letter{
+  transition: color 0.4s 
+}
+.word {
+  transition: background-color 0.4s
+}
 .word {
   color:black;
   display: inline-block;
