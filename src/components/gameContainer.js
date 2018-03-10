@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,Fragment } from 'react';
 import Word from './Word.jsx';
 import ScoreBoard from './scoreBoard';
 import { CPM_NULL, METRICS_INTERVAL_DELAY, GAME_DURATION, DEBUG_MODE } from '../constants';
@@ -171,18 +171,18 @@ class GameContainer extends Component {
   renderWords = (word, index) => {
     const isActive = index === this.state.index;
     return (
-      <span key={index}>
+      <Fragment key={index}>
         <Word
           displayedLetters={word.challenge.split('')}
           typedLetters={word.typed.split('')}
-          key={index}
           isCompleted={word.isCompleted}
           isCorrect={word.isCorrect}
           getDomElement={this.assignRef}
           isActive={isActive}
-        />
-        <span className="space"> </span>
-      </span>
+        >
+        </Word>
+        {' '}
+      </Fragment>
     );
   };
   render() {
