@@ -77,12 +77,13 @@ class Word extends React.Component {
     }
   };
   onJustBeingActive = () => {
+    console.log('active')
     /** triggered from comonentDidUpdate  */
     this.animationClasses = null;
     this.focusWord();
   };
   focusWord = () => {
-    const nextWord = this.nodeDom.parentNode;
+    const nextWord = this.nodeDom;
     const wordsContainer = this.nodeDom.parentNode.parentNode;
     /** height of the words container */
     const containerHeight = wordsContainer.clientHeight;

@@ -6,6 +6,7 @@
   overflow: hidden;
   box-shadow: inset 0 0 10px #000000;
   padding: 0 20px;
+  word-break: break-word;
 }
 .tag {
   margin-right: 20px;
@@ -30,7 +31,6 @@
 }
 .word {
   color: black;
-  display: inline-block;
   font-family: 'Fredoka One', cursive;
   border-radius: 15px;
 }
@@ -44,9 +44,6 @@
   color: #ff0000f2;
 }
 
-.space {
-  font-size: 100px;
-}
 #scoreboard th {
   text-align: center;
   width: calc(100% / 3);
