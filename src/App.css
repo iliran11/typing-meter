@@ -27,12 +27,13 @@
   transition: color 0.6s;
 }
 .word {
-  transition: background-color 0.6s;
 }
 .word {
   color: black;
   font-family: 'Fredoka One', cursive;
   border-radius: 15px;
+  display: inline-block;
+  transition: background-color 0.6s;
 }
 .correct-word {
   background-color: #0080001a;
@@ -54,4 +55,13 @@
 }
 input {
   font-family: 'Roboto', sans-serif;
+}
+#scoreboard table {
+  margin: 0;
+}
+@media only screen and (max-width: 576px) {
+  .words-container {
+    font-size: 40px;
+    line-height: 60px;
+  }
 }
