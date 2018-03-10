@@ -9,7 +9,9 @@ class Word extends React.Component {
   }
   shouldComponentUpdate = (nextProps, nextState) => {
     const typedWordsChanged = this.props.typedLetters.length !== nextProps.typedLetters.length;
-    return typedWordsChanged;
+    const isGoingActive = nextProps.isActive === true && this.props.isActive === false
+    /** render the component if there is a new typing information OR the word is going to get active. */
+    return typedWordsChanged || isGoingActive;
   };
   getContainerStyle = () => {
     const { isCompleted, isCorrect } = this.props;
@@ -46,11 +48,11 @@ class Word extends React.Component {
       return <Letter value={element.letter} status={element.status} key={index} />;
     });
   };
-  componentWillUpdate = nextProps => {
-    const { isActive: nextIsActive } = nextProps;
-    const { isActive: previousIsActive } = this.props;
+  componentDidUpdate = prevProps => {
+    const { isActive: prevIsActive } = prevProps;
+    const { isActive: currentIsActive } = this.props;
     /** check if unactive word, is going into active state. */
-    const beingActivated = previousIsActive === false && nextIsActive;
+    const beingActivated = currentIsActive && prevIsActive === false;
     if (beingActivated) {
       this.focusWord();
     }
@@ -85,7 +87,6 @@ class Word extends React.Component {
     this.nodeDom = nodeDom;
   };
   render = () => {
-    console.log('hello');
     const { isActive } = this.props;
     const containerStyle = this.getContainerStyle();
     const activeClassName = isActive ? 'active' : '';
