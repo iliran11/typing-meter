@@ -9,7 +9,6 @@ import {
   millisecondsToMinutes,
   createWordObject
 } from '../utils';
-import '../App.css';
 import 'bulma/css/bulma.css';
 
 class GameContainer extends Component {
