@@ -74,7 +74,7 @@ class GameContainer extends Component {
     const { index } = this.state;
     if (this.state.isGameActive === false) return '';
     /** useful when incrementing the index with a space - and then the space will not be counted as a typed character. */
-    const newInputValue = event.target.value.trim();
+    const newInputValue = event.target.value.trim().toLowerCase();
     const nextWordsArray = this.state.words.map((element, index) => {
       /** update the current active word with the typed value.*/
       if (index === this.state.index) {
