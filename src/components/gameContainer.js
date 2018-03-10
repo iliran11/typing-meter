@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import Word from './Word.jsx';
-import randomWords from 'random-words';
 import ScoreBoard from './scoreBoard';
 import { CPM_NULL, METRICS_INTERVAL_DELAY, GAME_DURATION, DEBUG_MODE } from '../constants';
+import {
+  generateLoremIpsum,
+  secondstoMillisecond,
+  millisecondsToSeconds,
+  millisecondsToMinutes,
+  createWordObject
+} from '../utils';
 import '../App.css';
 import 'bulma/css/bulma.css';
 
@@ -197,51 +203,5 @@ class GameContainer extends Component {
       </div>
     );
   }
-}
-
-function createWordObject({ challenge = '', typed = '', id }) {
-  return {
-    challenge,
-    typed,
-    get isCompleted() {
-      const { challenge, typed } = this;
-      return challenge.length <= typed.length;
-    },
-    get isEmpty() {
-      const { typed } = this;
-      const trimmedTyped = typed.trim();
-      return trimmedTyped.length === 0;
-    },
-    get isCorrect() {
-      const { challenge, typed } = this;
-      const relevantTyped = typed.substr(0, challenge.length);
-      return challenge === relevantTyped;
-    },
-    get wordArray() {
-      return this.challenge.split('');
-    }
-  };
-}
-function generateWordsArray() {
-  return Array.from(new Array(100), () => {
-    return randomWords();
-  });
-}
-function generateLoremIpsum() {
-  const text = generateWordsArray();
-  return text.map(word => {
-    return createWordObject({ challenge: word });
-  });
-}
-
-function secondstoMillisecond(number) {
-  return number * 1000;
-}
-function millisecondsToSeconds(number) {
-  const seconds = number / 1000;
-  return Math.ceil(seconds);
-}
-function millisecondsToMinutes(number) {
-  return number / 60000;
 }
 export default GameContainer;
