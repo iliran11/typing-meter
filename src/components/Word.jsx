@@ -1,15 +1,16 @@
 import React from 'react';
 import Letter from './Letter.jsx';
 import scrollIntoView from 'scroll-into-view';
+import { FAILURE_ANIMATION, SUCCESS_ANIMATION } from '../constants';
 
 class Word extends React.Component {
   constructor(props) {
     super(props);
-    this.isNowActive = false;
+    this.animationClasses = '';
   }
   shouldComponentUpdate = (nextProps, nextState) => {
     const typedWordsChanged = this.props.typedLetters.length !== nextProps.typedLetters.length;
-    const isGoingActive = nextProps.isActive === true && this.props.isActive === false
+    const isGoingActive = nextProps.isActive === true && this.props.isActive === false;
     /** render the component if there is a new typing information OR the word is going to get active. */
     return typedWordsChanged || isGoingActive;
   };
@@ -48,14 +49,37 @@ class Word extends React.Component {
       return <Letter value={element.letter} status={element.status} key={index} />;
     });
   };
+  componentWillUpdate = nextProps => {
+    // console.log(this.props.displayedLetters.join(''),nextProps)
+    const { isCompleted, isActive } = nextProps;
+    const isJustCompleted = isCompleted && isActive === false;
+    if (isJustCompleted) {
+      this.onJustCompleted(nextProps);
+    }
+  };
   componentDidUpdate = prevProps => {
     const { isActive: prevIsActive } = prevProps;
     const { isActive: currentIsActive } = this.props;
     /** check if unactive word, is going into active state. */
     const beingActivated = currentIsActive && prevIsActive === false;
     if (beingActivated) {
-      this.focusWord();
+      this.onJustBeingActive();
     }
+  };
+  onJustCompleted = nextProps => {
+    /** triggered from componentWillUpdate */
+    const { isCorrect } = nextProps;
+    // console.log(this.props.displayedLetters.join(''),nextProps)
+    if (isCorrect) {
+      this.animationClasses = SUCCESS_ANIMATION;
+    } else {
+      this.animationClasses = FAILURE_ANIMATION;
+    }
+  };
+  onJustBeingActive = () => {
+    /** triggered from comonentDidUpdate  */
+    this.animationClasses = null;
+    this.focusWord();
   };
   focusWord = () => {
     const nextWord = this.nodeDom.parentNode;
@@ -87,12 +111,13 @@ class Word extends React.Component {
     this.nodeDom = nodeDom;
   };
   render = () => {
-    const { isActive } = this.props;
+    const { props: isActive, animationClasses } = this;
     const containerStyle = this.getContainerStyle();
     const activeClassName = isActive ? 'active' : '';
     const Letters = this.getLetters();
+    const containerClasses = `${containerStyle} ${activeClassName} ${animationClasses}`;
     return (
-      <span className={`${containerStyle} ${activeClassName}`} ref={this.getNode} tabIndex="1">
+      <span className={containerClasses} ref={this.getNode} tabIndex="1">
         {Letters}
       </span>
     );
