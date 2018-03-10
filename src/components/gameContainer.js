@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Word from './Word.jsx';
 import randomWords from 'random-words';
 import ScoreBoard from './scoreBoard';
+import { CPM_NULL } from '../constants';
 import '../App.css';
 import 'bulma/css/bulma.css';
 
@@ -16,12 +17,12 @@ class GameContainer extends Component {
       isGameActive: true,
       index: 0,
       scrollIndex: 0,
-      words: generateLoremIpsum()
+      words: generateLoremIpsum(),
+      cpm: CPM_NULL
     };
     this.timeLeftInterval = setInterval(() => {
       const nextTimeLeft = this.getCurrentTimeLeft();
       if (nextTimeLeft < 0) {
-        clearInterval(this.timeLeftInterval);
         this.onRunningOutTime();
       } else {
         this.setState({
@@ -29,7 +30,9 @@ class GameContainer extends Component {
         });
       }
     }, 1000);
-    this.correctTypedWords =0
+    this.correctTypedWords = 0;
+    this.cpm = '?';
+    this.cpmInterval = setInterval(this.calculateCpm, 1000);
   }
   currentWord = () => {
     return this.state.words[this.state.index];
@@ -48,12 +51,14 @@ class GameContainer extends Component {
   };
   /** Events */
   onRunningOutTime = () => {
+    clearInterval(this.timeLeftInterval);
+    clearInterval(this.cpmInterval);
   };
-  onIndexChange = (index,nextIndex) => {
+  onIndexChange = (index, nextIndex) => {
     if (index !== nextIndex) {
-      this.correctTypedWords = this.countCorrectWords()
+      this.correctTypedWords = this.countCorrectWords();
     }
-  }
+  };
   handleChange = event => {
     const { index } = this.state;
     if (this.state.isGameActive === false) return '';
@@ -72,12 +77,15 @@ class GameContainer extends Component {
     const nextGameStatus = this.isGameActive(nextWordsArray);
     const currentWord = nextWordsArray[index];
     const nextIndex = currentWord.isCompleted ? index + 1 : index;
-    this.setState({
-      words: nextWordsArray,
-      isGameActive: nextGameStatus,
-      index: nextIndex
-    },() => this.onIndexChange(index,nextIndex));
-  }
+    this.setState(
+      {
+        words: nextWordsArray,
+        isGameActive: nextGameStatus,
+        index: nextIndex
+      },
+      () => this.onIndexChange(index, nextIndex)
+    );
+  };
   onKeyPressed = event => {
     const { words, index, scrollIndex } = this.state;
     const currentWord = words[index];
@@ -89,20 +97,26 @@ class GameContainer extends Component {
           const nextIndex = index - 1;
           /** nextIndexNormalized - don't allow negative, if user keep click on backspace when index is 0. */
           const nextIndexNormalized = nextIndex < 0 ? 0 : nextIndex;
-          this.setState({
-            index: nextIndexNormalized,
-            scrollIndex: scrollIndex - 1
-          },() => this.onIndexChange(index,nextIndexNormalized));
+          this.setState(
+            {
+              index: nextIndexNormalized,
+              scrollIndex: scrollIndex - 1
+            },
+            () => this.onIndexChange(index, nextIndexNormalized)
+          );
         }
         break;
       case 32:
         /** space clicked - if the typing of the word is compelted - move on. */
         if (currentWord.isCompleted) {
-          const nextIndex = index + 1
-          this.setState({
-            index: nextIndex,
-            scrollIndex: scrollIndex + 1
-          },this.onIndexChange(index,nextIndex));
+          const nextIndex = index + 1;
+          this.setState(
+            {
+              index: nextIndex,
+              scrollIndex: scrollIndex + 1
+            },
+            this.onIndexChange(index, nextIndex)
+          );
         }
         break;
       default:
@@ -131,12 +145,19 @@ class GameContainer extends Component {
     }, 0);
   };
   calculateCpm = () => {
+    const { cpm } = this.state;
     const millisecondsPassed = Date.now() - this.state.startTime;
     const minutesPassed = millisecondsToMinutes(millisecondsPassed);
-    return this.numberOfCorrectWords() / minutesPassed;
+    const rawCpm = this.numberOfCorrectWords() / minutesPassed;
+    const nextCpm = rawCpm.toPrecision(2);
+    if (cpm === CPM_NULL && nextCpm === 0) return;
+    this.setState({
+      cpm: nextCpm
+    });
   };
 
   renderWords = (word, index) => {
+    const isActive = index === this.state.index;
     return (
       <span key={index}>
         <Word
@@ -146,17 +167,17 @@ class GameContainer extends Component {
           isCompleted={word.isCompleted}
           isCorrect={word.isCorrect}
           getDomElement={this.assignRef}
-          isActive={index === this.state.index}
+          isActive={isActive}
         />
         <span className="space"> </span>
       </span>
     );
   };
   render() {
-    const { countCorrectWords,correctTypedWords, state: { timeLeft } } = this;
+    const { countCorrectWords, correctTypedWords, state: { timeLeft, cpm } } = this;
     return (
       <div className="content">
-        <ScoreBoard timeLeft={timeLeft} cpm={20} correctTypedWords={correctTypedWords} />
+        <ScoreBoard timeLeft={timeLeft} cpm={cpm} correctTypedWords={correctTypedWords} />
         <div className="words-container">{this.state.words.map(this.renderWords)}</div>
         <input
           value={this.getInputValue()}
@@ -171,7 +192,7 @@ class GameContainer extends Component {
   }
 }
 
-function createWordObject({ challenge = '', typed = '',id }) {
+function createWordObject({ challenge = '', typed = '', id }) {
   return {
     challenge,
     typed,
@@ -192,7 +213,6 @@ function createWordObject({ challenge = '', typed = '',id }) {
     get wordArray() {
       return this.challenge.split('');
     }
-    
   };
 }
 function generateWordsArray() {
@@ -218,6 +238,6 @@ function millisecondsToMinutes(number) {
   return number / 60000;
 }
 function getUniqueNumber() {
-  return 
+  return;
 }
 export default GameContainer;
