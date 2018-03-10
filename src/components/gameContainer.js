@@ -1,4 +1,4 @@
-import React, { Component,Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import Word from './Word.jsx';
 import ScoreBoard from './scoreBoard';
 import { CPM_NULL, METRICS_INTERVAL_DELAY, GAME_DURATION, DEBUG_MODE } from '../constants';
@@ -9,7 +9,6 @@ import {
   millisecondsToMinutes,
   createWordObject
 } from '../utils';
-
 
 class GameContainer extends Component {
   constructor() {
@@ -167,7 +166,9 @@ class GameContainer extends Component {
       cpm: nextCpm
     });
   };
-
+  componentDidMount = () => {
+    this.inputElement.focus();
+  };
   renderWords = (word, index) => {
     const isActive = index === this.state.index;
     return (
@@ -179,9 +180,7 @@ class GameContainer extends Component {
           isCorrect={word.isCorrect}
           getDomElement={this.assignRef}
           isActive={isActive}
-        >
-        </Word>
-        {' '}
+        />{' '}
       </Fragment>
     );
   };
@@ -198,6 +197,9 @@ class GameContainer extends Component {
           onKeyDown={this.onKeyPressed}
           tabIndex="0"
           className="input is-large is-primary"
+          ref={node => {
+            this.inputElement = node;
+          }}
         />
       </div>
     );
