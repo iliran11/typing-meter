@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import Word from './Word.jsx';
 import randomWords from 'random-words';
 import ScoreBoard from './scoreBoard';
-import { CPM_NULL } from '../constants';
+import { CPM_NULL,CPM_PERCISION,METRICS_INTERVAL_DELAY,GAME_DURATION,DEBUG_MODE } from '../constants';
 import '../App.css';
 import 'bulma/css/bulma.css';
 
 class GameContainer extends Component {
   constructor() {
-    const overallTime = secondstoMillisecond(2);
+    const overallTime = secondstoMillisecond(GAME_DURATION);
     super();
+    this.correctTypedWords = 0;
+    this.cpm = CPM_NULL;
     this.state = {
       overallTime,
       startTime: Date.now(),
@@ -18,21 +20,25 @@ class GameContainer extends Component {
       index: 0,
       scrollIndex: 0,
       words: generateLoremIpsum(),
-      cpm: CPM_NULL
+      cpm: this.cpm
     };
-    this.timeLeftInterval = setInterval(() => {
-      const nextTimeLeft = this.getCurrentTimeLeft();
-      if (nextTimeLeft < 0) {
-        this.onRunningOutTime();
-      } else {
-        this.setState({
-          timeLeft: nextTimeLeft
-        });
-      }
-    }, 1000);
-    this.correctTypedWords = 0;
-    this.cpm = '?';
-    this.cpmInterval = setInterval(this.calculateCpm, 1000);
+  }
+  setMetricIntervals = () => {
+    if (DEBUG_MODE === false) {
+      /** interval to update how much time left */
+      this.timeLeftInterval = setInterval(() => {
+        const nextTimeLeft = this.getCurrentTimeLeft();
+        if (nextTimeLeft < 0) {
+          this.onRunningOutTime();
+        } else {
+          this.setState({
+            timeLeft: nextTimeLeft
+          });
+        }
+      }, METRICS_INTERVAL_DELAY);
+      /** interval to re-calculate the CPM. */
+      this.cpmInterval = setInterval(this.calculateCpm, METRICS_INTERVAL_DELAY);
+    }
   }
   currentWord = () => {
     return this.state.words[this.state.index];
@@ -149,7 +155,7 @@ class GameContainer extends Component {
     const millisecondsPassed = Date.now() - this.state.startTime;
     const minutesPassed = millisecondsToMinutes(millisecondsPassed);
     const rawCpm = this.numberOfCorrectWords() / minutesPassed;
-    const nextCpm = rawCpm.toPrecision(2);
+    const nextCpm = Math.round(rawCpm)
     if (cpm === CPM_NULL && nextCpm === 0) return;
     this.setState({
       cpm: nextCpm
