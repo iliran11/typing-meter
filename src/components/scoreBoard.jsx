@@ -1,26 +1,18 @@
-
-import React from 'react'
+import React from 'react';
+import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
+import FontIcon from 'material-ui/FontIcon';
+import { blue500, red500, greenA200 } from 'material-ui/styles/colors';
+import FontAwesome from 'react-fontawesome';
 
 export default function ScoreBoard(props) {
-    const { timeLeft, cpm, correctTypedWords } = props;
-    return (
-        <div id="scoreboard">
-            <table className="table  is-fullwidth">
-                <thead>
-                    <tr>
-                        <th>Time Left</th>
-                        <th>CPM</th>
-                        <th>correct Typed Words</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>{timeLeft}</th>
-                        <th>{cpm}</th>
-                        <th>{correctTypedWords}</th>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    )
+  const { timeLeft, cpm, correctTypedWords } = props;
+  console.log(FontAwesome);
+  return (
+    <div>
+      <Toolbar text="TITLE">
+        <i class="fas fa-camera-retro" />
+        <ToolbarGroup firstChild={true}>hjkhjhj</ToolbarGroup>
+      </Toolbar>
+    </div>
+  );
 }
