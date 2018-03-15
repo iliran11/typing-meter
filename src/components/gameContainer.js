@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import Word from './Word.jsx';
 import ScoreBoard from './scoreBoard';
+import LinearProgress from 'material-ui/LinearProgress';
 import { CPM_NULL, METRICS_INTERVAL_DELAY, GAME_DURATION, DEBUG_MODE } from '../constants';
 import {
   generateLoremIpsum,
@@ -47,6 +48,12 @@ class GameContainer extends Component {
   };
   currentWord = () => {
     return this.state.words[this.state.index];
+  };
+  getProgress = () => {
+    const { state: { timeLeft } } = this;
+    const percentage = (timeLeft / GAME_DURATION)*100
+    const roundedNumber  = Math.floor(percentage)
+    return roundedNumber;
   };
   getInputValue = () => {
     if (this.state.isGameActive === false) return '';
@@ -185,11 +192,13 @@ class GameContainer extends Component {
     );
   };
   render() {
-    const { correctTypedWords, state: { timeLeft, cpm } } = this;
+    const { correctTypedWords, getProgress, state: { cpm } } = this;
+    const progress = getProgress();
     return (
       <div className="content">
-        <ScoreBoard timeLeft={timeLeft} cpm={cpm} correctTypedWords={correctTypedWords} />
+        <ScoreBoard cpm={cpm} correctTypedWords={correctTypedWords} />
         <div className="words-container">{this.state.words.map(this.renderWords)}</div>
+        <LinearProgress value={progress} mode={'determinate'} />
         <input
           value={this.getInputValue()}
           onChange={this.handleChange}
