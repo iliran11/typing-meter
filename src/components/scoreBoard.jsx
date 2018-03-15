@@ -9,9 +9,10 @@ export default function ScoreBoard(props) {
   console.log(FontAwesome);
   return (
     <div>
-      <Toolbar text="TITLE">
-        <i class="fas fa-camera-retro" />
-        <ToolbarGroup firstChild={true}>hjkhjhj</ToolbarGroup>
+      <Toolbar text="TITLE" style={{ backgroundColor: 'white' }}>
+        <ToolbarGroup firstChild={true} style={{ padding: 20 }}>
+          <i class="fas fa-tachometer-alt" /> <span className="cpm">{cpm}</span>
+        </ToolbarGroup>
       </Toolbar>
     </div>
   );

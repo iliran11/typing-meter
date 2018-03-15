@@ -59,6 +59,14 @@ input {
 #scoreboard table {
   margin: 0;
 }
+.fa-tachometer-alt {
+  font-size: 50px;
+  color: rgb(0, 188, 212);
+}
+.cpm {
+  font-size: 50px;
+  font-family: 'Fredoka One', cursive;
+}
 @media only screen and (max-width: 576px) {
   .words-container {
     font-size: 40px;

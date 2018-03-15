@@ -14,7 +14,6 @@ class App extends Component {
         <React.Fragment>
 
           <AppBar title="Title" iconClassNameRight="muidocs-icon-navigation-expand-more" />
-        <i className="fab fa-accessible-icon"></i>
           <GameContainer />
         </React.Fragment>
       </MuiThemeProvider>
