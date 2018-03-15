@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
-import GameContainer from './components/gameContainer';
 import 'normalize.css';
-import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import GameContainer from './components/gameContainer';
 import AppBar from 'material-ui/AppBar';
 import 'animate.css';
+import './App.css';
+
 
 class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <AppBar title="Title" iconClassNameRight="muidocs-icon-navigation-expand-more"/>
+        <React.Fragment>
+
+          <AppBar title="Title" iconClassNameRight="muidocs-icon-navigation-expand-more" />
+        <i className="fab fa-accessible-icon"></i>
           <GameContainer />
+        </React.Fragment>
       </MuiThemeProvider>
     );
   }
