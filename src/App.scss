@@ -1,4 +1,5 @@
 /* https://material.io/color/#!/?view.left=0&view.right=0&primary.color=00796B&primary.text.color=ffffff */
+
 .words-container {
   /* line-height: 5vh; */
   font-size: 60px;
@@ -7,49 +8,62 @@
   box-shadow: inset 0 0 10px #000000;
   padding: 0 20px;
   word-break: break-word;
-  flex-grow: 1; }
-
+  flex-grow: 1;
+}
 .app-bar {
-  flex: initial; }
-
+  flex: initial;
+}
 .content {
   flex: auto;
   display: flex;
-  flex-direction: column; }
-
+  flex-direction: column;
+}
 .content input {
-  margin-top: auto; }
-
+  margin-top: auto;
+}
 .app-bar h1 {
-  opacity: 0.8; }
-
+  opacity: 0.8;
+}
 .app-bar svg {
-  opacity: 0.8; }
-
+  opacity: 0.8;
+}
 .secondary-toolbar {
-  background-color: #48a999; }
-
+  background-color: #48a999;
+}
 .tag {
-  margin-right: 20px; }
+  margin-right: 20px;
+}
 
 .SUCCESS {
-  color: #23d160; }
-
+  color: hsl(141, 71%, 48%);
+}
 .FAILED {
-  color: #ff3860; }
-
+  color: hsl(348, 100%, 61%);
+}
 .NEUTRAL {
-  color: #363636; }
+  color: hsl(0, 0%, 21%);
+}
 
 .letter {
-  transition: color 0.6s; }
+  transition: color 0.6s;
+}
 
 .word {
   color: black;
   font-family: 'Fredoka One', cursive;
   border-radius: 15px;
   display: inline-block;
-  transition: background-color 0.6s; }
+  transition: background-color 0.6s;
+}
+// .correct-word {
+//   background-color: #0080001a;
+//   color: #008000d1;
+// }
+
+// .incorrect-word {
+//   background-color: #ff000017;
+//   color: #ff0000f2;
+// }
 
 #scoreboard th {
   text-align: center;
@@ -57,86 +71,94 @@
   font-size: 30px;
   font-family: 'Fredoka One', cursive;
   font-weight: bold;
-  font-family: 'Roboto', sans-serif; }
-
+  font-family: 'Roboto', sans-serif;
+}
 input {
-  font-family: 'Roboto', sans-serif; }
-
+  font-family: 'Roboto', sans-serif;
+}
 #scoreboard table {
-  margin: 0; }
+  margin: 0;
+}
 
 .progress-bar {
   background-color: #48a999;
   height: 20px;
   box-shadow: 0 0 10px #48a999;
-  animation: 60s linear 0s progress; }
-
+  animation: 60s linear 0s progress;
+}
 .row {
-  display: flex; }
-
+  display: flex;
+}
 .metric-score {
   font-size: 50px;
   font-family: 'Fredoka One', cursive;
   color: white;
-  opacity: 0.7; }
-
+  opacity: 0.7;
+}
 .score-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 20px; }
-
+  font-size: 20px;
+}
 .score-section h3 {
   margin: 0px;
   color: white;
   opacity: 0.6;
   font-weight: bold;
-  text-align: center; }
-
+  text-align: center;
+}
 .score-section .icon {
   font-size: 50px;
   color: white;
   opacity: 0.6;
-  margin-right: 15px; }
+  margin-right: 15px;
+}
 
 @keyframes progress {
   from {
-    width: 100%; }
+    width: 100%;
+  }
   to {
-    width: 0%; } }
+    width: 0%;
+  }
+}
 
 @media only screen and (max-width: 576px) {
   .words-container {
     font-size: 40px;
     line-height: 60px;
-    height: 240px; }
+    height: 240px;
+  }
   .score-section .icon {
-    font-size: 30px; }
+    font-size: 30px;
+  }
   .score-section h3 {
-    font-size: 15px; }
+    font-size: 15px;
+  }
   .metric-score {
-    font-size: 30px; } }
-
+    font-size: 30px;
+  }
+}
 html {
-  height: 100%; }
-
+  height: 100%;
+}
 *,
 *:before,
 *:after {
-  box-sizing: inherit; }
+  box-sizing: inherit;
+}
 
 body {
   height: 100%;
-  overflow: auto;
-  /*makes the body non-scrollable (we will add scrolling to the sidebar and main content containers)*/
-  margin: 0px;
-  /*removes default style*/
-  display: flex;
-  /*enables flex content for its children*/
-  box-sizing: border-box; }
-
+  overflow: auto; /*makes the body non-scrollable (we will add scrolling to the sidebar and main content containers)*/
+  margin: 0px; /*removes default style*/
+  display: flex; /*enables flex content for its children*/
+  box-sizing: border-box;
+}
 #root {
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 100%; }
+  width: 100%;
+}
