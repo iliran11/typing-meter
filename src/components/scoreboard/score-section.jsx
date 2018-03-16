@@ -7,7 +7,7 @@ export default function ScoreSection(props) {
       <h3>{title}</h3>
       <div className="row">
         <i className={`${iconClass} icon`} />
-        <span className="cpm">{score}</span>
+        <span className="metric-score">{score}</span>
       </div>
     </div>
   );
