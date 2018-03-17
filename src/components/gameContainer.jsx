@@ -7,7 +7,8 @@ import {
   secondstoMillisecond,
   millisecondsToSeconds,
   millisecondsToMinutes,
-  createWordObject
+  createWordObject,
+  noop
 } from '../utils';
 import ProgressBar from './progress-bar';
 
@@ -90,7 +91,8 @@ class GameContainer extends Component {
       }
       return element;
     });
-    const nextGameStatus = this.isGameActive(nextWordsArray);
+    /** check if all words are completed. */
+    const nextGameStatus = this.haveNonCompletedWords(nextWordsArray);
     const currentWord = nextWordsArray[index];
     const nextIndex = currentWord.isCompleted ? index + 1 : index;
     this.setState(
@@ -129,11 +131,17 @@ class GameContainer extends Component {
   onRunningOutTime = () => {
     clearInterval(this.timeLeftInterval);
     clearInterval(this.cpmInterval);
+    this.onGameCompletion();
   };
   onIndexChange = (index, nextIndex) => {
     if (index !== nextIndex) {
       this.correctTypedWords = this.countCorrectWords();
     }
+  };
+  onGameCompletion = () => {
+    const { onGameCompletion = noop } = this.props;
+    /** execute prop */
+    onGameCompletion();
   };
   /*=============================================
 =            GETTERS            =
@@ -159,11 +167,17 @@ class GameContainer extends Component {
     if (nextGameStatus === false) return false;
     return nextWordsArray[this.state.index].isCompleted;
   };
-  isGameActive = nextWordsArray => {
-    return nextWordsArray.some(element => {
+  haveNonCompletedWords(nextWordsArray) {
+    /** if all words are marked as completed - game is not active anymore. */
+    const haveNonCompletedWords = nextWordsArray.some(element => {
       return element.isCompleted === false;
     });
-  };
+    /** if everything is completed ...  */
+    if (!haveNonCompletedWords) {
+      this.onGameCompletion();
+    }
+    return haveNonCompletedWords;
+  }
   getCurrentTimeLeft = () => {
     const millisecondsPassed = Date.now() - this.state.startTime;
     const millisecondsLeft = this.state.overallTime - millisecondsPassed;

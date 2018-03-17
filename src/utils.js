@@ -45,3 +45,4 @@ export function generateWordsArray() {
       }
     };
   }
+  export const noop = ()=>{}
