@@ -11,6 +11,7 @@ import {
   noop
 } from '../utils';
 import ProgressBar from './progress-bar';
+import isUndefined from 'lodash.isundefined';
 
 class GameContainer extends Component {
   /*=============================================
@@ -128,6 +129,7 @@ class GameContainer extends Component {
   /*=============================================
 =            GAME EVENTS            =
 =============================================*/
+  onGameStart = () => {};
   onRunningOutTime = () => {
     clearInterval(this.timeLeftInterval);
     clearInterval(this.cpmInterval);
