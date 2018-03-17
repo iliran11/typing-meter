@@ -4,5 +4,6 @@ export const appBarStyle = {
 
 export const secondaryStyle = {
   backgroundColor: '#00796b',
-  height:'auto'
+  height:'auto',
+  padding: '5px 24px'
 };
