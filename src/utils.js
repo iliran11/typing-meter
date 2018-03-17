@@ -1,7 +1,8 @@
 import randomWords from 'random-words';
+import {WORDS_AMOUNT} from './constants'
 
 export function generateWordsArray() {
-    return Array.from(new Array(100), () => {
+    return Array.from(new Array(WORDS_AMOUNT), () => {
       return randomWords();
     });
   }
