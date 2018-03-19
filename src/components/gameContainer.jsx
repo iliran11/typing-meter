@@ -27,7 +27,7 @@ class GameContainer extends Component {
       overallTime,
       startTime: Date.now(),
       timeLeft: millisecondsToSeconds(overallTime),
-      isGameActive: true,
+      isGameActive: false,
       index: 0,
       scrollIndex: 0,
       words: generateLoremIpsum(),
@@ -75,8 +75,8 @@ class GameContainer extends Component {
     }
   };
   handleChange = event => {
-    const { index,isGameActive } = this.state;
-    if (this.state.isGameActive === false) return '';
+    const { state: { index, isGameActive }, shouldHandleInput } = this;
+    if (shouldHandleInput() === false) return;
     /** useful when incrementing the index with a space - and then the space will not be counted as a typed character. */
     const newInputValue = event.target.value.trim().toLowerCase();
     const nextWordsArray = this.state.words.map((element, index) => {
@@ -102,6 +102,7 @@ class GameContainer extends Component {
       () => this.onIndexChange(index, nextIndex)
     );
   };
+
   /*=============================================
 =  INTERVALS (calculating periodically time left and score metrics)            =
 =============================================*/
@@ -127,11 +128,9 @@ class GameContainer extends Component {
 =            UI EVENTS            =
 =============================================*/
 
-
   /*=============================================
 =            GAME EVENTS            =
 =============================================*/
-  onGameStart = () => {};
   onRunningOutTime = () => {
     clearInterval(this.timeLeftInterval);
     clearInterval(this.cpmInterval);
@@ -150,7 +149,11 @@ class GameContainer extends Component {
   /*=============================================
 =            GETTERS            =
 =============================================*/
-
+  shouldHandleInput = () => {
+    const { state: { isGameActive }, haveNonCompletedWords } = this;
+    /** handle input is the game is active, or if the game is not active, but still have uncompleted words. */
+    return isGameActive || (isGameActive === false && haveNonCompletedWords() === true);
+  };
   currentWord = () => {
     return this.state.words[this.state.index];
   };
@@ -171,7 +174,7 @@ class GameContainer extends Component {
     if (nextGameStatus === false) return false;
     return nextWordsArray[this.state.index].isCompleted;
   };
-  haveNonCompletedWords(nextWordsArray) {
+  haveNonCompletedWords = (nextWordsArray = this.state.words) => {
     /** if all words are marked as completed - game is not active anymore. */
     const haveNonCompletedWords = nextWordsArray.some(element => {
       return element.isCompleted === false;
@@ -181,7 +184,7 @@ class GameContainer extends Component {
       this.onGameCompletion();
     }
     return haveNonCompletedWords;
-  }
+  };
   getCurrentTimeLeft = () => {
     const millisecondsPassed = Date.now() - this.state.startTime;
     const millisecondsLeft = this.state.overallTime - millisecondsPassed;
@@ -221,9 +224,9 @@ class GameContainer extends Component {
       </Fragment>
     );
   };
-  render() {
+  render = () => {
     const { correctTypedWords, state: { cpm, isGameActive } } = this;
-    const placeHolder = isGameActive ? '' : "click to start"
+    const placeHolder = isGameActive ? '' : 'click to start';
     return (
       <div className="content">
         <ScoreBoard cpm={cpm} correctTypedWords={correctTypedWords} />
@@ -243,6 +246,6 @@ class GameContainer extends Component {
         <div className="words-container">{this.state.words.map(this.renderWords)}</div>
       </div>
     );
-  }
+  };
 }
 export default GameContainer;
