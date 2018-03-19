@@ -45,7 +45,7 @@ class GameContainer extends Component {
       case 8:
         /** backspace clicked */
         /** handle a situation when there is a backspace, when the index is 0, which result in -1 */
-        if (currentWord.isEmpty) {
+        if (currentWord.isEmpty && index > 0) {
           const nextIndex = index - 1;
           /** nextIndexNormalized - don't allow negative, if user keep click on backspace when index is 0. */
           const nextIndexNormalized = nextIndex < 0 ? 0 : nextIndex;
