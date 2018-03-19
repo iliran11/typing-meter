@@ -15,10 +15,10 @@
 input {
   margin-top: auto;
   height: 40px;
-  flex:none;
-  font-size:30px;
+  flex: none;
+  font-size: 30px;
   font-weight: bold;
-  padding-left:2%;
+  padding-left: 2%;
 }
 .metric-score {
   font-size: 50px;
@@ -66,8 +66,10 @@ input {
   background-color: #48a999;
   height: 50px;
   box-shadow: 0 0 10px #48a999;
-  animation: 60s linear 0s progress;
   flex: none;
+}
+.progress-bar--animate {
+  animation: 60s linear 0s progress;
 }
 
 input {
