@@ -204,7 +204,9 @@ class GameContainer extends Component {
       cpm: nextCpm
     });
   };
-
+  onFocus = () => {
+    alert(window.innerHeight)
+  }
   renderWords = (word, index) => {
     const isActive = index === this.state.index;
     return (
@@ -226,7 +228,6 @@ class GameContainer extends Component {
       <div className="content">
         <ScoreBoard cpm={cpm} correctTypedWords={correctTypedWords} />
         <ProgressBar />
-        <div className="words-container">{this.state.words.map(this.renderWords)}</div>
         <input
           value={this.getInputValue()}
           onChange={this.handleChange}
@@ -238,6 +239,7 @@ class GameContainer extends Component {
             this.inputElement = node;
           }}
         />
+        <div className="words-container">{this.state.words.map(this.renderWords)}</div>
       </div>
     );
   }
