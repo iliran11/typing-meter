@@ -35,9 +35,6 @@ class GameContainer extends Component {
     };
     this.setMetricIntervals();
   }
-  componentDidMount = () => {
-    this.inputElement.focus();
-  };
   /*=============================================
 =            INPUT HANDLERS            =
 =============================================*/
@@ -78,7 +75,7 @@ class GameContainer extends Component {
     }
   };
   handleChange = event => {
-    const { index } = this.state;
+    const { index,isGameActive } = this.state;
     if (this.state.isGameActive === false) return '';
     /** useful when incrementing the index with a space - and then the space will not be counted as a typed character. */
     const newInputValue = event.target.value.trim().toLowerCase();
@@ -126,6 +123,11 @@ class GameContainer extends Component {
       this.cpmInterval = setInterval(this.calculateCpm, METRICS_INTERVAL_DELAY);
     }
   };
+  /*=============================================
+=            UI EVENTS            =
+=============================================*/
+
+
   /*=============================================
 =            GAME EVENTS            =
 =============================================*/
@@ -220,11 +222,12 @@ class GameContainer extends Component {
     );
   };
   render() {
-    const { correctTypedWords, state: { cpm } } = this;
+    const { correctTypedWords, state: { cpm, isGameActive } } = this;
+    const placeHolder = isGameActive ? '' : "click to start"
     return (
       <div className="content">
         <ScoreBoard cpm={cpm} correctTypedWords={correctTypedWords} />
-        <ProgressBar />
+        <ProgressBar isProgressCounting={isGameActive} />
         <input
           value={this.getInputValue()}
           onChange={this.handleChange}
@@ -232,6 +235,7 @@ class GameContainer extends Component {
           onKeyDown={this.onKeyPressed}
           tabIndex="0"
           className="input is-large is-primary"
+          placeholder={placeHolder}
           ref={node => {
             this.inputElement = node;
           }}
