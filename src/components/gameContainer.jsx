@@ -204,9 +204,6 @@ class GameContainer extends Component {
       cpm: nextCpm
     });
   };
-  onFocus = () => {
-    alert(window.innerHeight)
-  }
   renderWords = (word, index) => {
     const isActive = index === this.state.index;
     return (
