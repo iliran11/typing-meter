@@ -12,6 +12,7 @@ import {
 } from '../utils';
 import ProgressBar from './progress-bar';
 import isUndefined from 'lodash.isundefined';
+import * as $ from 'jquery'
 
 class GameContainer extends Component {
   /*=============================================
@@ -35,9 +36,6 @@ class GameContainer extends Component {
     };
     this.setMetricIntervals();
   }
-  componentDidMount = () => {
-    this.inputElement.focus();
-  };
   /*=============================================
 =            INPUT HANDLERS            =
 =============================================*/
@@ -226,7 +224,6 @@ class GameContainer extends Component {
       <div className="content">
         <ScoreBoard cpm={cpm} correctTypedWords={correctTypedWords} />
         <ProgressBar />
-        <div className="words-container">{this.state.words.map(this.renderWords)}</div>
         <input
           value={this.getInputValue()}
           onChange={this.handleChange}
@@ -238,6 +235,7 @@ class GameContainer extends Component {
             this.inputElement = node;
           }}
         />
+        <div className="words-container">{this.state.words.map(this.renderWords)}</div>
       </div>
     );
   }
