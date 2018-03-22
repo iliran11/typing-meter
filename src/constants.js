@@ -4,4 +4,4 @@ export const METRICS_INTERVAL_DELAY = 500
 export const DEBUG_MODE = false
 export const FAILURE_ANIMATION = `animated jello`
 export const SUCCESS_ANIMATION = `animated pulse`
-export const WORDS_AMOUNT = 2
+export const WORDS_AMOUNT = 100
