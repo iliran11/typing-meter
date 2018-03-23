@@ -7,10 +7,10 @@ export default function ScoreBoard(props) {
   return (
     <div>
       <Toolbar text="TITLE" className="secondary-toolbar" style={secondaryStyle}>
-        <ToolbarGroup className="score-section">
+        <ToolbarGroup>
           <ScoreSection title="CORRECT" iconClass="fas fa-check-circle" score={correctTypedWords} />
         </ToolbarGroup>
-        <ToolbarGroup className="score-section">
+        <ToolbarGroup>
           <ScoreSection title="WPM" iconClass="fas fa-tachometer-alt" score={cpm} />
         </ToolbarGroup>
       </Toolbar>
