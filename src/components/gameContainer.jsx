@@ -27,7 +27,7 @@ class GameContainer extends Component {
       overallTime,
       startTime: Date.now(),
       timeLeft: millisecondsToSeconds(overallTime),
-      isGameActive: true,
+      isGameActive: false,
       index: 0,
       scrollIndex: 0,
       words: generateLoremIpsum(),
@@ -46,7 +46,7 @@ class GameContainer extends Component {
       case 8:
         /** backspace clicked */
         /** handle a situation when there is a backspace, when the index is 0, which result in -1 */
-        if (currentWord.isEmpty) {
+        if (currentWord.isEmpty && index > 0) {
           const nextIndex = index - 1;
           /** nextIndexNormalized - don't allow negative, if user keep click on backspace when index is 0. */
           const nextIndexNormalized = nextIndex < 0 ? 0 : nextIndex;
@@ -76,8 +76,8 @@ class GameContainer extends Component {
     }
   };
   handleChange = event => {
-    const { index } = this.state;
-    if (this.state.isGameActive === false) return '';
+    const { state: { index, isGameActive }, shouldHandleInput } = this;
+    if (shouldHandleInput() === false) return;
     /** useful when incrementing the index with a space - and then the space will not be counted as a typed character. */
     const newInputValue = event.target.value.trim().toLowerCase();
     const nextWordsArray = this.state.words.map((element, index) => {
@@ -103,6 +103,7 @@ class GameContainer extends Component {
       () => this.onIndexChange(index, nextIndex)
     );
   };
+
   /*=============================================
 =  INTERVALS (calculating periodically time left and score metrics)            =
 =============================================*/
@@ -125,9 +126,12 @@ class GameContainer extends Component {
     }
   };
   /*=============================================
+=            UI EVENTS            =
+=============================================*/
+
+  /*=============================================
 =            GAME EVENTS            =
 =============================================*/
-  onGameStart = () => {};
   onRunningOutTime = () => {
     clearInterval(this.timeLeftInterval);
     clearInterval(this.cpmInterval);
@@ -146,7 +150,11 @@ class GameContainer extends Component {
   /*=============================================
 =            GETTERS            =
 =============================================*/
-
+  shouldHandleInput = () => {
+    const { state: { isGameActive }, haveNonCompletedWords } = this;
+    /** handle input is the game is active, or if the game is not active, but still have uncompleted words. */
+    return isGameActive || (isGameActive === false && haveNonCompletedWords() === true);
+  };
   currentWord = () => {
     return this.state.words[this.state.index];
   };
@@ -167,7 +175,7 @@ class GameContainer extends Component {
     if (nextGameStatus === false) return false;
     return nextWordsArray[this.state.index].isCompleted;
   };
-  haveNonCompletedWords(nextWordsArray) {
+  haveNonCompletedWords = (nextWordsArray = this.state.words) => {
     /** if all words are marked as completed - game is not active anymore. */
     const haveNonCompletedWords = nextWordsArray.some(element => {
       return element.isCompleted === false;
@@ -177,7 +185,7 @@ class GameContainer extends Component {
       this.onGameCompletion();
     }
     return haveNonCompletedWords;
-  }
+  };
   getCurrentTimeLeft = () => {
     const millisecondsPassed = Date.now() - this.state.startTime;
     const millisecondsLeft = this.state.overallTime - millisecondsPassed;
@@ -202,7 +210,6 @@ class GameContainer extends Component {
       cpm: nextCpm
     });
   };
-
   renderWords = (word, index) => {
     const isActive = index === this.state.index;
     return (
@@ -218,12 +225,13 @@ class GameContainer extends Component {
       </Fragment>
     );
   };
-  render() {
-    const { correctTypedWords, state: { cpm } } = this;
+  render = () => {
+    const { correctTypedWords, state: { cpm, isGameActive } } = this;
+    const placeHolder = isGameActive ? '' : 'click to start';
     return (
       <div className="content">
         <ScoreBoard cpm={cpm} correctTypedWords={correctTypedWords} />
-        <ProgressBar />
+        <ProgressBar isProgressCounting={isGameActive} />
         <input
           value={this.getInputValue()}
           onChange={this.handleChange}
@@ -231,6 +239,7 @@ class GameContainer extends Component {
           onKeyDown={this.onKeyPressed}
           tabIndex="0"
           className="input is-large is-primary"
+          placeholder={placeHolder}
           ref={node => {
             this.inputElement = node;
           }}
@@ -239,6 +248,6 @@ class GameContainer extends Component {
         <div className="words-container">{this.state.words.map(this.renderWords)}</div>
       </div>
     );
-  }
+  };
 }
 export default GameContainer;

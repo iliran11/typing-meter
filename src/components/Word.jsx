@@ -100,7 +100,7 @@ class Word extends React.Component {
         {
           time: 200,
           align: {
-            top: 0.5
+            top: 0.2
           },
           isScrollable: () => true
         },
