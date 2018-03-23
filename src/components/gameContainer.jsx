@@ -11,6 +11,7 @@ import {
   noop
 } from '../utils';
 import ProgressBar from './progress-bar';
+import CompletionModal from './completionModal';
 
 class GameContainer extends Component {
   /*=============================================
@@ -234,6 +235,7 @@ class GameContainer extends Component {
             this.inputElement = node;
           }}
         />
+        <CompletionModal modal={true} open={true} />
         <div className="words-container">{this.state.words.map(this.renderWords)}</div>
       </div>
     );
