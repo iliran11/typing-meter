@@ -38,7 +38,8 @@ class GameContainer extends Component {
 =            INPUT HANDLERS            =
 =============================================*/
   onKeyPressed = event => {
-    const { words, index, scrollIndex } = this.state;
+    const { words, index, scrollIndex, isGameActive } = this.state;
+    if (isGameActive === false) return;
     const currentWord = words[index];
     switch (event.which) {
       case 8:
