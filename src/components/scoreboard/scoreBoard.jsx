@@ -1,6 +1,6 @@
 import React from 'react';
 import { secondaryStyle } from '../../styles';
-import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
+import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 import ScoreSection from './score-section';
 export default function ScoreBoard(props) {
   const { cpm, correctTypedWords } = props;

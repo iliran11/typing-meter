@@ -11,8 +11,6 @@ import {
   noop
 } from '../utils';
 import ProgressBar from './progress-bar';
-import isUndefined from 'lodash.isundefined';
-import * as $ from 'jquery'
 
 class GameContainer extends Component {
   /*=============================================
