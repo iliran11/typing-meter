@@ -14,10 +14,10 @@ const Title = function() {
   );
 };
 export default function CompletionModal(props) {
-  const { modal, open } = props;
+  const { modal = false, open = true } = props;
   const TitleNode = Title();
   return (
-    <Dialog modal={false} open={true} title={TitleNode} className="completion-dialog">
+    <Dialog modal={modal} open={open} title={TitleNode} className="completion-dialog">
     <div className="completion-content">
       <h4>Your Score</h4>
       <div class="score-report"> 

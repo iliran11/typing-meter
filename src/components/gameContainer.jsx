@@ -76,7 +76,7 @@ class GameContainer extends Component {
     }
   };
   handleChange = event => {
-    const { state: { index, isGameActive }, shouldHandleInput } = this;
+    const { state: { index }, shouldHandleInput } = this;
     if (shouldHandleInput() === false) return;
     /** useful when incrementing the index with a space - and then the space will not be counted as a typed character. */
     const newInputValue = event.target.value.trim().toLowerCase();
