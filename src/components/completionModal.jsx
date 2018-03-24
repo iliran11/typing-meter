@@ -5,7 +5,6 @@ import AutoRenew from 'material-ui/svg-icons/action/autorenew';
 import { checkCircleStyle } from '../styles';
 import ScoreSection from './scoreboard/score-section'
 import {completionRestartIcon,completionModalSvg,completionModalTitle,completionModalScore} from '../styles'
-import FontIcon from 'material-ui/FontIcon';
 
 
 const Title = function() {
