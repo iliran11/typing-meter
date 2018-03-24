@@ -1,12 +1,36 @@
-h2 {
+.size1 {
+  font-size: 40px;
+}
+.size2 {
   font-size: 37px;
 }
-h3 {
+.size3 {
   font-size: 28px;
 }
-p {
+.size4 {
   font-size: 21px;
 }
-.huge-text {
-  font-size: 40px;
+.svg-size1 {
+  height:40px;
+  width:40px;
+}
+
+@media only screen and (max-width: 576px) {
+  .size1 {
+    font-size: 35px;
+  }
+  .size2 {
+    font-size: 28px;
+  }
+  .size3 {
+    font-size: 22px;
+  }
+  .size4 {
+    font-size: 18px;
+  }
+  .svg-size1 {
+    height:35px;
+    width:35px;
+  }
+  
 }

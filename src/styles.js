@@ -14,18 +14,15 @@ export const checkCircleStyle = {
   color: 'white'
 }
 export const completionRestartIcon = {
-  ...checkCircleStyle,
-  color: '#004c40'
+  color: '#004c40',
+  height:'initial'
 }
 export const completionModalSvg  = {
-  width: '7vw',
   color: '#004c40'
 }
 export const completionModalTitle = {
-  fontSize: '4vw',
   color: '#004c40'
 }
 export const completionModalScore = {
-  fontSize: '7w',
   color: '#004c40'
 }

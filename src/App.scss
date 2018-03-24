@@ -4,6 +4,7 @@
 @import 'css/colors.scss';
 @import 'css/app-bar.scss';
 @import 'css/game-container.scss';
+@import 'css/typography.scss';
 
 html {
   height: 100%;
@@ -26,4 +27,11 @@ body {
   flex-direction: column;
   height: 100%;
   width: 100%;
+}
+.svg-wrapper {
+  display:flex;
+  svg {
+    flex:auto;
+    height:100%;
+  }
 }

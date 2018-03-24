@@ -239,7 +239,6 @@ class GameContainer extends Component {
   };
   render = () => {
     const { correctTypedWords, state: { cpm, isGameActive }, isGameFinished } = this;
-    console.log(isGameFinished());
     const placeHolder = isGameActive ? '' : 'click to start';
     return (
       <div className="content">
@@ -251,14 +250,14 @@ class GameContainer extends Component {
           onKeyPress={this.handleKeyPress}
           onKeyDown={this.onKeyPressed}
           tabIndex="0"
-          className="input is-large is-primary"
+          className="input is-large is-primary size3"
           placeholder={placeHolder}
           ref={node => {
             this.inputElement = node;
           }}
         />
         <CompletionModal modal={true} open={isGameFinished()} wpmScore={cpm} correctTypedWords={correctTypedWords} />
-        <div className="words-container">{this.state.words.map(this.renderWords)}</div>
+        <div className="words-container size1">{this.state.words.map(this.renderWords)}</div>
       </div>
     );
   };
