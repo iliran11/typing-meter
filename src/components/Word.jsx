@@ -77,7 +77,6 @@ class Word extends React.Component {
     }
   };
   onJustBeingActive = () => {
-    console.log('active')
     /** triggered from comonentDidUpdate  */
     this.animationClasses = null;
     this.focusWord();
