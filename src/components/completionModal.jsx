@@ -4,7 +4,7 @@ import ChceckCircle from 'material-ui/svg-icons/action/check-circle';
 import AutoRenew from 'material-ui/svg-icons/action/autorenew';
 import { checkCircleStyle } from '../styles';
 import ScoreSection from './scoreboard/score-section'
-import {completionRestartIcon,completionModalSvg,completionModalTitle,completionModalScore} from '../styles'
+import {completionRestartIcon,completionModalSvg,completionModalTitle,completionModalScore,completionDialog} from '../styles'
 
 
 const Title = function() {
@@ -19,10 +19,10 @@ export default function CompletionModal(props) {
   const { modal = false, open = true,correctTypedWords,wpmScore } = props;
   const TitleNode = Title();
   return (
-    <Dialog modal={modal} open={open} title={TitleNode} className="completion-dialog">
+    <Dialog repositionOnUpdate={false} modal={modal} open={open} title={TitleNode} style={completionDialog} className="completion-dialog">
     <div className="completion-content">
       <h4 className="size2">Your Score</h4>
-      <div class="score-report"> 
+      <div className="score-report"> 
       <ScoreSection title="CORRECT" iconClass="fas fa-check-circle" score={correctTypedWords} titleStyle={completionModalTitle} svgStyle={completionModalSvg} scoreStyle={completionModalScore} />
       <ScoreSection title="WPM" iconClass="fas fas fa-tachometer-alt" score={wpmScore} titleStyle={completionModalTitle} svgStyle={completionModalSvg} scoreStyle={completionModalScore} />
       </div>

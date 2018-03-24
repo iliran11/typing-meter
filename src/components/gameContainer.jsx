@@ -141,11 +141,14 @@ class GameContainer extends Component {
     }
   };
   onGameCompletion = () => {
-    const { onGameCompletion = noop } = this.props;
+    const { props:{onGameCompletion = noop},state: {cpm},correctTypedWords } = this;
     clearInterval(this.timeLeftInterval);
     clearInterval(this.cpmInterval);
     /** execute prop */
-    onGameCompletion();
+    onGameCompletion({
+      correctTypedWords,
+      cpm
+    });
   };
 
   /*=============================================
@@ -256,7 +259,6 @@ class GameContainer extends Component {
             this.inputElement = node;
           }}
         />
-        <CompletionModal modal={true} open={isGameFinished()} wpmScore={cpm} correctTypedWords={correctTypedWords} />
         <div className="words-container size1">{this.state.words.map(this.renderWords)}</div>
       </div>
     );

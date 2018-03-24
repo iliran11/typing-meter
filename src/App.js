@@ -6,21 +6,24 @@ import AppBar from 'material-ui/AppBar';
 import 'animate.css';
 import './App.css';
 import { appBarStyle } from './styles';
+import CompletionModal from './components/completionModal';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameisActive: true
-    }
+      gameIsActive: true
+    };
+    this.correctTypedWords = 0;
+    this.cpm = 0;
   }
-  onGameCompletion = () => {
+  onGameCompletion = options => {
     this.setState({
-      gameisActive: false
-    })
-  }
+      gameIsActive: false
+    });
+  };
   render() {
-    const {onGameCompletion, state: {gameisActive}} = this
+    const { onGameCompletion, state: { gameIsActive } } = this;
     return (
       <MuiThemeProvider>
         <React.Fragment>
@@ -30,7 +33,13 @@ class App extends Component {
             iconClassNameRight="muidocs-icon-navigation-expand-more"
             className="app-bar"
           />
-          {gameisActive && <GameContainer onGameCompletion={onGameCompletion}/>}
+          {gameIsActive && <GameContainer onGameCompletion={onGameCompletion} />}
+          <CompletionModal
+            modal={true}
+            open={gameIsActive === false}
+            wpmScore={this.cpm}
+            correctTypedWords={this.correctTypedWords}
+          />
         </React.Fragment>
       </MuiThemeProvider>
     );
