@@ -133,8 +133,6 @@ class GameContainer extends Component {
 =            GAME EVENTS            =
 =============================================*/
   onRunningOutTime = () => {
-    clearInterval(this.timeLeftInterval);
-    clearInterval(this.cpmInterval);
     this.onGameCompletion();
   };
   onIndexChange = (index, nextIndex) => {
@@ -144,6 +142,8 @@ class GameContainer extends Component {
   };
   onGameCompletion = () => {
     const { onGameCompletion = noop } = this.props;
+    clearInterval(this.timeLeftInterval);
+    clearInterval(this.cpmInterval);
     /** execute prop */
     onGameCompletion();
   };

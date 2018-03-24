@@ -8,7 +8,19 @@ import './App.css';
 import { appBarStyle } from './styles';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      gameisActive: true
+    }
+  }
+  onGameCompletion = () => {
+    this.setState({
+      gameisActive: false
+    })
+  }
   render() {
+    const {onGameCompletion, state: {gameisActive}} = this
     return (
       <MuiThemeProvider>
         <React.Fragment>
@@ -18,7 +30,7 @@ class App extends Component {
             iconClassNameRight="muidocs-icon-navigation-expand-more"
             className="app-bar"
           />
-          <GameContainer />
+          {gameisActive && <GameContainer onGameCompletion={onGameCompletion}/>}
         </React.Fragment>
       </MuiThemeProvider>
     );
