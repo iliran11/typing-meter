@@ -14,15 +14,15 @@ const Title = function() {
   );
 };
 export default function CompletionModal(props) {
-  const { modal = false, open = true } = props;
+  const { modal = false, open = true,correctTypedWords,wpmScore } = props;
   const TitleNode = Title();
   return (
     <Dialog modal={modal} open={open} title={TitleNode} className="completion-dialog">
     <div className="completion-content">
       <h4>Your Score</h4>
       <div class="score-report"> 
-      <ScoreSection title="CORRECT" iconClass="fas fa-check-circle" score={'1'} titleStyle={completionModalTitle} svgStyle={completionModalSvg} scoreStyle={completionModalScore} />
-      <ScoreSection title="WPM" iconClass="fas fas fa-tachometer-alt" score={'1'} titleStyle={completionModalTitle} svgStyle={completionModalSvg} scoreStyle={completionModalScore} />
+      <ScoreSection title="CORRECT" iconClass="fas fa-check-circle" score={correctTypedWords} titleStyle={completionModalTitle} svgStyle={completionModalSvg} scoreStyle={completionModalScore} />
+      <ScoreSection title="WPM" iconClass="fas fas fa-tachometer-alt" score={wpmScore} titleStyle={completionModalTitle} svgStyle={completionModalSvg} scoreStyle={completionModalScore} />
       </div>
       <h4>Try Again?</h4>
       <AutoRenew style={completionRestartIcon}/>

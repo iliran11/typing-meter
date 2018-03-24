@@ -147,9 +147,21 @@ class GameContainer extends Component {
     /** execute prop */
     onGameCompletion();
   };
+
   /*=============================================
 =            GETTERS            =
 =============================================*/
+  isGameFinished = () => {
+    const { haveNonCompletedWords, isRunningOutOfTime, state: { isGameActive } } = this;
+    /** game is active alone is not enough. on the start of the game - game is active is also false.
+     *  we have to check certain things to determine it's not active because it's finished.
+     */
+    const finishedConditions = !haveNonCompletedWords() || isRunningOutOfTime();
+    return finishedConditions && isGameActive === false;
+  };
+  isRunningOutOfTime = () => {
+    return this.state.timeLeft <= 0;
+  };
   shouldHandleInput = () => {
     const { state: { isGameActive }, haveNonCompletedWords } = this;
     /** handle input is the game is active, or if the game is not active, but still have uncompleted words. */
@@ -200,12 +212,12 @@ class GameContainer extends Component {
     }, 0);
   };
   calculateCpm = () => {
-    const { cpm } = this.state;
+    const { cpm, isGameActive } = this.state;
     const millisecondsPassed = Date.now() - this.state.startTime;
     const minutesPassed = millisecondsToMinutes(millisecondsPassed);
     const rawCpm = this.numberOfCorrectWords() / minutesPassed;
     const nextCpm = Math.round(rawCpm);
-    if (cpm === CPM_NULL && nextCpm === 0) return;
+    if ((cpm === CPM_NULL && nextCpm === 0) || isGameActive === false) return;
     this.setState({
       cpm: nextCpm
     });
@@ -226,7 +238,8 @@ class GameContainer extends Component {
     );
   };
   render = () => {
-    const { correctTypedWords, state: { cpm, isGameActive } } = this;
+    const { correctTypedWords, state: { cpm, isGameActive }, isGameFinished } = this;
+    console.log(isGameFinished());
     const placeHolder = isGameActive ? '' : 'click to start';
     return (
       <div className="content">
@@ -244,7 +257,7 @@ class GameContainer extends Component {
             this.inputElement = node;
           }}
         />
-        <CompletionModal modal={true} open={true} />
+        <CompletionModal modal={true} open={isGameFinished()} wpmScore={cpm} correctTypedWords={correctTypedWords} />
         <div className="words-container">{this.state.words.map(this.renderWords)}</div>
       </div>
     );
