@@ -4,7 +4,7 @@ import ChceckCircle from 'material-ui/svg-icons/action/check-circle';
 import AutoRenew from 'material-ui/svg-icons/action/autorenew';
 import { checkCircleStyle } from '../styles';
 import ScoreSection from './scoreboard/score-section'
-import {completionRestartIcon,completionModalSvg,completionModalTitle,completionModalScore,completionDialog} from '../styles'
+import {completionRestartIcon,completionModalSvg,completionModalTitle,completionModalScore} from '../styles'
 
 
 const Title = function() {
@@ -16,10 +16,10 @@ const Title = function() {
 };
 
 export default function CompletionModal(props) {
-  const { modal = false, open = true,correctTypedWords,wpmScore } = props;
+  const { modal = false, open = true,correctTypedWords,wpmScore, onRestart } = props;
   const TitleNode = Title();
   return (
-    <Dialog repositionOnUpdate={false} modal={modal} open={open} title={TitleNode} style={completionDialog} className="completion-dialog">
+    <Dialog repositionOnUpdate={false} modal={modal} open={open} title={TitleNode} className="completion-dialog">
     <div className="completion-content">
       <h4 className="size2">Your Score</h4>
       <div className="score-report"> 
@@ -28,8 +28,8 @@ export default function CompletionModal(props) {
       </div>
       <h4 className="size2">Try Again?</h4>
       <div>
-      <div className="svg-wrapper svg-size1">
-      <AutoRenew  style={completionRestartIcon}/>
+      <div className="svg-wrapper svg-size1 restart" onClick={onRestart}>
+      <AutoRenew style={completionRestartIcon}/>
       </div>
       </div>
    </div>

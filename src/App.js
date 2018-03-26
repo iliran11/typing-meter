@@ -18,12 +18,20 @@ class App extends Component {
     this.cpm = 0;
   }
   onGameCompletion = options => {
+    const {correctTypedWords,cpm} = options;
+    this.correctTypedWords = correctTypedWords
+    this.cpm = cpm
     this.setState({
       gameIsActive: false
     });
   };
+  onRestart = () => {
+    this.setState({
+      gameIsActive: true
+    });
+  };
   render() {
-    const { onGameCompletion, state: { gameIsActive } } = this;
+    const { onRestart,onGameCompletion,correctTypedWords,cpm, state: { gameIsActive } } = this;
     return (
       <MuiThemeProvider>
         <React.Fragment>
@@ -39,6 +47,9 @@ class App extends Component {
             open={gameIsActive === false}
             wpmScore={this.cpm}
             correctTypedWords={this.correctTypedWords}
+            onRestart={onRestart}
+            correctTypedWords={correctTypedWords}
+            cpm={cpm}
           />
         </React.Fragment>
       </MuiThemeProvider>
