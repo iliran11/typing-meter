@@ -25,7 +25,6 @@ class GameContainer extends Component {
     this.cpm = CPM_NULL;
     this.state = {
       overallTime,
-      startTime: Date.now(),
       timeLeft: millisecondsToSeconds(overallTime),
       isGameActive: false,
       index: 0,
@@ -33,7 +32,6 @@ class GameContainer extends Component {
       words: generateLoremIpsum(),
       cpm: this.cpm
     };
-    this.setMetricIntervals();
   }
   componentDidMount = () => {
     this.inputElement.focus();
@@ -150,6 +148,8 @@ class GameContainer extends Component {
   };
   onGameStart = () => {
     clearInterval(this.inputBouncingInterval);
+    this.startTime = Date.now();
+    this.setMetricIntervals();
   };
   onIndexChange = (index, nextIndex) => {
     if (index !== nextIndex) {
@@ -218,7 +218,7 @@ class GameContainer extends Component {
     return haveNonCompletedWords;
   };
   getCurrentTimeLeft = () => {
-    const millisecondsPassed = Date.now() - this.state.startTime;
+    const millisecondsPassed = Date.now() - this.startTime;
     const millisecondsLeft = this.state.overallTime - millisecondsPassed;
     return millisecondsToSeconds(millisecondsLeft);
   };
@@ -232,7 +232,7 @@ class GameContainer extends Component {
   };
   calculateCpm = () => {
     const { cpm, isGameActive } = this.state;
-    const millisecondsPassed = Date.now() - this.state.startTime;
+    const millisecondsPassed = Date.now() - this.startTime;
     const minutesPassed = millisecondsToMinutes(millisecondsPassed);
     const rawCpm = this.numberOfCorrectWords() / minutesPassed;
     const nextCpm = Math.round(rawCpm);
