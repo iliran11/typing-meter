@@ -1,7 +1,6 @@
 .words-container {
   line-height: 80px;
   overflow: hidden;
-  box-shadow: inset 0 0 10px #000000;
   padding: 0 20px;
   word-break: break-word;
   flex-grow: 1;
@@ -130,9 +129,9 @@ input {
   align-items: center;
   flex-direction: column;
   h4 {
-    margin:20px 0;
+    margin: 20px 0;
   }
-  .score-report{
+  .score-report {
     display: flex;
     width: 100%;
     justify-content: space-around;

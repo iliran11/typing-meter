@@ -35,6 +35,19 @@ class GameContainer extends Component {
     };
     this.setMetricIntervals();
   }
+  componentDidMount = () => {
+    this.inputElement.focus();
+    this.inputBouncingInterval = setInterval(() => {
+      this.inputElement.classList.toggle('animated');
+      this.inputElement.classList.toggle('bounce');
+      // this.inputElement.classList.toggle("liran")
+    }, 1000);
+  };
+  componentWillUpdate = (nextProps, nextState) => {
+    if (this.state.isGameActive === false && nextState.isGameActive === true) {
+      this.onGameStart();
+    }
+  };
   /*=============================================
 =            INPUT HANDLERS            =
 =============================================*/
@@ -135,13 +148,16 @@ class GameContainer extends Component {
   onRunningOutTime = () => {
     this.onGameCompletion();
   };
+  onGameStart = () => {
+    clearInterval(this.inputBouncingInterval);
+  };
   onIndexChange = (index, nextIndex) => {
     if (index !== nextIndex) {
       this.correctTypedWords = this.countCorrectWords();
     }
   };
   onGameCompletion = () => {
-    const { props:{onGameCompletion = noop},state: {cpm},correctTypedWords } = this;
+    const { props: { onGameCompletion = noop }, state: { cpm }, correctTypedWords } = this;
     clearInterval(this.timeLeftInterval);
     clearInterval(this.cpmInterval);
     /** execute prop */
@@ -242,12 +258,13 @@ class GameContainer extends Component {
   };
   render = () => {
     const { correctTypedWords, state: { cpm, isGameActive }, isGameFinished } = this;
-    const placeHolder = isGameActive ? '' : 'click to start';
+    const placeHolder = isGameActive ? '' : 'CLICK TO START';
     return (
       <div className="content">
         <ScoreBoard cpm={cpm} correctTypedWords={correctTypedWords} />
         <ProgressBar isProgressCounting={isGameActive} />
         <input
+          autoFocus
           value={this.getInputValue()}
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
