@@ -13,7 +13,7 @@ export const checkCircleStyle = {
   height: '15vw',
   color: 'white'
 }
-export const completionRestartIcon = {
+export const svgStyle = {
   color: '#004c40',
   height:'initial'
 }
@@ -25,4 +25,8 @@ export const completionModalTitle = {
 }
 export const completionModalScore = {
   color: '#004c40'
+}
+
+export const fontReset = {
+  fontSize: 'inherit'
 }

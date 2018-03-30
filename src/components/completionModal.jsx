@@ -4,7 +4,7 @@ import ChceckCircle from 'material-ui/svg-icons/action/check-circle';
 import AutoRenew from 'material-ui/svg-icons/action/autorenew';
 import { checkCircleStyle } from '../styles';
 import ScoreSection from './scoreboard/score-section'
-import {completionRestartIcon,completionModalSvg,completionModalTitle,completionModalScore} from '../styles'
+import {svgStyle,completionModalSvg,completionModalTitle,completionModalScore} from '../styles'
 
 
 const Title = function() {
@@ -29,7 +29,7 @@ export default function CompletionModal(props) {
       <h4 className="size2">Try Again?</h4>
       <div>
       <div className="svg-wrapper svg-size1 restart" onClick={onRestart}>
-      <AutoRenew style={completionRestartIcon}/>
+      <AutoRenew style={svgStyle}/>
       </div>
       </div>
    </div>

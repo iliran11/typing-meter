@@ -1,0 +1,42 @@
+.welcome-section {
+  display:flex;
+  flex-direction: column;
+  height:100%;
+  .title {
+    display: flex;
+    justify-content: center;
+    background-color: #00796b;
+  }
+  h1 {
+    color: #004c40;
+    margin: 0px;
+    margin-top:10px;
+    font-size: 30px;
+    margin-bottom: 16px;
+  }
+  .content {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    // text-align:center;
+    font-family: 'Roboto', sans-serif;
+    padding: 0px 10px;
+  }
+  .button {
+    margin-top:auto;
+    color:white;
+    button {
+      color:white;
+    }
+  }
+  .keyboard-icon {
+    height: 150px;
+    width: 150px;
+    display: flex;
+  }
+  .question-mark {
+    color: #004c40;
+    font-size:120%;
+    margin-left:5px;
+  }
+}
