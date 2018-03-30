@@ -14,9 +14,9 @@ export default function WelcomeModal(props) {
         <div className="svg-wrapper keyboard-icon svg-size-huge">
           <KeyboardIcon style={svgStyle} />
         </div>
+        <h1>How fast are your fingers?</h1>
       </div>
       <div className="content size4">
-        <h1>How fast are your fingers?</h1>
         <Stepper orientation="vertical">
           <Step>
             <StepLabel style={fontReset}>Start the test and click the input to start typing.</StepLabel>
@@ -37,10 +37,10 @@ export default function WelcomeModal(props) {
             <StepLabel style={fontReset}>Compare your score to others.</StepLabel>
           </Step>
         </Stepper>
-        <RaisedButton backgroundColor={'#004c40'} className="button" onClick={onContinue}>
-          Start Typing
-        </RaisedButton>
       </div>
+      <RaisedButton backgroundColor={'#00796b'} className="button" onClick={onContinue}>
+        Start Typing
+      </RaisedButton>
     </section>
   );
 }
