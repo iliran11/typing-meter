@@ -21,7 +21,7 @@ class App extends Component {
     this.cpm = 0;
   }
   componentWillUpdate = (nextProps, nextState) => {
-    if (this.state.gameIsActive === false && nextState.gameIsActive == true) {
+    if (this.state.gameIsActive === false && nextState.gameIsActive === true) {
       this.isGameFinished = false;
     }
     console.log(this.state.gameIsActive,nextState.gameIsActive)
@@ -55,7 +55,7 @@ class App extends Component {
     this.isWelcome = false;
   };
   render() {
-    const { onRestart, onGameCompletion, correctTypedWords, cpm, state: { gameIsActive } } = this;
+    const { onRestart, onGameCompletion, cpm, state: { gameIsActive } } = this;
     return (
       <MuiThemeProvider>
         <React.Fragment>
@@ -73,7 +73,6 @@ class App extends Component {
             wpmScore={this.cpm}
             correctTypedWords={this.correctTypedWords}
             onRestart={onRestart}
-            correctTypedWords={correctTypedWords}
             cpm={cpm}
           />
           <WelcomeModal open={this.isWelcome} onContinue={this.onWelcomeContinue} />

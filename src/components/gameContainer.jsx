@@ -11,7 +11,6 @@ import {
   noop
 } from '../utils';
 import ProgressBar from './progress-bar';
-import CompletionModal from './completionModal';
 
 class GameContainer extends Component {
   /*=============================================
@@ -257,7 +256,7 @@ class GameContainer extends Component {
     );
   };
   render = () => {
-    const { correctTypedWords, state: { cpm, isGameActive }, isGameFinished } = this;
+    const { correctTypedWords, state: { cpm, isGameActive } } = this;
     const placeHolder = isGameActive ? '' : 'CLICK TO START';
     return (
       <div className="content">

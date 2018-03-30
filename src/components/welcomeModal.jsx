@@ -1,9 +1,6 @@
 import React from 'react';
-import Dialog from 'material-ui/Dialog';
-import Paper from 'material-ui/Paper';
 import KeyboardIcon from 'material-ui/svg-icons/hardware/keyboard';
-import InfoIcon from 'material-ui/svg-icons/action/info-outline';
-import { svgStyle, fontReset, buttonBackgroundColor } from '../styles';
+import { svgStyle, fontReset } from '../styles';
 import { StepLabel, Step, Stepper } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 
