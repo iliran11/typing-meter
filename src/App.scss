@@ -36,3 +36,16 @@ body {
     height:100%;
   }
 }
+.logo {
+  color:white;
+  font-size:40px;
+  opacity:0.7;
+}
+.right-hand{
+  font-size:40px;
+  color:white;
+  opacity: 0.7;
+  .github {
+    margin-left:3vw;
+  }
+}
