@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import 'normalize.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import GameContainer from './components/gameContainer.jsx';
-import AppBar from 'material-ui/AppBar';
+import AppBar from './components/appBar';
+import Drawer from 'material-ui/Drawer';
 import 'animate.css';
 import './App.css';
-import { appBarStyle } from './styles';
 import CompletionModal from './components/completionModal';
 import WelcomeModal from './components/welcomeModal';
 
@@ -24,7 +24,6 @@ class App extends Component {
     if (this.state.gameIsActive === false && nextState.gameIsActive === true) {
       this.isGameFinished = false;
     }
-    console.log(this.state.gameIsActive,nextState.gameIsActive)
     if (this.state.gameIsActive === true && nextState.gameIsActive === false) {
       this.isGameFinished = true;
     }
@@ -55,18 +54,12 @@ class App extends Component {
     this.isWelcome = false;
   };
   render() {
-    const { onRestart, onGameCompletion, cpm, state: { gameIsActive } } = this;
+    const { onRestart, onGameCompletion, cpm, state: { gameIsActive,drawerIsOpen } } = this;
     return (
       <MuiThemeProvider>
         <React.Fragment>
-          <AppBar
-            style={appBarStyle}
-            title="Title"
-            iconClassNameRight="muidocs-icon-navigation-expand-more"
-            className="app-bar"
-          />
+          <AppBar/>
           {gameIsActive && <GameContainer onGameCompletion={onGameCompletion} />}
-
           <CompletionModal
             modal={true}
             open={this.isGameFinished}
@@ -75,7 +68,8 @@ class App extends Component {
             onRestart={onRestart}
             cpm={cpm}
           />
-          <WelcomeModal open={this.isWelcome} onContinue={this.onWelcomeContinue} />
+          <WelcomeModal open={this.isWelcome} onContinue={this.onWelcomeContinue} onRequestChange={(open) => this.setState({drawerIsOpen: open})}
+/>
         </React.Fragment>
       </MuiThemeProvider>
     );
