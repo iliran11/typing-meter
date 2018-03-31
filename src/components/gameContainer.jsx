@@ -22,6 +22,7 @@ class GameContainer extends Component {
     super();
     this.correctTypedWords = 0;
     this.cpm = CPM_NULL;
+    this.getDisabledClass = 'disabled'
     this.state = {
       overallTime,
       timeLeft: millisecondsToSeconds(overallTime),
@@ -148,6 +149,7 @@ class GameContainer extends Component {
   onGameStart = () => {
     clearInterval(this.inputBouncingInterval);
     this.startTime = Date.now();
+    this.getDisabledClass = ''
     this.setMetricIntervals();
   };
   onIndexChange = (index, nextIndex) => {
@@ -256,11 +258,11 @@ class GameContainer extends Component {
     );
   };
   render = () => {
-    const { correctTypedWords, state: { cpm, isGameActive } } = this;
+    const { correctTypedWords,getDisabledClass, state: { cpm, isGameActive } } = this;
     const placeHolder = isGameActive ? '' : 'CLICK TO START';
     return (
       <div className="content">
-        <ScoreBoard cpm={cpm} correctTypedWords={correctTypedWords} />
+        <ScoreBoard cpm={cpm} correctTypedWords={correctTypedWords} disabled={getDisabledClass} />
         <ProgressBar isProgressCounting={isGameActive} />
         <input
           autoFocus
@@ -275,7 +277,7 @@ class GameContainer extends Component {
             this.inputElement = node;
           }}
         />
-        <div className="words-container size1">{this.state.words.map(this.renderWords)}</div>
+        <div className={`words-container size1 transitionable ${getDisabledClass}`}>{this.state.words.map(this.renderWords)}</div>
       </div>
     );
   };
