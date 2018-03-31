@@ -35,11 +35,6 @@ class GameContainer extends Component {
   }
   componentDidMount = () => {
     this.inputElement.focus();
-    this.inputBouncingInterval = setInterval(() => {
-      this.inputElement.classList.toggle('animated');
-      this.inputElement.classList.toggle('bounce');
-      // this.inputElement.classList.toggle("liran")
-    }, 1000);
   };
   componentWillUpdate = (nextProps, nextState) => {
     if (this.state.isGameActive === false && nextState.isGameActive === true) {
