@@ -3,6 +3,7 @@ import KeyboardIcon from 'material-ui/svg-icons/hardware/keyboard';
 import { svgStyle, fontReset } from '../styles';
 import { StepLabel, Step, Stepper } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
+import StepperNumber from './welcome/stepperNumber'
 
 export default function WelcomeModal(props) {
   console.log(svgStyle);
@@ -18,29 +19,29 @@ export default function WelcomeModal(props) {
       </div>
       <div className="content size4">
         <Stepper orientation="vertical">
-          <Step>
-            <StepLabel style={fontReset}>Start the test and click the input to start typing.</StepLabel>
+          <Step >
+            <StepLabel icon={<StepperNumber number={1}/>} style={fontReset}>Start the test and click the input to start typing.</StepLabel>
           </Step>
           <Step>
-            <StepLabel style={fontReset}>
+            <StepLabel icon={<StepperNumber number={2}/>} style={fontReset} >
               While typing, take care of your typing accuracy. You can always fix back with backspace.
             </StepLabel>
           </Step>
           <Step>
-            <StepLabel style={fontReset}>
+            <StepLabel icon={<StepperNumber number={3}/>}style={fontReset}>
               <div>
                 See your WPM score<i className="far fa-question-circle question-mark" />
               </div>
             </StepLabel>
           </Step>
           <Step>
-            <StepLabel style={fontReset}>Compare your score to others.</StepLabel>
+            <StepLabel icon={<StepperNumber number={4}/>}style={fontReset}>Compare your score to others.</StepLabel>
           </Step>
         </Stepper>
       </div>
-      <RaisedButton backgroundColor={'#00796b'} className="button" onClick={onContinue}>
+      <button onClick={onContinue}>
         Start Typing
-      </RaisedButton>
+      </button>
     </section>
   );
 }

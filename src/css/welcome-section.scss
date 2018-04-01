@@ -24,13 +24,15 @@
     font-family: 'Roboto', sans-serif;
     padding: 0px 10px;
   }
-  .button {
+  button {
     margin-top: auto;
     color: white;
     font-size:30px;
-    button {
-      color: white;
-    }
+    height:10vh;
+    background-color: #00796b;
+    font-family: 'Roboto', sans-serif;
+    border:0px;
+
   }
   .keyboard-icon {
     height: 150px;
@@ -41,5 +43,9 @@
     color: #004c40;
     font-size: 120%;
     margin-left: 5px;
+  }
+  .number-svg {
+    height:24px;
+    width:24px;
   }
 }
