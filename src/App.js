@@ -57,7 +57,7 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <React.Fragment>
-          <AppBar/>
+          <AppBar />
           {gameIsActive && <GameContainer onGameCompletion={onGameCompletion} />}
           <CompletionModal
             modal={true}
@@ -67,8 +67,11 @@ class App extends Component {
             onRestart={onRestart}
             cpm={cpm}
           />
-          <WelcomeModal open={this.isWelcome} onContinue={this.onWelcomeContinue} onRequestChange={(open) => this.setState({drawerIsOpen: open})}
-/>
+          <WelcomeModal
+            open={this.isWelcome}
+            onContinue={this.onWelcomeContinue}
+            onRequestChange={open => this.setState({ drawerIsOpen: open })}
+          />
         </React.Fragment>
       </MuiThemeProvider>
     );
