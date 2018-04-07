@@ -17,6 +17,7 @@ const Title = function() {
 
 export default function CompletionModal(props) {
   const { modal = false, open = true,correctTypedWords,wpmScore, onRestart } = props;
+  console.log(onRestart)
   const TitleNode = Title();
   return (
     <Dialog repositionOnUpdate={false} modal={modal} open={open} title={TitleNode} className="completion-dialog">

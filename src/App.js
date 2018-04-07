@@ -7,30 +7,28 @@ import 'animate.css';
 import './App.css';
 import CompletionModal from './components/completionModal';
 import WelcomeModal from './components/welcome/cards-welcome';
+import { INITIAL_START, AWAITS_TYPING, GAME_IS_ACTIVE, RESTART_PENDING } from './constants';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameInBackground: true
+      gameStatus: INITIAL_START
     };
     this.isWelcome = true;
     this.isGameFinished = false;
     this.correctTypedWords = 0;
     this.cpm = 0;
   }
-  componentWillUpdate = (nextProps, nextState) => {
-    if (this.state.gameInBackground === true && nextState.gameInBackground === false) {
-      this.isGameFinished = false;
-    }
-    if (this.state.gameInBackground === false && nextState.gameInBackground === true) {
-      this.isGameFinished = true;
-    }
-  };
   onWelcomeContinue = () => {
     this.isWelcome = false;
     this.setState({
       gameInBackground: false
+    });
+  };
+  onGameRestart = () => {
+    this.setState({
+      gameStatus: RESTART_PENDING
     });
   };
   onGameCompletion = options => {
@@ -38,41 +36,42 @@ class App extends Component {
     this.correctTypedWords = correctTypedWords;
     this.cpm = cpm;
     this.setState({
-      gameInBackground: true
+      gameStatus: RESTART_PENDING
+    });
+  };
+  onGameBegins = () => {
+    this.setState({
+      gameStatus: GAME_IS_ACTIVE
     });
   };
   onRestart = () => {
     this.setState({
-      gameInBackground: false
+      gameStatus: RESTART_PENDING
     });
   };
   onWelcomeContinue = () => {
     this.setState({
-      gameInBackground: false
+      gameStatus: AWAITS_TYPING
     });
     this.isWelcome = false;
   };
   render() {
-    const { onRestart, onGameCompletion, cpm, onWelcomeContinue,state: { gameInBackground } } = this;
+    const { isWelcome, onGameRestart, onGameCompletion, cpm, onWelcomeContinue,onGameBegins, state: { gameStatus } } = this;
     return (
       <MuiThemeProvider>
         <React.Fragment>
           <AppBar />
-          <GameContainer onGameCompletion={onGameCompletion} gameInBackground={gameInBackground} />
-          <CompletionModal
-            modal={true}
-            open={this.isGameFinished}
-            wpmScore={this.cpm}
-            correctTypedWords={this.correctTypedWords}
-            onRestart={onRestart}
-            cpm={cpm}
+          <GameContainer
+            onGameBegins={onGameBegins}
+            onGameCompletion={onGameCompletion}
+            onGameRestart={onGameRestart}
+            gameStatus={gameStatus}
           />
           <WelcomeModal
-            open={this.isWelcome}
             onContinue={this.onWelcomeContinue}
             onRequestChange={open => this.setState({ drawerIsOpen: open })}
             onWelcomeContinue={onWelcomeContinue}
-            isOpen={gameInBackground}
+            isOpen={isWelcome}
           />
         </React.Fragment>
       </MuiThemeProvider>

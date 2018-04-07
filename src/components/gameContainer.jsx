@@ -1,7 +1,16 @@
 import React, { Component, Fragment } from 'react';
 import Word from './Word.jsx';
 import ScoreBoard from './scoreboard/scoreBoard';
-import { CPM_NULL, METRICS_INTERVAL_DELAY, GAME_DURATION, DEBUG_MODE } from '../constants';
+import {
+  CPM_NULL,
+  METRICS_INTERVAL_DELAY,
+  GAME_DURATION,
+  DEBUG_MODE,
+  INITIAL_START,
+  AWAITS_TYPING,
+  GAME_IS_ACTIVE,
+  RESTART_PENDING
+} from '../constants';
 import {
   generateLoremIpsum,
   secondstoMillisecond,
@@ -10,6 +19,7 @@ import {
   createWordObject,
   noop
 } from '../utils';
+import CompletionModal from './completionModal';
 import ProgressBar from './progress-bar';
 
 class GameContainer extends Component {
@@ -18,40 +28,19 @@ class GameContainer extends Component {
 =============================================*/
 
   constructor() {
-    const overallTime = secondstoMillisecond(GAME_DURATION);
     super();
-    this.correctTypedWords = 0;
-    this.cpm = CPM_NULL;
-    this.getDisabledClass = 'disabled';
-    this.state = {
-      overallTime,
-      timeLeft: millisecondsToSeconds(overallTime),
-      isGameActive: false,
-      index: 0,
-      scrollIndex: 0,
-      words: generateLoremIpsum(),
-      cpm: this.cpm
-    };
+    const overallTime = secondstoMillisecond(GAME_DURATION);
+    this.state = this.setupGame();
   }
-  static getDerivedStateFromProps() {
-    console.log('bye');
-    return null;
-  }
-
   componentDidMount = () => {
     this.inputElement.focus();
-  };
-  componentWillUpdate = (nextProps, nextState) => {
-    if (this.state.isGameActive === false && nextState.isGameActive === true) {
-      this.onGameStart();
-    }
   };
   /*=============================================
 =            INPUT HANDLERS            =
 =============================================*/
   onKeyPressed = event => {
-    const { words, index, scrollIndex, isGameActive } = this.state;
-    if (isGameActive === false) return;
+    const { state: { words, index, scrollIndex }, props: { gameStatus } } = this;
+    if (gameStatus <= GAME_IS_ACTIVE) return;
     const currentWord = words[index];
     switch (event.which) {
       case 8:
@@ -87,8 +76,9 @@ class GameContainer extends Component {
     }
   };
   handleChange = event => {
-    const { state: { index }, shouldHandleInput } = this;
-    if (shouldHandleInput() === false) return;
+    const { state: { index }, props: { gameStatus } } = this;
+    if (this.shouldHandleInput === false) return;
+    if (gameStatus === AWAITS_TYPING) this.onGameStart();
     /** useful when incrementing the index with a space - and then the space will not be counted as a typed character. */
     const newInputValue = event.target.value.trim().toLowerCase();
     const nextWordsArray = this.state.words.map((element, index) => {
@@ -102,13 +92,12 @@ class GameContainer extends Component {
       return element;
     });
     /** check if all words are completed. */
-    const nextGameStatus = this.haveNonCompletedWords(nextWordsArray);
+    this.haveNonCompletedWords(nextWordsArray);
     const currentWord = nextWordsArray[index];
     const nextIndex = currentWord.isCompleted ? index + 1 : index;
     this.setState(
       {
         words: nextWordsArray,
-        isGameActive: nextGameStatus,
         index: nextIndex
       },
       () => this.onIndexChange(index, nextIndex)
@@ -149,7 +138,6 @@ class GameContainer extends Component {
   onGameStart = () => {
     clearInterval(this.inputBouncingInterval);
     this.startTime = Date.now();
-    this.getDisabledClass = '';
     this.setMetricIntervals();
   };
   onIndexChange = (index, nextIndex) => {
@@ -158,34 +146,50 @@ class GameContainer extends Component {
     }
   };
   onGameCompletion = () => {
-    const { props: { onGameCompletion = noop }, state: { cpm }, correctTypedWords } = this;
+    const { props: { onGameCompletion = noop, onGameRestart }, state: { cpm }, correctTypedWords } = this;
     clearInterval(this.timeLeftInterval);
     clearInterval(this.cpmInterval);
+    this.inputElement.blur();
     /** execute prop */
+    onGameRestart();
     onGameCompletion({
       correctTypedWords,
       cpm
     });
+  };
+  restartGame = () => {
+    this.setState(this.setupGame());
+    this.onGameCompletion();
+    this.props.onRestart();
+  };
+  setupGame = () => {
+    const overallTime = secondstoMillisecond(GAME_DURATION);
+    this.correctTypedWords = 0;
+    this.cpm = CPM_NULL;
+    return {
+      overallTime,
+      timeLeft: millisecondsToSeconds(overallTime),
+      index: 0,
+      scrollIndex: 0,
+      words: generateLoremIpsum(),
+      cpm: this.cpm,
+      gameAboutToBegin: false
+    };
   };
 
   /*=============================================
 =            GETTERS            =
 =============================================*/
   isGameFinished = () => {
-    const { haveNonCompletedWords, isRunningOutOfTime, state: { isGameActive } } = this;
+    const { haveNonCompletedWords, isRunningOutOfTime, state: { gameState } } = this;
     /** game is active alone is not enough. on the start of the game - game is active is also false.
      *  we have to check certain things to determine it's not active because it's finished.
      */
     const finishedConditions = !haveNonCompletedWords() || isRunningOutOfTime();
-    return finishedConditions && isGameActive === false;
+    return finishedConditions && gameState < GAME_IS_ACTIVE;
   };
   isRunningOutOfTime = () => {
     return this.state.timeLeft <= 0;
-  };
-  shouldHandleInput = () => {
-    const { state: { isGameActive }, haveNonCompletedWords } = this;
-    /** handle input is the game is active, or if the game is not active, but still have uncompleted words. */
-    return isGameActive || (isGameActive === false && haveNonCompletedWords() === true);
   };
   currentWord = () => {
     return this.state.words[this.state.index];
@@ -208,6 +212,7 @@ class GameContainer extends Component {
     return nextWordsArray[this.state.index].isCompleted;
   };
   haveNonCompletedWords = (nextWordsArray = this.state.words) => {
+    const { onGameCompletion } = this.props;
     /** if all words are marked as completed - game is not active anymore. */
     const haveNonCompletedWords = nextWordsArray.some(element => {
       return element.isCompleted === false;
@@ -216,7 +221,6 @@ class GameContainer extends Component {
     if (!haveNonCompletedWords) {
       this.onGameCompletion();
     }
-    return haveNonCompletedWords;
   };
   getCurrentTimeLeft = () => {
     const millisecondsPassed = Date.now() - this.startTime;
@@ -232,12 +236,12 @@ class GameContainer extends Component {
     }, 0);
   };
   calculateCpm = () => {
-    const { cpm, isGameActive } = this.state;
+    const { cpm, gameState } = this.state;
     const millisecondsPassed = Date.now() - this.startTime;
     const minutesPassed = millisecondsToMinutes(millisecondsPassed);
     const rawCpm = this.numberOfCorrectWords() / minutesPassed;
     const nextCpm = Math.round(rawCpm);
-    if ((cpm === CPM_NULL && nextCpm === 0) || isGameActive === false) return;
+    if ((cpm === CPM_NULL && nextCpm === 0) || gameState < GAME_IS_ACTIVE) return;
     this.setState({
       cpm: nextCpm
     });
@@ -257,13 +261,30 @@ class GameContainer extends Component {
       </Fragment>
     );
   };
+  get shouldHandleInput() {
+    const { props: { gameStatus }, haveNonCompletedWords } = this;
+    /** handle input is the game is active, or if the game is not active, but still have uncompleted words. */
+    return gameStatus === GAME_IS_ACTIVE || gameStatus === AWAITS_TYPING;
+  }
+
+  get disabledClass() {
+    const { gameStatus } = this.props;
+    return gameStatus === GAME_IS_ACTIVE ? '' : 'disabled';
+  }
   render = () => {
-    const { correctTypedWords, getDisabledClass, isInputGrayed, state: { cpm, isGameActive } } = this;
-    const placeHolder = isGameActive ? '' : 'CLICK TO START';
+    const {
+      correctTypedWords,
+      disabledClass,
+      isInputGrayed,
+      restartGame,
+      state: { cpm },
+      props: { gameStatus }
+    } = this;
+    const placeHolder = gameStatus >= GAME_IS_ACTIVE ? '' : 'CLICK TO START';
     return (
       <div className="content">
-        <ScoreBoard cpm={cpm} correctTypedWords={correctTypedWords} disabled={getDisabledClass} />
-        <ProgressBar isProgressCounting={isGameActive} />
+        <ScoreBoard cpm={cpm} correctTypedWords={correctTypedWords} disabled={disabledClass} />
+        <ProgressBar isProgressCounting={gameStatus >= GAME_IS_ACTIVE} />
         <input
           autoFocus
           value={this.getInputValue()}
@@ -277,9 +298,16 @@ class GameContainer extends Component {
             this.inputElement = node;
           }}
         />
-        <div className={`words-container size1 transitionable ${getDisabledClass}`}>
+        <div className={`words-container size1 transitionable ${disabledClass}`}>
           {this.state.words.map(this.renderWords)}
         </div>
+        <CompletionModal
+          open={gameStatus === RESTART_PENDING}
+          wpmScore={this.cpm}
+          correctTypedWords={this.correctTypedWords}
+          onRestart={restartGame}
+          cpm={cpm}
+        />
       </div>
     );
   };
