@@ -6,13 +6,13 @@ import AppBar from './components/appBar';
 import 'animate.css';
 import './App.css';
 import CompletionModal from './components/completionModal';
-import WelcomeModal from './components/welcomeModal';
+import WelcomeModal from './components/welcome/cards-welcome';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameIsActive: false
+      gameInBackground: false
     };
     this.isWelcome = true;
     this.isGameFinished = false;
@@ -20,17 +20,17 @@ class App extends Component {
     this.cpm = 0;
   }
   componentWillUpdate = (nextProps, nextState) => {
-    if (this.state.gameIsActive === false && nextState.gameIsActive === true) {
+    if (this.state.gameInBackground === false && nextState.gameInBackground === true) {
       this.isGameFinished = false;
     }
-    if (this.state.gameIsActive === true && nextState.gameIsActive === false) {
+    if (this.state.gameInBackground === true && nextState.gameInBackground === false) {
       this.isGameFinished = true;
     }
   };
   onWelcomeContinue = () => {
     this.isWelcome = false;
     this.setState({
-      gameIsActive: true
+      gameInBackground: true
     });
   };
   onGameCompletion = options => {
@@ -53,12 +53,12 @@ class App extends Component {
     this.isWelcome = false;
   };
   render() {
-    const { onRestart, onGameCompletion, cpm, state: { gameIsActive } } = this;
+    const { onRestart, onGameCompletion, cpm, state: { gameInBackground } } = this;
     return (
       <MuiThemeProvider>
         <React.Fragment>
           <AppBar />
-          {gameIsActive && <GameContainer onGameCompletion={onGameCompletion} />}
+          <GameContainer onGameCompletion={onGameCompletion} gameInBackground={gameInBackground}/>
           <CompletionModal
             modal={true}
             open={this.isGameFinished}
