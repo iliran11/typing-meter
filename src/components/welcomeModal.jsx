@@ -2,7 +2,6 @@ import React from 'react';
 import KeyboardIcon from 'material-ui/svg-icons/hardware/keyboard';
 import { svgStyle, fontReset } from '../styles';
 import { StepLabel, Step, Stepper } from 'material-ui/Stepper';
-import RaisedButton from 'material-ui/RaisedButton';
 import StepperNumber from './welcome/stepperNumber'
 
 export default function WelcomeModal(props) {

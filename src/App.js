@@ -3,7 +3,6 @@ import 'normalize.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import GameContainer from './components/gameContainer.jsx';
 import AppBar from './components/appBar';
-import Drawer from 'material-ui/Drawer';
 import 'animate.css';
 import './App.css';
 import CompletionModal from './components/completionModal';
@@ -54,7 +53,7 @@ class App extends Component {
     this.isWelcome = false;
   };
   render() {
-    const { onRestart, onGameCompletion, cpm, state: { gameIsActive,drawerIsOpen } } = this;
+    const { onRestart, onGameCompletion, cpm, state: { gameIsActive } } = this;
     return (
       <MuiThemeProvider>
         <React.Fragment>
