@@ -12,7 +12,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameInBackground: false
+      gameInBackground: true
     };
     this.isWelcome = true;
     this.isGameFinished = false;
@@ -20,17 +20,17 @@ class App extends Component {
     this.cpm = 0;
   }
   componentWillUpdate = (nextProps, nextState) => {
-    if (this.state.gameInBackground === false && nextState.gameInBackground === true) {
+    if (this.state.gameInBackground === true && nextState.gameInBackground === false) {
       this.isGameFinished = false;
     }
-    if (this.state.gameInBackground === true && nextState.gameInBackground === false) {
+    if (this.state.gameInBackground === false && nextState.gameInBackground === true) {
       this.isGameFinished = true;
     }
   };
   onWelcomeContinue = () => {
     this.isWelcome = false;
     this.setState({
-      gameInBackground: true
+      gameInBackground: false
     });
   };
   onGameCompletion = options => {
@@ -38,27 +38,27 @@ class App extends Component {
     this.correctTypedWords = correctTypedWords;
     this.cpm = cpm;
     this.setState({
-      gameIsActive: false
+      gameInBackground: true
     });
   };
   onRestart = () => {
     this.setState({
-      gameIsActive: true
+      gameInBackground: false
     });
   };
   onWelcomeContinue = () => {
     this.setState({
-      gameIsActive: true
+      gameInBackground: false
     });
     this.isWelcome = false;
   };
   render() {
-    const { onRestart, onGameCompletion, cpm, state: { gameInBackground } } = this;
+    const { onRestart, onGameCompletion, cpm, onWelcomeContinue,state: { gameInBackground } } = this;
     return (
       <MuiThemeProvider>
         <React.Fragment>
           <AppBar />
-          <GameContainer onGameCompletion={onGameCompletion} gameInBackground={gameInBackground}/>
+          <GameContainer onGameCompletion={onGameCompletion} gameInBackground={gameInBackground} />
           <CompletionModal
             modal={true}
             open={this.isGameFinished}
@@ -71,6 +71,8 @@ class App extends Component {
             open={this.isWelcome}
             onContinue={this.onWelcomeContinue}
             onRequestChange={open => this.setState({ drawerIsOpen: open })}
+            onWelcomeContinue={onWelcomeContinue}
+            isOpen={gameInBackground}
           />
         </React.Fragment>
       </MuiThemeProvider>

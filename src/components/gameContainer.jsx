@@ -33,6 +33,11 @@ class GameContainer extends Component {
       cpm: this.cpm
     };
   }
+  static getDerivedStateFromProps() {
+    console.log('bye');
+    return null;
+  }
+
   componentDidMount = () => {
     this.inputElement.focus();
   };
