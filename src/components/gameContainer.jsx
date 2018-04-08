@@ -151,16 +151,14 @@ class GameContainer extends Component {
     clearInterval(this.cpmInterval);
     this.inputElement.blur();
     /** execute prop */
-    onGameRestart();
     onGameCompletion({
       correctTypedWords,
       cpm
     });
   };
   restartGame = () => {
+    this.props.onGameRestart();
     this.setState(this.setupGame());
-    this.onGameCompletion();
-    this.props.onRestart();
   };
   setupGame = () => {
     const overallTime = secondstoMillisecond(GAME_DURATION);

@@ -44,9 +44,9 @@ class App extends Component {
       gameStatus: GAME_IS_ACTIVE
     });
   };
-  onRestart = () => {
+  onGameRestart = () => {
     this.setState({
-      gameStatus: RESTART_PENDING
+      gameStatus: AWAITS_TYPING
     });
   };
   onWelcomeContinue = () => {
