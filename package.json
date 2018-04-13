@@ -4,9 +4,10 @@
   "private": true,
   "dependencies": {
     "animate.css": "^3.6.1",
+    "lodash.isnull": "^3.0.0",
     "lorem-ipsum": "^1.0.4",
     "material-ui": "^0.20.0",
-    "node-sass-chokidar": "^1.1.1",
+    "node-sass-chokidar": "^1.2.2",
     "normalize.css": "^8.0.0",
     "npm-run-all": "^4.1.2",
     "random-word": "^2.0.0",
