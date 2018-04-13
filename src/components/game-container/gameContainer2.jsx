@@ -22,16 +22,18 @@ import {
 } from '../../utils';
 import CompletionModal from '../completionModal';
 import ProgressBar from './progress-bar';
+import isNull from 'lodash.isnull';
 
 class GameContainer extends Component {
   constructor(props) {
     super(props);
     this.state = this.initialState;
+    this.startTime = null;
+    /** INPUT CHNAGE EVENT */
     this.onInputChange = event => {
-      console.log('input change')
       const { gameStatus } = this.props;
       if (gameStatus === AWAITS_TYPING) {
-        this.props.onGameBegins();
+        this.onGameStart();
       }
       /** trim and lower case everything the user is typing */
       const newInputValue = event.target.value.trim().toLowerCase();
@@ -46,6 +48,7 @@ class GameContainer extends Component {
         words: nextWordsArray
       });
     };
+    /** KEY DOWN EVENT */
     this.handleKeyPress = event => {
       switch (event.which) {
         case 8:
@@ -65,6 +68,7 @@ class GameContainer extends Component {
           }
       }
     };
+    this.timeLeftInterval = setInterval(() => {});
   }
   // static getDerivedStateFromProps = (nextProps, prevState) => {};
   componentDidMount = () => {};
@@ -72,6 +76,21 @@ class GameContainer extends Component {
     return true;
   }
   componentDidUpdate(prevProps, prevState) {}
+  onGameStart = () => {
+    this.props.onGameBegins();
+    this.startTime = Date.now();
+    this.timeLeftInterval = setInterval(() => {
+      if (this.timeLeft < 0) {
+        this.onGameEnd();
+      }
+      this.setState({
+        timeLeft: this.timeLeft
+      })
+    },1000);
+  };
+  onGameEnd = () => {
+    clearInterval(this.timeLeftInterval);
+  };
   get initialState() {
     const overallTime = secondstoMillisecond(GAME_DURATION);
     return {
@@ -83,6 +102,12 @@ class GameContainer extends Component {
       cpm: this.cpm,
       gameAboutToBegin: false
     };
+  }
+  get timeLeft() {
+    if (isNull(this.startTime)) return GAME_DURATION;
+    const millisecondsPassed = Date.now() - this.startTime;
+    const millisecondsLeft = this.state.overallTime - millisecondsPassed;
+    return millisecondsToSeconds(millisecondsLeft);
   }
   get currentWord() {
     return this.state.words[this.currentIndex];
@@ -125,6 +150,7 @@ class GameContainer extends Component {
     return 'placeholder';
   }
   render() {
+    console.log(this.timeLeft);
     return (
       <Fragment>
         <ScoreBoard
