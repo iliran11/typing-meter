@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'normalize.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import GameContainer from './components/gameContainer.jsx';
+import GameContainer from './components/game-container/gameContainer2';
 import AppBar from './components/appBar';
 import 'animate.css';
 import './App.css';
