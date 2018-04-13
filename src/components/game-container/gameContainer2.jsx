@@ -1,25 +1,8 @@
 import React, { Component, Fragment } from 'react';
-import Word from './Word.jsx';
 import ScoreBoard from '../scoreboard/scoreBoard';
 import WordsBoard from './WordsBoard';
-import {
-  CPM_NULL,
-  METRICS_INTERVAL_DELAY,
-  GAME_DURATION,
-  DEBUG_MODE,
-  INITIAL_START,
-  AWAITS_TYPING,
-  GAME_IS_ACTIVE,
-  RESTART_PENDING
-} from '../../constants';
-import {
-  generateLoremIpsum,
-  secondstoMillisecond,
-  millisecondsToSeconds,
-  millisecondsToMinutes,
-  createWordObject,
-  noop
-} from '../../utils';
+import { GAME_DURATION, AWAITS_TYPING, GAME_IS_ACTIVE, CPM_NULL,RESTART_PENDING } from '../../constants';
+import { generateLoremIpsum, secondstoMillisecond, millisecondsToSeconds, createWordObject } from '../../utils';
 import CompletionModal from '../completionModal';
 import ProgressBar from './progress-bar';
 import isNull from 'lodash.isnull';
@@ -27,7 +10,7 @@ import isNull from 'lodash.isnull';
 class GameContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = this.initialState;
+    this.state = initialState();
     this.startTime = null;
     /** INPUT CHNAGE EVENT */
     this.onInputChange = event => {
@@ -66,16 +49,21 @@ class GameContainer extends Component {
               words: nextWordsArray
             });
           }
+          break;
+        default:
+          return;
       }
     };
-    this.timeLeftInterval = setInterval(() => {});
   }
-  // static getDerivedStateFromProps = (nextProps, prevState) => {};
-  componentDidMount = () => {};
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const {gameStatus: nextGameStatus} = nextProps
+    const {gameStatus: prevGameStatus} = prevState
+    const isRestarting = nextGameStatus === AWAITS_TYPING && prevGameStatus === RESTART_PENDING;
+    if (isRestarting) {
+      return { ...initialState(), gameStatus: nextProps.gameStatus };
+    }
+    return { gameStatus: nextProps.gameStatus };
   }
-  componentDidUpdate(prevProps, prevState) {}
   onGameStart = () => {
     this.props.onGameBegins();
     this.startTime = Date.now();
@@ -85,24 +73,16 @@ class GameContainer extends Component {
       }
       this.setState({
         timeLeft: this.timeLeft
-      })
-    },1000);
+      });
+    }, 1000);
   };
   onGameEnd = () => {
     clearInterval(this.timeLeftInterval);
+    this.props.onGameEnd({
+      correctTypedWords: this.correctWordsNumber,
+      cpm: this.cpmScore
+    });
   };
-  get initialState() {
-    const overallTime = secondstoMillisecond(GAME_DURATION);
-    return {
-      overallTime,
-      timeLeft: millisecondsToSeconds(overallTime),
-      index: 0,
-      scrollIndex: 0,
-      words: generateLoremIpsum(),
-      cpm: this.cpm,
-      gameAboutToBegin: false
-    };
-  }
   get timeLeft() {
     if (isNull(this.startTime)) return GAME_DURATION;
     const millisecondsPassed = Date.now() - this.startTime;
@@ -150,7 +130,6 @@ class GameContainer extends Component {
     return 'placeholder';
   }
   render() {
-    console.log(this.timeLeft);
     return (
       <Fragment>
         <ScoreBoard
@@ -184,3 +163,16 @@ class GameContainer extends Component {
 }
 
 export default GameContainer;
+
+const initialState = () => {
+  const overallTime = secondstoMillisecond(GAME_DURATION);
+  return {
+    overallTime,
+    timeLeft: millisecondsToSeconds(overallTime),
+    index: 0,
+    scrollIndex: 0,
+    words: generateLoremIpsum(),
+    cpm: CPM_NULL,
+    gameAboutToBegin: false
+  };
+};
