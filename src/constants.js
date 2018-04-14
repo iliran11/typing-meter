@@ -1,4 +1,4 @@
-export const CPM_NULL = '0';
+export const WPM_NULL = '0';
 export const GAME_DURATION = 2;
 export const METRICS_INTERVAL_DELAY = 500;
 export const DEBUG_MODE = false;

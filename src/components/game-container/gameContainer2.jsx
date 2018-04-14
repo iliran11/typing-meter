@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import ScoreBoard from '../scoreboard/scoreBoard';
 import WordsBoard from './WordsBoard';
-import { GAME_DURATION, AWAITS_TYPING, GAME_IS_ACTIVE, CPM_NULL, RESTART_PENDING } from '../../constants';
+import { GAME_DURATION, AWAITS_TYPING, GAME_IS_ACTIVE, WPM_NULL, RESTART_PENDING } from '../../constants';
 import { generateLoremIpsum, secondstoMillisecond, millisecondsToSeconds, createWordObject } from '../../utils';
 import CompletionModal from '../completionModal';
 import ProgressBar from './progress-bar';
@@ -80,7 +80,7 @@ class GameContainer extends Component {
     clearInterval(this.timeLeftInterval);
     this.props.onGameEnd({
       correctTypedWords: this.correctWordsNumber,
-      cpm: this.cpmScore
+      wpm: this.wpmScore
     });
   };
   get timeLeft() {
@@ -108,7 +108,7 @@ class GameContainer extends Component {
   get inputValue() {
     return this.isGameActive ? this.currentWord.typed : '';
   }
-  get cpmScore() {
+  get wpmScore() {
     return '10';
   }
   get correctWordsNumber() {
@@ -133,7 +133,7 @@ class GameContainer extends Component {
     return (
       <Fragment>
         <ScoreBoard
-          cpm={this.cpmScore}
+          wpm={this.wpmScore}
           correctTypedWords={this.correctWordsNumber}
           disabled={this.isWordBoardDisabled}
         />
@@ -153,9 +153,9 @@ class GameContainer extends Component {
         <WordsBoard words={this.state.words} currentGamePosition={this.currentIndex} isActive={this.isGameActive} />
         <CompletionModal
           open={this.isGameFinished}
-          wpmScore={this.cpm}
+          wpmScore={this.wpm}
           correctTypedWords={this.correctTypedWords}
-          cpm={this.cpmScore}
+          wpm={this.wpmScore}
         />
       </Fragment>
     );
@@ -172,7 +172,7 @@ const initialState = () => {
     index: 0,
     scrollIndex: 0,
     words: generateLoremIpsum(),
-    cpm: CPM_NULL,
+    wpm: WPM_NULL,
     gameAboutToBegin: false
   };
 };

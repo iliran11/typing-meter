@@ -18,7 +18,7 @@ class App extends Component {
     this.isWelcome = true;
     this.isGameFinished = false;
     this.correctTypedWords = 0;
-    this.cpm = 0;
+    this.wpm = 0;
   }
   onWelcomeContinue = () => {
     this.isWelcome = false;
@@ -32,9 +32,9 @@ class App extends Component {
     });
   };
   onGameEnd = options => {
-    const { correctTypedWords, cpm } = options;
+    const { correctTypedWords, wpm } = options;
     this.correctTypedWords = correctTypedWords;
-    this.cpm = cpm;
+    this.wpm = wpm;
     this.setState({
       gameStatus: RESTART_PENDING
     });
@@ -60,7 +60,7 @@ class App extends Component {
       isWelcome,
       onGameRestart,
       onGameEnd,
-      cpm,
+      wpm,
       onWelcomeContinue,
       onGameBegins,
       state: { gameStatus }
@@ -83,10 +83,10 @@ class App extends Component {
           />
           <CompletionModal
             open={gameStatus === RESTART_PENDING}
-            wpmScore={this.cpm}
+            wpmScore={this.wpm}
             correctTypedWords={this.correctTypedWords}
             onRestart={this.onGameRestart}
-            cpm={cpm}
+            wpm={wpm}
           />
         </React.Fragment>
       </MuiThemeProvider>
