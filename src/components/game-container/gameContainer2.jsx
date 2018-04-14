@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import ScoreBoard from '../scoreboard/scoreBoard';
 import WordsBoard from './WordsBoard';
-import { GAME_DURATION, AWAITS_TYPING, GAME_IS_ACTIVE, CPM_NULL,RESTART_PENDING } from '../../constants';
+import { GAME_DURATION, AWAITS_TYPING, GAME_IS_ACTIVE, CPM_NULL, RESTART_PENDING } from '../../constants';
 import { generateLoremIpsum, secondstoMillisecond, millisecondsToSeconds, createWordObject } from '../../utils';
 import CompletionModal from '../completionModal';
 import ProgressBar from './progress-bar';
@@ -56,8 +56,8 @@ class GameContainer extends Component {
     };
   }
   static getDerivedStateFromProps(nextProps, prevState) {
-    const {gameStatus: nextGameStatus} = nextProps
-    const {gameStatus: prevGameStatus} = prevState
+    const { gameStatus: nextGameStatus } = nextProps;
+    const { gameStatus: prevGameStatus } = prevState;
     const isRestarting = nextGameStatus === AWAITS_TYPING && prevGameStatus === RESTART_PENDING;
     if (isRestarting) {
       return { ...initialState(), gameStatus: nextProps.gameStatus };
@@ -68,7 +68,7 @@ class GameContainer extends Component {
     this.props.onGameBegins();
     this.startTime = Date.now();
     this.timeLeftInterval = setInterval(() => {
-      if (this.timeLeft < 0) {
+      if (this.timeLeft <= 0) {
         this.onGameEnd();
       }
       this.setState({
@@ -137,7 +137,7 @@ class GameContainer extends Component {
           correctTypedWords={this.correctWordsNumber}
           disabled={this.isWordBoardDisabled}
         />
-        <ProgressBar isProgressCounting={this.isGameActive} />
+        <ProgressBar isProgressCounting={this.isGameActive} animationTime={GAME_DURATION} />
         <input
           autoFocus
           value={this.inputValue}

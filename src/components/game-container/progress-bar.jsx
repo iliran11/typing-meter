@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 export default function ProgressBar(props) {
-  const {isProgressCounting} = props
-  const animationClass = isProgressCounting ? 'progress-bar--animate ' : ''
-  return (
-    <div className={`progress-bar ${animationClass}`}></div>
-  )
+  const { isProgressCounting, animationTime } = props;
+  const animationStyle = { animation: `${animationTime}s linear 0s progress` };
+  const style = isProgressCounting ? animationStyle : {};
+  return <div className="progress-bar" style={style} />;
 }
