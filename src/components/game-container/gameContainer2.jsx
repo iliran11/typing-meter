@@ -109,6 +109,16 @@ class GameContainer extends Component {
     return this.isGameActive ? this.currentWord.typed : '';
   }
   get wpmScore() {
+    const result = this.state.words.reduce(
+      (accumulator, currentValue) => {
+        const resultObject = currentValue.numberOfCorrectEntities;
+        accumulator.correct += resultObject.correct;
+        accumulator.wrong += resultObject.wrong;
+        return accumulator;
+      },
+      { correct: 0, wrong: 0 }
+    );
+    console.log(result)
     return '10';
   }
   get correctWordsNumber() {

@@ -1,5 +1,6 @@
 import randomWords from 'random-words';
 import { WORDS_AMOUNT } from './constants';
+import countBy from 'lodash.countby';
 
 export function generateWordsArray() {
   return Array.from(new Array(WORDS_AMOUNT), () => {
@@ -44,8 +45,25 @@ export function createWordObject({ challenge = '', typed = '', id }) {
     get wordArray() {
       return this.challenge.split('');
     },
+    get typedArray() {
+      return this.typed.split('');
+    },
     get removeLastTypedLetter() {
       return this.typed.slice(0, -1);
+    },
+    get numberOfCorrectEntities() {
+      const wordArray = this.wordArray;
+      return this.typedArray.reduce(
+        (accumulator, currentValue, currentIndex) => {
+          const isLetterCorrect = currentValue === this.wordArray[currentIndex];
+          if (isLetterCorrect) accumulator.correct += 1;
+          else {
+            accumulator.wrong += 1;
+          }
+          return accumulator;
+        },
+        { correct: 0, wrong: 0 }
+      );
     }
   };
 }
