@@ -6,6 +6,7 @@ import { generateLoremIpsum, secondstoMillisecond, millisecondsToSeconds, create
 import CompletionModal from '../completionModal';
 import ProgressBar from './progress-bar';
 import isNull from 'lodash.isnull';
+import isFinite from 'lodash.isfinite'
 
 class GameContainer extends Component {
   constructor(props) {
@@ -83,6 +84,15 @@ class GameContainer extends Component {
       wpm: this.wpmScore
     });
   };
+  get timePassed() {
+    /** returns time passed in seconds */
+    return GAME_DURATION - this.timeLeft
+  }
+  get timePassedMinutes() {
+    /** returns time passed in minutes. */
+    return this.timePassed/60
+  }
+
   get timeLeft() {
     if (isNull(this.startTime)) return GAME_DURATION;
     const millisecondsPassed = Date.now() - this.startTime;
@@ -109,7 +119,9 @@ class GameContainer extends Component {
     return this.isGameActive ? this.currentWord.typed : '';
   }
   get wpmScore() {
-    const result = this.state.words.reduce(
+    /**http://indiatyping.com/index.php/typing-tips/typing-speed-calculation-formula */
+    /** returns an object of total number of correct and wrong chars */
+    const typingResult = this.state.words.reduce(
       (accumulator, currentValue) => {
         const resultObject = currentValue.numberOfCorrectEntities;
         accumulator.correct += resultObject.correct;
@@ -118,8 +130,15 @@ class GameContainer extends Component {
       },
       { correct: 0, wrong: 0 }
     );
-    console.log(result)
-    return '10';
+    const {correct,wrong} = typingResult
+    const grossWpm = ((correct+wrong)/5)/this.timePassedMinutes
+    const errorFactor = wrong/this.timePassedMinutes
+    return (grossWpm - errorFactor);
+  }
+  get wpmNormalized() {
+    const wpmScore = this.wpmScore;
+    if (isFinite(wpmScore)) return Math.round(this.wpmScore)
+    return WPM_NULL
   }
   get correctWordsNumber() {
     return '20';
@@ -143,7 +162,7 @@ class GameContainer extends Component {
     return (
       <Fragment>
         <ScoreBoard
-          wpm={this.wpmScore}
+          wpm={this.wpmNormalized}
           correctTypedWords={this.correctWordsNumber}
           disabled={this.isWordBoardDisabled}
         />
@@ -165,7 +184,7 @@ class GameContainer extends Component {
           open={this.isGameFinished}
           wpmScore={this.wpm}
           correctTypedWords={this.correctTypedWords}
-          wpm={this.wpmScore}
+          wpm={this.wpmNormalized}
         />
       </Fragment>
     );

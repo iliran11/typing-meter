@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "animate.css": "^3.6.1",
+    "lodash.countby": "^4.6.0",
+    "lodash.isfinite": "^3.3.2",
     "lodash.isnull": "^3.0.0",
     "lorem-ipsum": "^1.0.4",
     "material-ui": "^0.20.0",
