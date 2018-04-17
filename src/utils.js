@@ -1,6 +1,5 @@
 import randomWords from 'random-words';
 import { WORDS_AMOUNT } from './constants';
-import countBy from 'lodash.countby';
 
 export function generateWordsArray() {
   return Array.from(new Array(WORDS_AMOUNT), () => {
@@ -52,7 +51,6 @@ export function createWordObject({ challenge = '', typed = '', id }) {
       return this.typed.slice(0, -1);
     },
     get numberOfCorrectEntities() {
-      const wordArray = this.wordArray;
       return this.typedArray.reduce(
         (accumulator, currentValue, currentIndex) => {
           const isLetterCorrect = currentValue === this.wordArray[currentIndex];

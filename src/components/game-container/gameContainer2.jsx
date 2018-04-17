@@ -6,7 +6,8 @@ import { generateLoremIpsum, secondstoMillisecond, millisecondsToSeconds, create
 import CompletionModal from '../completionModal';
 import ProgressBar from './progress-bar';
 import isNull from 'lodash.isnull';
-import isFinite from 'lodash.isfinite'
+import isFinite from 'lodash.isfinite';
+import isObjectLike from 'lodash.isobjectlike';
 
 class GameContainer extends Component {
   constructor(props) {
@@ -28,6 +29,17 @@ class GameContainer extends Component {
         typed: newInputValue
       });
       nextWordsArray[this.currentIndex] = nextCurrentWord;
+      /** check if this word is completed, and it is the last. if so - complete the game. */
+      if (nextCurrentWord.isCompleted) {
+        /** second if is nested to run the getter only on isCompleted===true word. */
+        if (this.isCurrentWordIsLast) {
+          this.props.onGameEnd({
+            correctTypedWords: 1,
+            wpm: 2
+          });
+          return;
+        }
+      }
       this.setState({
         words: nextWordsArray
       });
@@ -86,11 +98,11 @@ class GameContainer extends Component {
   };
   get timePassed() {
     /** returns time passed in seconds */
-    return GAME_DURATION - this.timeLeft
+    return GAME_DURATION - this.timeLeft;
   }
   get timePassedMinutes() {
     /** returns time passed in minutes. */
-    return this.timePassed/60
+    return this.timePassed / 60;
   }
 
   get timeLeft() {
@@ -112,6 +124,10 @@ class GameContainer extends Component {
     });
     return currentIndex;
   }
+  get isCurrentWordIsLast() {
+    const nextWord = this.state.words[this.currentIndex + 1];
+    return !isObjectLike(nextWord);
+  }
   get previousIndex() {
     return this.currentIndex - 1;
   }
@@ -130,15 +146,15 @@ class GameContainer extends Component {
       },
       { correct: 0, wrong: 0 }
     );
-    const {correct,wrong} = typingResult
-    const grossWpm = ((correct+wrong)/5)/this.timePassedMinutes
-    const errorFactor = wrong/this.timePassedMinutes
-    return (grossWpm - errorFactor);
+    const { correct, wrong } = typingResult;
+    const grossWpm = (correct + wrong) / 5 / this.timePassedMinutes;
+    const errorFactor = wrong / this.timePassedMinutes;
+    return grossWpm - errorFactor;
   }
   get wpmNormalized() {
     const wpmScore = this.wpmScore;
-    if (isFinite(wpmScore)) return Math.round(this.wpmScore)
-    return WPM_NULL
+    if (isFinite(wpmScore)) return Math.round(this.wpmScore);
+    return WPM_NULL;
   }
   get correctWordsNumber() {
     return '20';
