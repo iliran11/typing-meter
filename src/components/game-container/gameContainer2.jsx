@@ -167,7 +167,10 @@ class GameContainer extends Component {
     return WPM_NULL;
   }
   get correctWordsNumber() {
-    return '20';
+    const correctWordsArray =  this.state.words.filter((currentElement)=>{
+      return currentElement.isCorrect
+    });
+    return correctWordsArray.length
   }
   get isWordBoardDisabled() {
     return this.isGameActive;
