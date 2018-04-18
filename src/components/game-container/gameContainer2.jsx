@@ -13,6 +13,7 @@ class GameContainer extends Component {
     super(props);
     this.state = initialState();
     this.startTime = null;
+    this.inputRef = React.createRef();
     /** INPUT CHNAGE EVENT */
     this.onInputChange = event => {
       const { gameStatus } = this.props;
@@ -36,12 +37,8 @@ class GameContainer extends Component {
           /** check if this word is completed, and it is the last. if so - complete the game. */
           if (nextCurrentWord.isCompleted) {
             /** second if is nested to run the getter only on isCompleted===true word. */
-            if (this.currentIndex===-1) {
-              this.props.onGameEnd({
-                correctTypedWords: 1,
-                wpm: 2,
-                stats: this.typingStatistcs
-              });
+            if (this.currentIndex === -1) {
+              this.onGameEnd()
             }
           }
         }
@@ -96,8 +93,10 @@ class GameContainer extends Component {
     clearInterval(this.timeLeftInterval);
     this.props.onGameEnd({
       correctTypedWords: this.correctWordsNumber,
-      wpm: this.wpmScore
+      wpm: this.wpmNormalized
     });
+    this.inputRef.current.blur();
+
   };
 
   get timePassed() {
@@ -116,9 +115,9 @@ class GameContainer extends Component {
     return millisecondsToSeconds(millisecondsLeft);
   }
   get currentWord() {
-    const {currentIndex} = this
+    const { currentIndex } = this;
     /** if the index is -1, it means the game has ended. so return an empty word. */
-    if (currentIndex===-1) return null
+    if (currentIndex === -1) return null;
     return this.state.words[this.currentIndex];
   }
   get previousWord() {
@@ -135,8 +134,8 @@ class GameContainer extends Component {
     return this.currentIndex - 1;
   }
   get inputValue() {
-    const {currentWord} = this
-    if (isNull(currentWord)) return ''
+    const { currentWord } = this;
+    if (isNull(currentWord)) return '';
     return this.isGameActive ? this.currentWord.typed : '';
   }
   get typingStatistcs() {
@@ -160,7 +159,11 @@ class GameContainer extends Component {
   }
   get wpmNormalized() {
     const wpmScore = this.wpmScore;
-    if (isFinite(wpmScore)) return Math.round(this.wpmScore);
+    if (isFinite(wpmScore)) {
+      /** if the number is smaller than 0, just return 0. */
+      if (wpmScore < 0) return 0;
+      return Math.round(this.wpmScore);
+    }
     return WPM_NULL;
   }
   get correctWordsNumber() {
@@ -198,9 +201,7 @@ class GameContainer extends Component {
           tabIndex="0"
           className={`input is-large is-primary size3 ${this.inputClasses}`}
           placeholder={this.inputPlaceHolder}
-          ref={node => {
-            this.inputElement = node;
-          }}
+          ref={this.inputRef}
         />
         <WordsBoard words={this.state.words} currentGamePosition={this.currentIndex} isActive={this.isGameActive} />
         <CompletionModal
