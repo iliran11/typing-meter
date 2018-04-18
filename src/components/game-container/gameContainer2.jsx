@@ -7,7 +7,6 @@ import CompletionModal from '../completionModal';
 import ProgressBar from './progress-bar';
 import isNull from 'lodash.isnull';
 import isFinite from 'lodash.isfinite';
-import isObjectLike from 'lodash.isobjectlike';
 
 class GameContainer extends Component {
   constructor(props) {
@@ -29,20 +28,24 @@ class GameContainer extends Component {
         typed: newInputValue
       });
       nextWordsArray[this.currentIndex] = nextCurrentWord;
-      /** check if this word is completed, and it is the last. if so - complete the game. */
-      if (nextCurrentWord.isCompleted) {
-        /** second if is nested to run the getter only on isCompleted===true word. */
-        if (this.isCurrentWordIsLast) {
-          this.props.onGameEnd({
-            correctTypedWords: 1,
-            wpm: 2
-          });
-          return;
+      this.setState(
+        {
+          words: nextWordsArray
+        },
+        () => {
+          /** check if this word is completed, and it is the last. if so - complete the game. */
+          if (nextCurrentWord.isCompleted) {
+            /** second if is nested to run the getter only on isCompleted===true word. */
+            if (this.currentIndex===-1) {
+              this.props.onGameEnd({
+                correctTypedWords: 1,
+                wpm: 2,
+                stats: this.typingStatistcs
+              });
+            }
+          }
         }
-      }
-      this.setState({
-        words: nextWordsArray
-      });
+      );
     };
     /** KEY DOWN EVENT */
     this.handleKeyPress = event => {
@@ -96,6 +99,7 @@ class GameContainer extends Component {
       wpm: this.wpmScore
     });
   };
+
   get timePassed() {
     /** returns time passed in seconds */
     return GAME_DURATION - this.timeLeft;
@@ -112,6 +116,9 @@ class GameContainer extends Component {
     return millisecondsToSeconds(millisecondsLeft);
   }
   get currentWord() {
+    const {currentIndex} = this
+    /** if the index is -1, it means the game has ended. so return an empty word. */
+    if (currentIndex===-1) return null
     return this.state.words[this.currentIndex];
   }
   get previousWord() {
@@ -124,20 +131,16 @@ class GameContainer extends Component {
     });
     return currentIndex;
   }
-  get isCurrentWordIsLast() {
-    const nextWord = this.state.words[this.currentIndex + 1];
-    return !isObjectLike(nextWord);
-  }
   get previousIndex() {
     return this.currentIndex - 1;
   }
   get inputValue() {
+    const {currentWord} = this
+    if (isNull(currentWord)) return ''
     return this.isGameActive ? this.currentWord.typed : '';
   }
-  get wpmScore() {
-    /**http://indiatyping.com/index.php/typing-tips/typing-speed-calculation-formula */
-    /** returns an object of total number of correct and wrong chars */
-    const typingResult = this.state.words.reduce(
+  get typingStatistcs() {
+    return this.state.words.reduce(
       (accumulator, currentValue) => {
         const resultObject = currentValue.numberOfCorrectEntities;
         accumulator.correct += resultObject.correct;
@@ -146,7 +149,11 @@ class GameContainer extends Component {
       },
       { correct: 0, wrong: 0 }
     );
-    const { correct, wrong } = typingResult;
+  }
+  get wpmScore() {
+    /**http://indiatyping.com/index.php/typing-tips/typing-speed-calculation-formula */
+    /** returns an object of total number of correct and wrong chars */
+    const { correct, wrong } = this.typingStatistcs;
     const grossWpm = (correct + wrong) / 5 / this.timePassedMinutes;
     const errorFactor = wrong / this.timePassedMinutes;
     return grossWpm - errorFactor;
