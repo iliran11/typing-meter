@@ -4,6 +4,10 @@
   padding: 0 20px;
   word-break: break-word;
   flex-grow: 1;
+  background-color: blue;
+  @media all and (max-width: 480px) {
+    line-height: 60px;
+  }
 }
 .content {
   flex: auto;
@@ -26,7 +30,7 @@ input {
   transition: all 0.5s;
 }
 .disabled {
-  opacity:0.1
+  opacity: 0.1;
 }
 .secondary-toolbar {
   background-color: #48a999;
@@ -63,9 +67,16 @@ input {
 }
 .progress-bar {
   background-color: #48a999;
-  height: 50px;
+  height: 3.125rem;
   box-shadow: 0 0 10px #48a999;
   flex: none;
+  @media all and (max-width: 991px) {
+  }
+  @media all and (max-width: 768px) {
+  }
+  @media all and (max-width: 480px) {
+    height: 1.25rem;
+  }
 }
 input {
   font-family: 'Roboto', sans-serif;
@@ -105,14 +116,6 @@ input {
 }
 .restart {
   cursor: pointer;
-}
-@media only screen and (max-width: 576px) {
-  .words-container {
-    line-height: 60px;
-  }
-  .progress-bar {
-    height: 20px;
-  }
 }
 .completion-dialog {
   h1 {
