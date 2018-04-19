@@ -1,7 +1,7 @@
 import React from 'react';
 import Letter from './Letter.jsx';
 import scrollIntoView from 'scroll-into-view';
-import { FAILURE_ANIMATION, SUCCESS_ANIMATION } from '../constants';
+import { FAILURE_ANIMATION, SUCCESS_ANIMATION } from '../../constants';
 
 class Word extends React.Component {
   constructor(props) {

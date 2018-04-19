@@ -1,76 +1,92 @@
 import React, { Component } from 'react';
 import 'normalize.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import GameContainer from './components/gameContainer.jsx';
+import GameContainer from './components/game-container/gameContainer2';
 import AppBar from './components/appBar';
 import 'animate.css';
 import './App.css';
 import CompletionModal from './components/completionModal';
-import WelcomeModal from './components/welcomeModal';
+import WelcomeModal from './components/welcome/cards-welcome';
+import { INITIAL_START, AWAITS_TYPING, GAME_IS_ACTIVE, RESTART_PENDING } from './constants';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameIsActive: false
+      gameStatus: INITIAL_START
     };
     this.isWelcome = true;
     this.isGameFinished = false;
     this.correctTypedWords = 0;
-    this.cpm = 0;
+    this.wpm = 0;
   }
-  componentWillUpdate = (nextProps, nextState) => {
-    if (this.state.gameIsActive === false && nextState.gameIsActive === true) {
-      this.isGameFinished = false;
-    }
-    if (this.state.gameIsActive === true && nextState.gameIsActive === false) {
-      this.isGameFinished = true;
-    }
-  };
   onWelcomeContinue = () => {
     this.isWelcome = false;
     this.setState({
-      gameIsActive: true
+      gameInBackground: false
     });
   };
-  onGameCompletion = options => {
-    const { correctTypedWords, cpm } = options;
+  onGameRestart = () => {
+    this.setState({
+      gameStatus: RESTART_PENDING
+    });
+  };
+  onGameEnd = options => {
+    const { correctTypedWords, wpm } = options;
     this.correctTypedWords = correctTypedWords;
-    this.cpm = cpm;
+    this.wpm = wpm;
     this.setState({
-      gameIsActive: false
+      gameStatus: RESTART_PENDING
     });
   };
-  onRestart = () => {
+  onGameBegins = () => {
     this.setState({
-      gameIsActive: true
+      gameStatus: GAME_IS_ACTIVE
+    });
+  };
+  onGameRestart = () => {
+    this.setState({
+      gameStatus: AWAITS_TYPING
     });
   };
   onWelcomeContinue = () => {
     this.setState({
-      gameIsActive: true
+      gameStatus: AWAITS_TYPING
     });
     this.isWelcome = false;
   };
   render() {
-    const { onRestart, onGameCompletion, cpm, state: { gameIsActive } } = this;
+    const {
+      isWelcome,
+      onGameRestart,
+      onGameEnd,
+      wpm,
+      onWelcomeContinue,
+      onGameBegins,
+      state: { gameStatus }
+    } = this;
     return (
       <MuiThemeProvider>
         <React.Fragment>
           <AppBar />
-          {gameIsActive && <GameContainer onGameCompletion={onGameCompletion} />}
-          <CompletionModal
-            modal={true}
-            open={this.isGameFinished}
-            wpmScore={this.cpm}
-            correctTypedWords={this.correctTypedWords}
-            onRestart={onRestart}
-            cpm={cpm}
+          <GameContainer
+            onGameBegins={onGameBegins}
+            onGameEnd={onGameEnd}
+            onGameRestart={onGameRestart}
+            gameStatus={gameStatus}
           />
           <WelcomeModal
-            open={this.isWelcome}
             onContinue={this.onWelcomeContinue}
             onRequestChange={open => this.setState({ drawerIsOpen: open })}
+            onWelcomeContinue={onWelcomeContinue}
+            isOpen={isWelcome}
+          />
+          <CompletionModal
+            open={gameStatus === RESTART_PENDING}
+            wpmScore={this.wpm}
+            correctTypedWords={this.correctTypedWords}
+            onRestart={this.onGameRestart}
+            wpm={wpm}
           />
         </React.Fragment>
       </MuiThemeProvider>
