@@ -22,7 +22,7 @@ export default function CardsWelcome(props) {
           start
         </StepLabel>
         <StepContent>
-          <p>Start the test and click the input to start typing</p>
+          <p>After you complete the introduction, Start the test by clicking the input field and start typing!</p>
           {Buttons}
         </StepContent>
       </Step>
@@ -31,7 +31,8 @@ export default function CardsWelcome(props) {
           Accurate
         </StepLabel>
         <StepContent>
-          <p>While typing, take care of your typing accuracy. You can always fix back with backspace.</p>
+          <p>The more accurate you type - the better the result</p>
+          <p>Watch for red words - you can go back and fix them!</p>
           {Buttons}
         </StepContent>
       </Step>
