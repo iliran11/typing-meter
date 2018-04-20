@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import Stepper from './stepper';
+import Stepper from './Verticalstepper';
 import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+
 
 class StepperController extends Component {
   constructor(props) {
@@ -28,6 +30,12 @@ class StepperController extends Component {
           incrementStep={this.incrementStep}
           decrementStep={this.decrementStep}
           onWelcomeContinue={this.props.onWelcomeContinue}
+        />
+        <FlatButton
+          label={'Skip'}
+          primary={true}
+          onClick={this.props.onWelcomeContinue}
+          style={{marginTop:15}}
         />
       </Dialog>
     );
