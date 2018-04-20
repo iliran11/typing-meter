@@ -185,7 +185,7 @@ class GameContainer extends Component {
     return 'input-class';
   }
   get inputPlaceHolder() {
-    return 'placeholder';
+    return this.state.gameStatus === GAME_IS_ACTIVE ? '' : 'Type to start ...';
   }
   render() {
     return (
