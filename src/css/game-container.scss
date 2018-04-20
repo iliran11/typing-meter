@@ -44,11 +44,11 @@ input {
 .secondary-toolbar {
   background-color: $primary-light;
   justify-content: center;
-  height:auto;
+  height: auto;
   padding: 5px 24px;
-  background-color:$primary-color;
+  background-color: $primary-color;
   & div:not(:last-child) {
-    margin-right:6.25rem;
+    margin-right: 6.25rem;
     @media all and (max-width: 480px) {
       margin-right: 2.5rem;
     }
@@ -145,16 +145,32 @@ input {
     padding: 0px;
   }
 }
-.completion-content {
+.completion-dialog {
+  h1 {
+    svg {
+      width: 15vw;
+      height: 15vw;
+      color: $secondary-color;
+    }
+  }
+}
+#completion-content {
   display: flex;
   align-items: center;
   flex-direction: column;
   h4 {
     margin: 20px 0;
   }
+  h3,
+  span {
+    color: $primary-color;
+  }
   .score-report {
     display: flex;
     width: 100%;
     justify-content: space-around;
+  }
+  i {
+    color: $primary-color;
   }
 }
