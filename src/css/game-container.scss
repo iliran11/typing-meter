@@ -22,7 +22,7 @@ input {
 }
 .metric-score {
   font-family: 'Fredoka One', cursive;
-  color: white;
+  color: $secondary-color;
   opacity: 0.7;
 }
 .transitionable {
@@ -42,11 +42,11 @@ input {
 }
 
 .secondary-toolbar {
-  background-color: #48a999;
+  background-color: $primary-light;
   justify-content: center;
   height:auto;
   padding: 5px 24px;
-  background-color:#00796b;
+  background-color:$primary-color;
   & div:not(:last-child) {
     margin-right:6.25rem;
     @media all and (max-width: 480px) {
@@ -61,7 +61,7 @@ input {
   align-items: center;
   h3 {
     margin: 0px;
-    color: white;
+    color: $secondary-color;
     opacity: 0.6;
     font-weight: bold;
     text-align: center;
@@ -74,7 +74,7 @@ input {
     }
   }
   .icon {
-    color: white;
+    color: $secondary-color;
     opacity: 0.6;
     margin-right: 1rem;
   }
@@ -84,9 +84,9 @@ input {
   }
 }
 .progress-bar {
-  background-color: #48a999;
+  background-color: $primary-light;
   height: 3.125rem;
-  box-shadow: 0 0 10px #48a999;
+  box-shadow: 0 0 10px $primary-light;
   flex: none;
   @media all and (max-width: 991px) {
   }
@@ -102,13 +102,13 @@ input {
 }
 
 .SUCCESS {
-  color: hsl(141, 71%, 48%);
+  color: $correct-letter;
 }
 .FAILED {
-  color: hsl(348, 100%, 61%);
+  color: $wrong-letter;
 }
 .NEUTRAL {
-  color: hsl(0, 0%, 21%);
+  color: $neutral-letter;
 }
 
 .letter {
@@ -123,7 +123,7 @@ input {
   transition: background-color 0.6s;
 }
 .correct-word {
-  background-color: rgba(0, 128, 0, 0.10196078431372549);
+  background-color: $correct-word;
   color: rgba(0, 128, 0, 0.8196078431372549);
 }
 
@@ -136,10 +136,10 @@ input {
 }
 .completion-dialog {
   h1 {
-    background-color: #004c40;
+    background-color: $primary-dark;
     margin: 0px;
     opacity: 0.8;
-    color: white !important;
+    color: $secondary-color !important;
     display: flex;
     justify-content: center;
     padding: 0px;

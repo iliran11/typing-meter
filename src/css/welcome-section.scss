@@ -5,7 +5,7 @@
   .title {
     display: flex;
     justify-content: center;
-    background-color: #00796b;
+    background-color: $primary-color;
     flex-direction: column;
     align-items: center;
   }
@@ -29,7 +29,7 @@
     color: white;
     font-size:30px;
     height:10vh;
-    background-color: #00796b;
+    background-color: $primary-color;
     font-family: 'Roboto', sans-serif;
     border:0px;
 
@@ -40,7 +40,7 @@
     display: flex;
   }
   .question-mark {
-    color: #004c40;
+    color: $primary-dark;
     font-size: 120%;
     margin-left: 5px;
   }

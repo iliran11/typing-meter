@@ -1,5 +1,5 @@
 .app-bar {
-  background-color: #004c40;
+  background-color: $primary-dark;
   flex: none;
   display: flex;
   justify-content: space-between;
@@ -8,7 +8,7 @@
   .left-hand {
     opacity:0.8;
     font-size:3.75rem;
-    color: white;
+    color: $secondary-color;
     @media all and (max-width: 480px) {
       font-size: 1.875rem;
     }
