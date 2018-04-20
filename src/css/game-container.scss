@@ -32,15 +32,27 @@ input {
 .disabled {
   opacity: 0.1;
 }
-.secondary-toolbar {
-  background-color: #48a999;
-}
+
 @keyframes progress {
   from {
     width: 100%;
   }
   to {
     width: 0%;
+  }
+}
+
+.secondary-toolbar {
+  background-color: #48a999;
+  justify-content: center;
+  height:auto;
+  padding: 5px 24px;
+  background-color:#00796b;
+  & div:not(:last-child) {
+    margin-right:6.25rem;
+    @media all and (max-width: 480px) {
+      margin-right: 2.5rem;
+    }
   }
 }
 
@@ -55,10 +67,17 @@ input {
     font-weight: bold;
     text-align: center;
   }
+  h3,
+  .row {
+    font-size: 2.5rem;
+    @media all and (max-width: 480px) {
+      font-size: 1.25rem;
+    }
+  }
   .icon {
     color: white;
     opacity: 0.6;
-    margin-right: 15px;
+    margin-right: 1rem;
   }
   .row {
     margin-top: 5px;
@@ -80,7 +99,6 @@ input {
 }
 input {
   font-family: 'Roboto', sans-serif;
-  // height:80px;
   flex: none;
 }
 

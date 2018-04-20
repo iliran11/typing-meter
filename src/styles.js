@@ -3,9 +3,10 @@ export const appBarStyle = {
 };
 
 export const secondaryStyle = {
-  backgroundColor: '#00796b',
-  height:'auto',
-  padding: '5px 24px'
+  backgroundColor: null,
+  height:null,
+  padding: null,
+  justifyContent:null
 };
 
 export const checkCircleStyle = {
