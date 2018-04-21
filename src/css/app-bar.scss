@@ -1,9 +1,28 @@
 .app-bar {
+  background-color: $primary-dark;
   flex: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  .right-hand,
+  .left-hand {
+    opacity:0.8;
+    font-size:3.75rem;
+    color: $secondary-color;
+    @media all and (max-width: 480px) {
+      font-size: 1.875rem;
+    }
+  }
+  .right-hand {
+    i:not(:first-child){
+      margin-left: 1.875rem;
+      @media all and (max-width: 480px) {
+        margin-left:0.625rem;
+      }
+    }
+  }
   h1 {
     opacity: 0.8;
-  }
-  svg {
-    opacity: 0.8;
+    font-size: 1px;
   }
 }

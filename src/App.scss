@@ -1,5 +1,13 @@
 /* https://material.io/color/#!/?view.left=0&view.right=0&primary.color=00796B&primary.text.color=ffffff */
 
+/** BreakPoints */
+// .gameContainer {
+  @media all and (max-width: 991px) {  }
+  @media all and (max-width: 768px) {  }
+  @media all and (max-width: 480px) {  }
+// }
+
+@import 'css/colors.scss';
 @import 'css/utils.scss';
 @import 'css/colors.scss';
 @import 'css/app-bar.scss';
@@ -34,18 +42,5 @@ body {
   svg {
     flex:auto;
     height:100%;
-  }
-}
-.logo {
-  color:white;
-  font-size:40px;
-  opacity:0.7;
-}
-.right-hand{
-  font-size:40px;
-  color:white;
-  opacity: 0.7;
-  .github {
-    margin-left:3vw;
   }
 }
