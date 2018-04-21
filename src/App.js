@@ -15,7 +15,6 @@ class App extends Component {
     this.state = {
       gameStatus: INITIAL_START
     };
-    this.isWelcome = true;
     this.isGameFinished = false;
     this.correctTypedWords = 0;
     this.wpm = 0;
@@ -53,11 +52,12 @@ class App extends Component {
     this.setState({
       gameStatus: AWAITS_TYPING
     });
-    this.isWelcome = false;
   };
+  get showWelcome() {
+    return this.state.gameStatus === INITIAL_START;
+  }
   render() {
     const {
-      isWelcome,
       onGameRestart,
       onGameEnd,
       wpm,
@@ -69,17 +69,19 @@ class App extends Component {
       <MuiThemeProvider>
         <React.Fragment>
           <AppBar />
-          <GameContainer
-            onGameBegins={onGameBegins}
-            onGameEnd={onGameEnd}
-            onGameRestart={onGameRestart}
-            gameStatus={gameStatus}
-          />
+          {this.showWelcome === false && (
+            <GameContainer
+              onGameBegins={onGameBegins}
+              onGameEnd={onGameEnd}
+              onGameRestart={onGameRestart}
+              gameStatus={gameStatus}
+            />
+          )}
           <WelcomeModal
             onContinue={this.onWelcomeContinue}
             onRequestChange={open => this.setState({ drawerIsOpen: open })}
             onWelcomeContinue={onWelcomeContinue}
-            isOpen={isWelcome}
+            isOpen={this.showWelcome}
           />
           <CompletionModal
             open={gameStatus === RESTART_PENDING}
