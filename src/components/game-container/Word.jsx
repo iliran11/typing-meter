@@ -45,7 +45,6 @@ class Word extends React.Component {
     const { isCompleted } = this.props;
     const comparisonResult = this.compareTypedToDisplayed();
     return comparisonResult.map((element, index) => {
-      if (isCompleted) return <Letter value={element.letter} key={index} />;
       return <Letter value={element.letter} status={element.status} key={index} />;
     });
   };
