@@ -18,6 +18,7 @@ class App extends Component {
     this.isGameFinished = false;
     this.correctTypedWords = 0;
     this.wpm = 0;
+    this.customWords = null;
   }
   onWelcomeContinue = () => {
     this.isWelcome = false;
@@ -53,6 +54,9 @@ class App extends Component {
       gameStatus: AWAITS_TYPING
     });
   };
+  setCustomWords = event => {
+    this.customWords = event.target.value;
+  };
   get showWelcome() {
     return this.state.gameStatus === INITIAL_START;
   }
@@ -65,6 +69,7 @@ class App extends Component {
       onGameBegins,
       state: { gameStatus }
     } = this;
+    console.log(this.customWords);
     return (
       <MuiThemeProvider>
         <React.Fragment>
@@ -75,6 +80,7 @@ class App extends Component {
               onGameEnd={onGameEnd}
               onGameRestart={onGameRestart}
               gameStatus={gameStatus}
+              customWords={this.customWords}
             />
           )}
           <WelcomeModal
@@ -82,6 +88,7 @@ class App extends Component {
             onRequestChange={open => this.setState({ drawerIsOpen: open })}
             onWelcomeContinue={onWelcomeContinue}
             isOpen={this.showWelcome}
+            setCustomWords={this.setCustomWords}
           />
           <CompletionModal
             open={gameStatus === RESTART_PENDING}

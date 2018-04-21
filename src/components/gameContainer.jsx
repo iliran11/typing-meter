@@ -164,12 +164,13 @@ class GameContainer extends Component {
     const overallTime = secondstoMillisecond(GAME_DURATION);
     this.correctTypedWords = 0;
     this.cpm = CPM_NULL;
+    const words = this.props.customWords || generateLoremIpsum()
     return {
       overallTime,
       timeLeft: millisecondsToSeconds(overallTime),
       index: 0,
       scrollIndex: 0,
-      words: generateLoremIpsum(),
+      words,
       cpm: this.cpm,
       gameAboutToBegin: false
     };

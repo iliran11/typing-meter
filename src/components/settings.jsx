@@ -6,18 +6,23 @@ class SettingsForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameDuration: 20
+      gameDuration: 20,
     };
-    this.handleSlider = (event,value) => {
+    this.handleSlider = (event, value) => {
       console.log(value);
+    };
+    this.handleCustomWords = event => {
+      this.setState({
+        customWords: event.target.value
+      });
     };
   }
 
   render() {
     return (
       <div>
-        <TextField floatingLabelText="Practice Text" multiLine={true} fullWidth={true} />
-        <Slider min={20} max={120} step={20} value={this.state.gameDuration} onChange={this.handleSlider} />
+        <TextField floatingLabelText="Practice Text" multiLine={true} fullWidth={true} onChange={this.props.setCustomWords} />
+        <Slider min={20} max={120} step={20} onChange={this.props.setCustomWords} />
       </div>
     );
   }

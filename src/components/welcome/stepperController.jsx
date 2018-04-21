@@ -33,6 +33,7 @@ class StepperController extends Component {
             incrementStep={this.incrementStep}
             decrementStep={this.decrementStep}
             onWelcomeContinue={this.props.onWelcomeContinue}
+            setCustomWords={this.props.setCustomWords}
           />
           <FlatButton label={'Skip'} primary={true} onClick={this.props.onWelcomeContinue} style={{ marginTop: 15 }} />
         </React.Fragment>
