@@ -4,6 +4,7 @@ import { StepLabel, Step, Stepper, StepContent } from 'material-ui/Stepper';
 import StepperNumber from './stepperNumber';
 import { fontReset } from '../../styles';
 import StepActions from './stepActions';
+import Settings from '../settings'
 
 export default function CardsWelcome(props) {
   const { onWelcomeContinue, activeStep, incrementStep, decrementStep } = props;
@@ -19,16 +20,17 @@ export default function CardsWelcome(props) {
     <Stepper orientation="vertical" activeStep={activeStep}>
       <Step>
         <StepLabel icon={<StepperNumber number={1} />} style={fontReset}>
-          start
+          START
         </StepLabel>
         <StepContent>
           <p>After you complete the introduction, Start the test by clicking the input field and start typing!</p>
+          <Settings/>
           {Buttons}
         </StepContent>
       </Step>
       <Step>
         <StepLabel icon={<StepperNumber number={2} />} style={fontReset}>
-          Accurate
+          ACCURATE
         </StepLabel>
         <StepContent>
           <p>The more accurate you type - the better the result</p>
@@ -38,7 +40,7 @@ export default function CardsWelcome(props) {
       </Step>
       <Step>
         <StepLabel icon={<StepperNumber number={3} />} style={fontReset}>
-          Results
+          RESULTS
         </StepLabel>
         <StepContent>
           <p>
@@ -49,7 +51,7 @@ export default function CardsWelcome(props) {
       </Step>
       <Step>
         <StepLabel icon={<StepperNumber number={4} />} style={fontReset}>
-          Compare
+          COMPARE&ANALYZE
         </StepLabel>
         <StepContent>
           <p>Compare your score to others.</p>
