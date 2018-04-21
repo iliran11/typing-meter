@@ -29,7 +29,7 @@ export function createWordObject({ challenge = '', typed = '', id }) {
     typed,
     get isCompleted() {
       const { challenge, typed } = this;
-      return challenge.length === typed.length;
+      return challenge.length <= typed.length;
     },
     get isEmpty() {
       const { typed } = this;
@@ -46,6 +46,12 @@ export function createWordObject({ challenge = '', typed = '', id }) {
     },
     get typedArray() {
       return this.typed.split('');
+    },
+    get challenegeArray() {
+      return this.challenge.split('');
+    },
+    get challengeLength() {
+      return this.challenegeArray.length;
     },
     get removeLastTypedLetter() {
       return this.typed.slice(0, -1);

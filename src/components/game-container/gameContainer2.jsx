@@ -21,7 +21,7 @@ class GameContainer extends Component {
         this.onGameStart();
       }
       /** trim and lower case everything the user is typing */
-      const newInputValue = event.target.value.trim().toLowerCase();
+      const newInputValue = event.target.value.trim().toLowerCase().substring(0,this.currentWord.challengeLength);
       const nextWordsArray = this.state.words.slice(0);
       /** create a new word object according to the new input */
       const nextCurrentWord = new createWordObject({
