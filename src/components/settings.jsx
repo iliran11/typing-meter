@@ -20,10 +20,11 @@ class SettingsForm extends React.Component {
 
   render() {
     return (
-      <div>
+      <form>
         <TextField floatingLabelText="Practice Text" multiLine={true} fullWidth={true} onChange={this.props.setCustomWords} />
-        <Slider min={20} max={120} step={20} onChange={this.props.setCustomWords} />
-      </div>
+        <label>Game Duration: 20</label>
+        <Slider min={1} max={10} step={1} onChange={this.props.setCustomWords} />
+      </form>
     );
   }
 }
