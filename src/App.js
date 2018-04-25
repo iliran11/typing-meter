@@ -7,7 +7,7 @@ import 'animate.css';
 import './App.css';
 import CompletionModal from './components/completionModal';
 import WelcomeModal from './components/welcome/stepperController';
-import { INITIAL_START, AWAITS_TYPING, GAME_IS_ACTIVE, RESTART_PENDING } from './constants';
+import { INITIAL_START, AWAITS_TYPING, GAME_IS_ACTIVE, RESTART_PENDING, GAME_DURATION } from './constants';
 
 class App extends Component {
   constructor(props) {
@@ -19,6 +19,7 @@ class App extends Component {
     this.correctTypedWords = 0;
     this.wpm = 0;
     this.customWords = null;
+    this.gameDuration = GAME_DURATION;
   }
   onWelcomeContinue = () => {
     this.isWelcome = false;
@@ -57,6 +58,9 @@ class App extends Component {
   setCustomWords = event => {
     this.customWords = event.target.value;
   };
+  setGameDuration = (event, value) => {
+    this.gameDuration = value;
+  };
   get showWelcome() {
     return this.state.gameStatus === INITIAL_START;
   }
@@ -69,7 +73,6 @@ class App extends Component {
       onGameBegins,
       state: { gameStatus }
     } = this;
-    console.log(this.customWords);
     return (
       <MuiThemeProvider>
         <React.Fragment>
@@ -81,6 +84,7 @@ class App extends Component {
               onGameRestart={onGameRestart}
               gameStatus={gameStatus}
               customWords={this.customWords}
+              gameDuration={this.gameDuration}
             />
           )}
           <WelcomeModal
@@ -89,6 +93,7 @@ class App extends Component {
             onWelcomeContinue={onWelcomeContinue}
             isOpen={this.showWelcome}
             setCustomWords={this.setCustomWords}
+            setGameDuration={this.setGameDuration}
           />
           <CompletionModal
             open={gameStatus === RESTART_PENDING}
