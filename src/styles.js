@@ -19,6 +19,10 @@ export const svgStyle = {
   height: 'initial'
 };
 
+export const resetMargin = {
+  marginTop: 1,
+  marginBottom:1
+};
 export const fontReset = {
   fontSize: 'inherit'
 };
