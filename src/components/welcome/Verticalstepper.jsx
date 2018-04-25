@@ -9,7 +9,7 @@ import Settings from '../settings';
 import { SETTINGS_FORM } from '../../constants';
 
 export default function CardsWelcome(props) {
-  const { onWelcomeContinue, activeStep, incrementStep, decrementStep, setCustomWords } = props;
+  const { onWelcomeContinue, activeStep, incrementStep, decrementStep, setCustomWords,setGameDuration } = props;
   const Buttons = (
     <StepActions
       stepIndex={activeStep}
@@ -22,7 +22,12 @@ export default function CardsWelcome(props) {
   return (
     <Stepper orientation="vertical" activeStep={activeStep}>
       {stepperContent.map((element, index) => {
-        const content = element.key === SETTINGS_FORM ? <Settings setCustomWords={setCustomWords} /> : element.content;
+        const content =
+          element.key === SETTINGS_FORM ? (
+            <Settings setGameDuration={setGameDuration} setCustomWords={setCustomWords} />
+          ) : (
+            element.content
+          );
         return (
           <Step key={index}>
             <StepLabel icon={<StepperNumber number={index} />} style={fontReset}>
