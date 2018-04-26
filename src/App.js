@@ -55,8 +55,8 @@ class App extends Component {
       gameStatus: AWAITS_TYPING
     });
   };
-  setCustomWords = event => {
-    this.customWords = event.target.value;
+  setCustomWords = value => {
+    this.customWords = value;
   };
   setGameDuration = (event, value) => {
     this.gameDuration = value;
