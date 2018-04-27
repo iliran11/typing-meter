@@ -1,0 +1,15 @@
+form {
+  padding: 0 10px;
+  label {
+    flex:none;
+    margin-right:10px;
+    color:#444444
+  }
+  .toggle-control {
+    display:flex;
+    align-items:center;
+  }
+  .slider-control {
+    margin-top:10px;
+  }
+}

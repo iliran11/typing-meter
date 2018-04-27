@@ -6,8 +6,8 @@ export function generateWordsArray() {
     return randomWords();
   });
 }
-export function generateLoremIpsum() {
-  const text = generateWordsArray();
+export function generateLoremIpsum(customWords) {
+  const text = customWords || generateWordsArray();
   return text.map(word => {
     return createWordObject({ challenge: word });
   });

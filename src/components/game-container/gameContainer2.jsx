@@ -1,17 +1,18 @@
 import React, { Component, Fragment } from 'react';
 import ScoreBoard from '../scoreboard/scoreBoard';
 import WordsBoard from './WordsBoard';
-import { GAME_DURATION, AWAITS_TYPING, GAME_IS_ACTIVE, WPM_NULL, RESTART_PENDING } from '../../constants';
+import { AWAITS_TYPING, GAME_IS_ACTIVE, WPM_NULL, RESTART_PENDING } from '../../constants';
 import { generateLoremIpsum, secondstoMillisecond, millisecondsToSeconds, createWordObject } from '../../utils';
 import CompletionModal from '../completionModal';
 import ProgressBar from './progress-bar';
 import isNull from 'lodash.isnull';
 import isFinite from 'lodash.isfinite';
+import isString from 'lodash.isstring';
 
 class GameContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = initialState();
+    this.state = initialState(this.props.customWords, this.props.gameDuration);
     this.startTime = null;
     this.inputRef = React.createRef();
     /** INPUT CHNAGE EVENT */
@@ -21,7 +22,10 @@ class GameContainer extends Component {
         this.onGameStart();
       }
       /** trim and lower case everything the user is typing */
-      const newInputValue = event.target.value.trim().toLowerCase().substring(0,this.currentWord.challengeLength);
+      const newInputValue = event.target.value
+        .trim()
+        .toLowerCase()
+        .substring(0, this.currentWord.challengeLength);
       const nextWordsArray = this.state.words.slice(0);
       /** create a new word object according to the new input */
       const nextCurrentWord = new createWordObject({
@@ -38,7 +42,7 @@ class GameContainer extends Component {
           if (nextCurrentWord.isCompleted) {
             /** second if is nested to run the getter only on isCompleted===true word. */
             if (this.currentIndex === -1) {
-              this.onGameEnd()
+              this.onGameEnd();
             }
           }
         }
@@ -73,7 +77,7 @@ class GameContainer extends Component {
     const { gameStatus: prevGameStatus } = prevState;
     const isRestarting = nextGameStatus === AWAITS_TYPING && prevGameStatus === RESTART_PENDING;
     if (isRestarting) {
-      return { ...initialState(), gameStatus: nextProps.gameStatus };
+      return { ...initialState(nextProps.customWords), gameStatus: nextProps.gameStatus };
     }
     return { gameStatus: nextProps.gameStatus };
   }
@@ -96,12 +100,11 @@ class GameContainer extends Component {
       wpm: this.wpmNormalized
     });
     this.inputRef.current.blur();
-
   };
 
   get timePassed() {
     /** returns time passed in seconds */
-    return GAME_DURATION - this.timeLeft;
+    return this.props.gameDuration - this.timeLeft;
   }
   get timePassedMinutes() {
     /** returns time passed in minutes. */
@@ -109,7 +112,7 @@ class GameContainer extends Component {
   }
 
   get timeLeft() {
-    if (isNull(this.startTime)) return GAME_DURATION;
+    if (isNull(this.startTime)) return this.props.gameDuration;
     const millisecondsPassed = Date.now() - this.startTime;
     const millisecondsLeft = this.state.overallTime - millisecondsPassed;
     return millisecondsToSeconds(millisecondsLeft);
@@ -167,10 +170,10 @@ class GameContainer extends Component {
     return WPM_NULL;
   }
   get correctWordsNumber() {
-    const correctWordsArray =  this.state.words.filter((currentElement)=>{
-      return currentElement.isCorrect
+    const correctWordsArray = this.state.words.filter(currentElement => {
+      return currentElement.isCorrect;
     });
-    return correctWordsArray.length
+    return correctWordsArray.length;
   }
   get isWordBoardDisabled() {
     return this.isGameActive;
@@ -195,7 +198,7 @@ class GameContainer extends Component {
           correctTypedWords={this.correctWordsNumber}
           disabled={this.isWordBoardDisabled}
         />
-        <ProgressBar isProgressCounting={this.isGameActive} animationTime={GAME_DURATION} />
+        <ProgressBar isProgressCounting={this.isGameActive} animationTime={this.props.gameDuration} />
         <input
           autoFocus
           value={this.inputValue}
@@ -220,14 +223,15 @@ class GameContainer extends Component {
 
 export default GameContainer;
 
-const initialState = () => {
-  const overallTime = secondstoMillisecond(GAME_DURATION);
+const initialState = (customWords, gameDuration) => {
+  const customWordArray = isString(customWords) ? customWords.split(' ') : null;
+  const overallTime = secondstoMillisecond(gameDuration);
   return {
     overallTime,
     timeLeft: millisecondsToSeconds(overallTime),
     index: 0,
     scrollIndex: 0,
-    words: generateLoremIpsum(),
+    words: generateLoremIpsum(customWordArray),
     wpm: WPM_NULL,
     gameAboutToBegin: false
   };

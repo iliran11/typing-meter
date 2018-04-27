@@ -1,5 +1,10 @@
 import React, { Fragment } from 'react';
+import {SETTINGS_FORM} from '../../constants'
 export default [
+  {
+    label: 'SETTINGS',
+    key: SETTINGS_FORM
+  },
   {
     label: 'START',
     content: <p>After you complete the introduction, Start the test by clicking the input field and start typing!</p>
