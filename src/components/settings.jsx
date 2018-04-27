@@ -36,31 +36,34 @@ class SettingsForm extends React.Component {
   }
 
   get toggleLabel() {
-    return this.state.customText ? 'Default Text' : 'Insert your own text!';
+    return 'Custom Text';
+  }
+  get typeCustomText() {
+    return 'Put your custom text here'
   }
 
   render() {
     return (
       <form>
-        <Toggle label={this.toggleLabel} onToggle={this.onToggle} defaultToggled={false} />
+        <div className="toggle-control">
+          <label className="label">{this.toggleLabel}</label>
+          <Toggle onToggle={this.onToggle} defaultToggled={false} />
+        </div>
         {this.state.customText && (
-          <TextField
-            floatingLabelText="Practice Text"
-            multiLine={true}
-            fullWidth={true}
-            onChange={this.handleCustomWords}
-          />
+          <TextField multiLine={true} rows={1} hintText={this.typeCustomText} fullWidth={true} onChange={this.handleCustomWords} />
         )}
         <div>
-          <label>Game Duration: {this.state.gameDuration}</label>
-          <Slider
-            value={this.state.gameDuration}
-            min={20}
-            max={100}
-            step={10}
-            onChange={this.handleSliderChange}
-            sliderStyle={resetMargin}
-          />
+          <div className="slider-control">
+            <label>Game Duration: {this.state.gameDuration}</label>
+            <Slider
+              value={this.state.gameDuration}
+              min={20}
+              max={100}
+              step={10}
+              onChange={this.handleSliderChange}
+              sliderStyle={resetMargin}
+            />
+          </div>
         </div>
       </form>
     );
