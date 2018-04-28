@@ -8,11 +8,10 @@ export function generateWordsArray() {
 }
 export function generateLoremIpsum(customWords) {
   const text = customWords || generateWordsArray();
-  return text.map(word => {
+  return text.filter(filterEmptyStrings).map(word => {
     return createWordObject({ challenge: word });
   });
 }
-
 export function secondstoMillisecond(number) {
   return number * 1000;
 }
@@ -74,5 +73,12 @@ export function createWordObject({ challenge = '', typed = '', id }) {
       );
     }
   };
+}
+function filterEmptyStrings(value) {
+  return value !== ""
+}
+export function replaceLineBreaks(string) {
+  /**https://stackoverflow.com/questions/784539/how-do-i-replace-all-line-breaks-in-a-string-with-br-tags?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa */
+  return string.replace(/(?:\r\n|\r|\n)/g, ' ' );
 }
 export const noop = () => {};
