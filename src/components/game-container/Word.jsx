@@ -30,7 +30,7 @@ class Word extends React.Component {
         status = null;
       } else if (typedLetters[index] === undefined) {
         status = null;
-      } else if (typedLetters[index] === displayedElement) {
+      } else if (typedLetters[index].toLowerCase() === displayedElement.toLowerCase()) {
         status = 'SUCCESS';
       } else {
         status = 'FAILED';

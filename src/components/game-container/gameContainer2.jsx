@@ -1,8 +1,21 @@
 import React, { Component, Fragment } from 'react';
 import ScoreBoard from '../scoreboard/scoreBoard';
 import WordsBoard from './WordsBoard';
-import { AWAITS_TYPING, GAME_IS_ACTIVE, WPM_NULL, RESTART_PENDING } from '../../constants';
-import { generateLoremIpsum, secondstoMillisecond, millisecondsToSeconds, createWordObject } from '../../utils';
+import {
+  AWAITS_TYPING,
+  GAME_IS_ACTIVE,
+  WPM_NULL,
+  RESTART_PENDING,
+  INCREMENT_INDEX,
+  DECREMENT_INDEX
+} from '../../constants';
+import {
+  replaceLineBreaks,
+  generateLoremIpsum,
+  secondstoMillisecond,
+  millisecondsToSeconds,
+  createWordObject
+} from '../../utils';
 import CompletionModal from '../completionModal';
 import ProgressBar from './progress-bar';
 import isNull from 'lodash.isnull';
@@ -22,6 +35,7 @@ class GameContainer extends Component {
         this.onGameStart();
       }
       /** trim and lower case everything the user is typing */
+      console.log(this.currentWord, this.currentIndex);
       const newInputValue = event.target.value
         .trim()
         .toLowerCase()
@@ -63,8 +77,14 @@ class GameContainer extends Component {
               typed: this.previousWord.removeLastTypedLetter
             });
             this.setState({
-              words: nextWordsArray
+              words: nextWordsArray,
+              index: this.currentIndex + DECREMENT_INDEX
             });
+          }
+          break;
+        case 32:
+          if (this.currentWord.isCompleted) {
+            this.changeIndex({ changeType: INCREMENT_INDEX });
           }
           break;
         default:
@@ -77,7 +97,8 @@ class GameContainer extends Component {
     const { gameStatus: prevGameStatus } = prevState;
     const isRestarting = nextGameStatus === AWAITS_TYPING && prevGameStatus === RESTART_PENDING;
     if (isRestarting) {
-      return { ...initialState(nextProps.customWords), gameStatus: nextProps.gameStatus };
+      console.log(nextProps);
+      return { ...initialState(nextProps.customWords, nextProps.gameDuration), gameStatus: nextProps.gameStatus };
     }
     return { gameStatus: nextProps.gameStatus };
   }
@@ -101,7 +122,12 @@ class GameContainer extends Component {
     });
     this.inputRef.current.blur();
   };
-
+  changeIndex = options => {
+    const { changeType } = options;
+    this.setState({
+      index: this.currentIndex + changeType
+    });
+  };
   get timePassed() {
     /** returns time passed in seconds */
     return this.props.gameDuration - this.timeLeft;
@@ -128,10 +154,7 @@ class GameContainer extends Component {
     return this.state.words[this.previousIndex];
   }
   get currentIndex() {
-    const currentIndex = this.state.words.findIndex(word => {
-      return word.isCompleted === false;
-    });
-    return currentIndex;
+    return this.state.index;
   }
   get previousIndex() {
     return this.currentIndex - 1;
@@ -224,7 +247,7 @@ class GameContainer extends Component {
 export default GameContainer;
 
 const initialState = (customWords, gameDuration) => {
-  const customWordArray = isString(customWords) ? customWords.split(' ') : null;
+  const customWordArray = isString(customWords) ? replaceLineBreaks(customWords).split(' ') : null;
   const overallTime = secondstoMillisecond(gameDuration);
   return {
     overallTime,

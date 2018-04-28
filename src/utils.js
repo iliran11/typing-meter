@@ -8,11 +8,10 @@ export function generateWordsArray() {
 }
 export function generateLoremIpsum(customWords) {
   const text = customWords || generateWordsArray();
-  return text.map(word => {
+  return text.filter(filterEmptyStrings).map(word => {
     return createWordObject({ challenge: word });
   });
 }
-
 export function secondstoMillisecond(number) {
   return number * 1000;
 }
@@ -38,8 +37,11 @@ export function createWordObject({ challenge = '', typed = '', id }) {
     },
     get isCorrect() {
       const { challenge, typed } = this;
-      const relevantTyped = typed.substr(0, challenge.length);
-      return challenge === relevantTyped;
+      const relevantTyped = typed.substr(0, challenge.length).toLowerCase();
+      return this.ChallengeLowerCase === relevantTyped;
+    },
+    get ChallengeLowerCase() {
+      return this.challenge.toLowerCase()
     },
     get wordArray() {
       return this.challenge.split('');
@@ -56,6 +58,7 @@ export function createWordObject({ challenge = '', typed = '', id }) {
     get removeLastTypedLetter() {
       return this.typed.slice(0, -1);
     },
+
     get numberOfCorrectEntities() {
       return this.typedArray.reduce(
         (accumulator, currentValue, currentIndex) => {
@@ -70,5 +73,12 @@ export function createWordObject({ challenge = '', typed = '', id }) {
       );
     }
   };
+}
+function filterEmptyStrings(value) {
+  return value !== ""
+}
+export function replaceLineBreaks(string) {
+  /**https://stackoverflow.com/questions/784539/how-do-i-replace-all-line-breaks-in-a-string-with-br-tags?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa */
+  return string.replace(/(?:\r\n|\r|\n)/g, ' ' );
 }
 export const noop = () => {};
