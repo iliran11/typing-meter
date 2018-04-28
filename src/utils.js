@@ -38,8 +38,11 @@ export function createWordObject({ challenge = '', typed = '', id }) {
     },
     get isCorrect() {
       const { challenge, typed } = this;
-      const relevantTyped = typed.substr(0, challenge.length);
-      return challenge === relevantTyped;
+      const relevantTyped = typed.substr(0, challenge.length).toLowerCase();
+      return this.ChallengeLowerCase === relevantTyped;
+    },
+    get ChallengeLowerCase() {
+      return this.challenge.toLowerCase()
     },
     get wordArray() {
       return this.challenge.split('');
@@ -56,6 +59,7 @@ export function createWordObject({ challenge = '', typed = '', id }) {
     get removeLastTypedLetter() {
       return this.typed.slice(0, -1);
     },
+
     get numberOfCorrectEntities() {
       return this.typedArray.reduce(
         (accumulator, currentValue, currentIndex) => {
