@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Stepper from './Verticalstepper';
-import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
 class StepperController extends Component {

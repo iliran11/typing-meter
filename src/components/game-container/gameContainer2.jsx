@@ -86,6 +86,7 @@ class GameContainer extends Component {
           if (this.currentWord.isCompleted) {
             this.changeIndex({ changeType: INCREMENT_INDEX });
           }
+          break;
         default:
           return;
       }
@@ -96,8 +97,8 @@ class GameContainer extends Component {
     const { gameStatus: prevGameStatus } = prevState;
     const isRestarting = nextGameStatus === AWAITS_TYPING && prevGameStatus === RESTART_PENDING;
     if (isRestarting) {
-      console.log(nextProps)
-      return { ...initialState(nextProps.customWords,nextProps.gameDuration), gameStatus: nextProps.gameStatus };
+      console.log(nextProps);
+      return { ...initialState(nextProps.customWords, nextProps.gameDuration), gameStatus: nextProps.gameStatus };
     }
     return { gameStatus: nextProps.gameStatus };
   }
@@ -154,10 +155,6 @@ class GameContainer extends Component {
   }
   get currentIndex() {
     return this.state.index;
-    const currentIndex = this.state.words.findIndex(word => {
-      return word.isCompleted === false;
-    });
-    return currentIndex;
   }
   get previousIndex() {
     return this.currentIndex - 1;
