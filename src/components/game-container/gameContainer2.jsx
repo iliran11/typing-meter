@@ -262,7 +262,6 @@ const initialState = (customWords, gameDuration) => {
       {
         title: 'Score Board',
         selector: '.joyride-step-scoreboard',
-        title: 'Your Score Board',
         text: 'Your metrics will update while you play typing.'
       },
       {
@@ -275,7 +274,6 @@ const initialState = (customWords, gameDuration) => {
         title: 'Words Per Minute',
         position: 'top-right',
         selector: '.joyride-step--wpm',
-        title: 'Number of Correctly Typed Words',
         text: (
           <div className="joyride-box--wpm">
             <span>The Score of Your Game.</span>

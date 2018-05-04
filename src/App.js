@@ -6,7 +6,6 @@ import AppBar from './components/appbar2';
 import 'animate.css';
 import './App.css';
 import CompletionModal from './components/completionModal';
-import WelcomeModal from './components/welcome/stepperController';
 import { INITIAL_START, AWAITS_TYPING, GAME_IS_ACTIVE, RESTART_PENDING, GAME_DURATION } from './constants';
 
 class App extends Component {
@@ -69,7 +68,6 @@ class App extends Component {
       onGameRestart,
       onGameEnd,
       wpm,
-      onWelcomeContinue,
       onGameBegins,
       state: { gameStatus }
     } = this;
