@@ -13,7 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameStatus: INITIAL_START
+      gameStatus: AWAITS_TYPING
     };
     this.isGameFinished = false;
     this.correctTypedWords = 0;
@@ -77,7 +77,6 @@ class App extends Component {
       <MuiThemeProvider>
         <React.Fragment>
           <AppBar />
-          {this.showWelcome === false && (
             <GameContainer
               onGameBegins={onGameBegins}
               onGameEnd={onGameEnd}
@@ -86,15 +85,6 @@ class App extends Component {
               customWords={this.customWords}
               gameDuration={this.gameDuration}
             />
-          )}
-          <WelcomeModal
-            onContinue={this.onWelcomeContinue}
-            onRequestChange={open => this.setState({ drawerIsOpen: open })}
-            onWelcomeContinue={onWelcomeContinue}
-            isOpen={this.showWelcome}
-            setCustomWords={this.setCustomWords}
-            setGameDuration={this.setGameDuration}
-          />
           <CompletionModal
             open={gameStatus === RESTART_PENDING}
             wpmScore={this.wpm}

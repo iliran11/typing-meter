@@ -6,7 +6,7 @@ export default function ScoreBoard(props) {
   const { wpm, correctTypedWords,disabled } = props;
   return (
     <div>
-      <Toolbar text="TITLE" className="secondary-toolbar transitionable" style={secondaryStyle}>
+      <Toolbar text="TITLE" className="secondary-toolbar transitionable joyride-step-scoreboard" style={secondaryStyle}>
         <ToolbarGroup>
           <ScoreSection title="CORRECT" iconClass="fas fa-check-circle" score={correctTypedWords} disabled={disabled}/>
         </ToolbarGroup>

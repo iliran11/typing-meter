@@ -21,6 +21,7 @@ import ProgressBar from './progress-bar';
 import isNull from 'lodash.isnull';
 import isFinite from 'lodash.isfinite';
 import isString from 'lodash.isstring';
+import Joyride from 'react-joyride';
 
 class GameContainer extends Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class GameContainer extends Component {
     this.state = initialState(this.props.customWords, this.props.gameDuration);
     this.startTime = null;
     this.inputRef = React.createRef();
+    this.joyride = React.createRef();
     /** INPUT CHNAGE EVENT */
     this.onInputChange = event => {
       const { gameStatus } = this.props;
@@ -216,6 +218,7 @@ class GameContainer extends Component {
   render() {
     return (
       <Fragment>
+        <Joyride ref={this.joyride} run={true} steps={this.state.steps} autoStart={true} />
         <ScoreBoard
           wpm={this.wpmNormalized}
           correctTypedWords={this.correctWordsNumber}
@@ -256,6 +259,20 @@ const initialState = (customWords, gameDuration) => {
     scrollIndex: 0,
     words: generateLoremIpsum(customWordArray),
     wpm: WPM_NULL,
-    gameAboutToBegin: false
+    gameAboutToBegin: false,
+    steps: [
+      {
+        title: <h1> hello </h1>,
+        selector: '.joyride-step-scoreboard',
+        title:'Your Score Board',
+        text: 'Your metrics while you type.',
+      },
+      {
+        title: <h1> hello </h1>,
+        selector: '.joyride-step-scoreboard',
+        title:'Your Score Board',
+        text: 'Your metrics while you type.',
+      }
+    ]
   };
 };
