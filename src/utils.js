@@ -81,4 +81,8 @@ export function replaceLineBreaks(string) {
   /**https://stackoverflow.com/questions/784539/how-do-i-replace-all-line-breaks-in-a-string-with-br-tags?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa */
   return string.replace(/(?:\r\n|\r|\n)/g, ' ' );
 }
+export function isLastCharIsSpace(str) {
+  /**https://stackoverflow.com/questions/36701001/check-if-last-typed-character-was-space?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa */
+  return str.substr(str.length-1, str.length-2)===" "
+}
 export const noop = () => {};

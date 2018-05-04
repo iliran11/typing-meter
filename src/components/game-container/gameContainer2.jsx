@@ -14,7 +14,8 @@ import {
   generateLoremIpsum,
   secondstoMillisecond,
   millisecondsToSeconds,
-  createWordObject
+  createWordObject,
+  isLastCharIsSpace
 } from '../../utils';
 import CompletionModal from '../completionModal';
 import ProgressBar from './progress-bar';
@@ -32,6 +33,12 @@ class GameContainer extends Component {
     this.joyride = React.createRef();
     /** INPUT CHNAGE EVENT */
     this.onInputChange = event => {
+      /** check if space has been clicked after completing a word. */
+      const spaceHasClicked = isLastCharIsSpace(event.target.value);
+      if (spaceHasClicked && this.currentWord.isCompleted) {
+        this.changeIndex({ changeType: INCREMENT_INDEX });
+        return;
+      }
       const { gameStatus } = this.props;
       if (gameStatus === AWAITS_TYPING) {
         this.onGameStart();
@@ -65,7 +72,7 @@ class GameContainer extends Component {
     };
     /** KEY DOWN EVENT */
     this.handleKeyPress = event => {
-      switch (event.key) {
+      switch (event.which) {
         case 8:
           /** backspace clicked */
 
@@ -81,11 +88,6 @@ class GameContainer extends Component {
               words: nextWordsArray,
               index: this.currentIndex + DECREMENT_INDEX
             });
-          }
-          break;
-        case 32:
-          if (this.currentWord.isCompleted) {
-            this.changeIndex({ changeType: INCREMENT_INDEX });
           }
           break;
         default:
