@@ -14,13 +14,15 @@ import {
   generateLoremIpsum,
   secondstoMillisecond,
   millisecondsToSeconds,
-  createWordObject
+  createWordObject,
+  isLastCharIsSpace
 } from '../../utils';
 import CompletionModal from '../completionModal';
 import ProgressBar from './progress-bar';
 import isNull from 'lodash.isnull';
 import isFinite from 'lodash.isfinite';
 import isString from 'lodash.isstring';
+import Joyride from 'react-joyride';
 
 class GameContainer extends Component {
   constructor(props) {
@@ -28,14 +30,20 @@ class GameContainer extends Component {
     this.state = initialState(this.props.customWords, this.props.gameDuration);
     this.startTime = null;
     this.inputRef = React.createRef();
+    this.joyride = React.createRef();
     /** INPUT CHNAGE EVENT */
     this.onInputChange = event => {
+      /** check if space has been clicked after completing a word. */
+      const spaceHasClicked = isLastCharIsSpace(event.target.value);
+      if (spaceHasClicked && this.currentWord.isCompleted) {
+        this.changeIndex({ changeType: INCREMENT_INDEX });
+        return;
+      }
       const { gameStatus } = this.props;
       if (gameStatus === AWAITS_TYPING) {
         this.onGameStart();
       }
       /** trim and lower case everything the user is typing */
-      console.log(this.currentWord, this.currentIndex);
       const newInputValue = event.target.value
         .trim()
         .toLowerCase()
@@ -82,11 +90,6 @@ class GameContainer extends Component {
             });
           }
           break;
-        case 32:
-          if (this.currentWord.isCompleted) {
-            this.changeIndex({ changeType: INCREMENT_INDEX });
-          }
-          break;
         default:
           return;
       }
@@ -97,7 +100,6 @@ class GameContainer extends Component {
     const { gameStatus: prevGameStatus } = prevState;
     const isRestarting = nextGameStatus === AWAITS_TYPING && prevGameStatus === RESTART_PENDING;
     if (isRestarting) {
-      console.log(nextProps);
       return { ...initialState(nextProps.customWords, nextProps.gameDuration), gameStatus: nextProps.gameStatus };
     }
     return { gameStatus: nextProps.gameStatus };
@@ -216,6 +218,7 @@ class GameContainer extends Component {
   render() {
     return (
       <Fragment>
+        <Joyride ref={this.joyride} run={true} steps={this.state.steps} autoStart={true} type="continuous" />
         <ScoreBoard
           wpm={this.wpmNormalized}
           correctTypedWords={this.correctWordsNumber}
@@ -228,7 +231,7 @@ class GameContainer extends Component {
           onChange={this.onInputChange}
           onKeyDown={this.handleKeyPress}
           tabIndex="0"
-          className={`input is-large is-primary size3 ${this.inputClasses}`}
+          className={`input is-large is-primary size3 joyride-step--input ${this.inputClasses}`}
           placeholder={this.inputPlaceHolder}
           ref={this.inputRef}
         />
@@ -256,6 +259,45 @@ const initialState = (customWords, gameDuration) => {
     scrollIndex: 0,
     words: generateLoremIpsum(customWordArray),
     wpm: WPM_NULL,
-    gameAboutToBegin: false
+    gameAboutToBegin: false,
+    steps: [
+      {
+        title: 'Score Board',
+        selector: '.joyride-step-scoreboard',
+        text: 'Your metrics will update while you play typing.'
+      },
+      {
+        position: 'top-left',
+        selector: '.joyride-step--correct',
+        title: 'Number of Correctly Typed Words',
+        text: 'The number of wholly correct words. a correct word has a green background.'
+      },
+      {
+        title: 'Words Per Minute',
+        position: 'top-right',
+        selector: '.joyride-step--wpm',
+        text: (
+          <div className="joyride-box--wpm">
+            <span>The Score of Your Game.</span>
+            <br />
+            <span>Will update as you type.</span>
+            <br />
+            <span>The less errors your make, and the faster you type, the score will be higher.</span>
+            <br />
+            <a href="http://indiatyping.com/index.php/typing-tips/typing-speed-calculation-formula">Read More ... </a>
+          </div>
+        )
+      },
+      {
+        title: 'Time Left',
+        selector: '.joyride-step--progress-bar',
+        text: 'Indicates how much time is left to play. You can adjust game duration in settings.'
+      },
+      {
+        title: 'Start Typing',
+        selector: '.joyride-step--input',
+        text: 'Start the game by typing in the input!'
+      }
+    ]
   };
 };

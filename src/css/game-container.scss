@@ -44,8 +44,12 @@ input {
   }
 }
 
+.scoreboard-container {
+  padding: 5px;
+  background-color: $primary-color;
+}
+
 .secondary-toolbar {
-  background-color: $primary-light;
   justify-content: center;
   height: auto;
   padding: 5px 24px;
@@ -91,6 +95,9 @@ input {
   height: 3.125rem;
   box-shadow: 0 0 10px $primary-light;
   flex: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   @media all and (max-width: 991px) {
   }
   @media all and (max-width: 768px) {
@@ -98,6 +105,9 @@ input {
   @media all and (max-width: 480px) {
     height: 1.25rem;
   }
+}
+.joyride-step--progress-bar {
+  height: 60%;
 }
 input {
   font-family: 'Roboto', sans-serif;
@@ -176,4 +186,8 @@ input {
   i {
     color: $primary-color;
   }
+}
+
+.joyride-box--wpm {
+  line-height: 25px;
 }

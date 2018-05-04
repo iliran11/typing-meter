@@ -6,14 +6,13 @@ import AppBar from './components/appbar2';
 import 'animate.css';
 import './App.css';
 import CompletionModal from './components/completionModal';
-import WelcomeModal from './components/welcome/stepperController';
 import { INITIAL_START, AWAITS_TYPING, GAME_IS_ACTIVE, RESTART_PENDING, GAME_DURATION } from './constants';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameStatus: INITIAL_START
+      gameStatus: AWAITS_TYPING
     };
     this.isGameFinished = false;
     this.correctTypedWords = 0;
@@ -69,7 +68,6 @@ class App extends Component {
       onGameRestart,
       onGameEnd,
       wpm,
-      onWelcomeContinue,
       onGameBegins,
       state: { gameStatus }
     } = this;
@@ -77,7 +75,6 @@ class App extends Component {
       <MuiThemeProvider>
         <React.Fragment>
           <AppBar />
-          {this.showWelcome === false && (
             <GameContainer
               onGameBegins={onGameBegins}
               onGameEnd={onGameEnd}
@@ -86,15 +83,6 @@ class App extends Component {
               customWords={this.customWords}
               gameDuration={this.gameDuration}
             />
-          )}
-          <WelcomeModal
-            onContinue={this.onWelcomeContinue}
-            onRequestChange={open => this.setState({ drawerIsOpen: open })}
-            onWelcomeContinue={onWelcomeContinue}
-            isOpen={this.showWelcome}
-            setCustomWords={this.setCustomWords}
-            setGameDuration={this.setGameDuration}
-          />
           <CompletionModal
             open={gameStatus === RESTART_PENDING}
             wpmScore={this.wpm}
