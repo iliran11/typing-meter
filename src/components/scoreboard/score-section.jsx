@@ -1,9 +1,9 @@
 import React from 'react';
 
 export default function ScoreSection(props) {
-  const { title, score, iconClass, svgStyle, scoreStyle, titleStyle,disabled } = props;
+  const { title, score, iconClass, svgStyle, scoreStyle, titleStyle,disabled ,className} = props;
   return (
-    <div className={`score-section transitionable ${disabled}`}>
+    <div className={`score-section transitionable ${disabled} ${className}`}>
       <h3 style={titleStyle}>{title}</h3>
       <div className="row">
         <i className={`${iconClass} icon`} style={svgStyle} />

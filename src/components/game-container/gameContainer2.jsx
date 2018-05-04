@@ -37,7 +37,6 @@ class GameContainer extends Component {
         this.onGameStart();
       }
       /** trim and lower case everything the user is typing */
-      console.log(this.currentWord, this.currentIndex);
       const newInputValue = event.target.value
         .trim()
         .toLowerCase()
@@ -66,7 +65,7 @@ class GameContainer extends Component {
     };
     /** KEY DOWN EVENT */
     this.handleKeyPress = event => {
-      switch (event.which) {
+      switch (event.key) {
         case 8:
           /** backspace clicked */
 
@@ -99,7 +98,6 @@ class GameContainer extends Component {
     const { gameStatus: prevGameStatus } = prevState;
     const isRestarting = nextGameStatus === AWAITS_TYPING && prevGameStatus === RESTART_PENDING;
     if (isRestarting) {
-      console.log(nextProps);
       return { ...initialState(nextProps.customWords, nextProps.gameDuration), gameStatus: nextProps.gameStatus };
     }
     return { gameStatus: nextProps.gameStatus };
@@ -218,7 +216,7 @@ class GameContainer extends Component {
   render() {
     return (
       <Fragment>
-        <Joyride ref={this.joyride} run={true} steps={this.state.steps} autoStart={true} />
+        <Joyride ref={this.joyride} run={true} steps={this.state.steps} autoStart={true} type="continuous" />
         <ScoreBoard
           wpm={this.wpmNormalized}
           correctTypedWords={this.correctWordsNumber}
@@ -231,7 +229,7 @@ class GameContainer extends Component {
           onChange={this.onInputChange}
           onKeyDown={this.handleKeyPress}
           tabIndex="0"
-          className={`input is-large is-primary size3 ${this.inputClasses}`}
+          className={`input is-large is-primary size3 joyride-step--input ${this.inputClasses}`}
           placeholder={this.inputPlaceHolder}
           ref={this.inputRef}
         />
@@ -262,16 +260,43 @@ const initialState = (customWords, gameDuration) => {
     gameAboutToBegin: false,
     steps: [
       {
-        title: <h1> hello </h1>,
+        title: 'Score Board',
         selector: '.joyride-step-scoreboard',
-        title:'Your Score Board',
-        text: 'Your metrics while you type.',
+        title: 'Your Score Board',
+        text: 'Your metrics will update while you play typing.'
       },
       {
-        title: <h1> hello </h1>,
-        selector: '.joyride-step-scoreboard',
-        title:'Your Score Board',
-        text: 'Your metrics while you type.',
+        position: 'top-left',
+        selector: '.joyride-step--correct',
+        title: 'Number of Correctly Typed Words',
+        text: 'The number of wholly correct words. a correct word has a green background.'
+      },
+      {
+        title: 'Words Per Minute',
+        position: 'top-right',
+        selector: '.joyride-step--wpm',
+        title: 'Number of Correctly Typed Words',
+        text: (
+          <div className="joyride-box--wpm">
+            <span>The Score of Your Game.</span>
+            <br />
+            <span>Will update as you type.</span>
+            <br />
+            <span>The less errors your make, and the faster you type, the score will be higher.</span>
+            <br />
+            <a href="http://indiatyping.com/index.php/typing-tips/typing-speed-calculation-formula">Read More ... </a>
+          </div>
+        )
+      },
+      {
+        title: 'Time Left',
+        selector: '.joyride-step--progress-bar',
+        text: 'Indicates how much time is left to play. You can adjust game duration in settings.'
+      },
+      {
+        title: 'Start Typing',
+        selector: '.joyride-step--input',
+        text: 'Start the game by typing in the input!'
       }
     ]
   };
