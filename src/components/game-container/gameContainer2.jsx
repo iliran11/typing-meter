@@ -52,7 +52,8 @@ class GameContainer extends Component {
       /** create a new word object according to the new input */
       const nextCurrentWord = new createWordObject({
         challenge: this.currentWord.challenge,
-        typed: newInputValue
+        typed: newInputValue,
+        key: `${this.previousWord.challenge}-${Date.now()}`
       });
       nextWordsArray[this.currentIndex] = nextCurrentWord;
       this.setState(
@@ -82,7 +83,8 @@ class GameContainer extends Component {
             const nextWordsArray = this.state.words.slice(0);
             nextWordsArray[this.previousIndex] = createWordObject({
               challenge: this.previousWord.challenge,
-              typed: this.previousWord.removeLastTypedLetter
+              typed: this.previousWord.removeLastTypedLetter,
+              key: `${this.previousWord.challenge}-${Date.now()}`
             });
             this.setState({
               words: nextWordsArray,
@@ -98,7 +100,9 @@ class GameContainer extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     const { gameStatus: nextGameStatus } = nextProps;
     const { gameStatus: prevGameStatus } = prevState;
-    const isRestarting = nextGameStatus === AWAITS_TYPING && prevGameStatus === RESTART_PENDING;
+    /** ADD COMMENT */
+    const isRestarting =
+      nextGameStatus === AWAITS_TYPING && (prevGameStatus === RESTART_PENDING || prevGameStatus === GAME_IS_ACTIVE);
     if (isRestarting) {
       return { ...initialState(nextProps.customWords, nextProps.gameDuration), gameStatus: nextProps.gameStatus };
     }
@@ -252,6 +256,7 @@ export default GameContainer;
 const initialState = (customWords, gameDuration) => {
   const customWordArray = isString(customWords) ? replaceLineBreaks(customWords).split(' ') : null;
   const overallTime = secondstoMillisecond(gameDuration);
+  const nextWords = generateLoremIpsum(customWordArray);
   return {
     overallTime,
     timeLeft: millisecondsToSeconds(overallTime),

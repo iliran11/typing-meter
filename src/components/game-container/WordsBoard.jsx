@@ -8,7 +8,7 @@ export default function WordsBoard(props) {
   const renderWords = (word, index) => {
     const isActive = index === currentGamePosition;
     return (
-      <Fragment key={index}>
+      <Fragment key={word.key}>
         <Word
           displayedLetters={word.challenge.split('')}
           typedLetters={word.typed.split('')}
@@ -19,5 +19,6 @@ export default function WordsBoard(props) {
       </Fragment>
     );
   };
+  console.log(words)
   return <div className={wordsBoardClasses}>{words.map(renderWords)}</div>;
 }
