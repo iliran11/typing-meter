@@ -7,18 +7,21 @@ import 'animate.css';
 import './App.css';
 import CompletionModal from './components/completionModal';
 import { INITIAL_START, AWAITS_TYPING, GAME_IS_ACTIVE, RESTART_PENDING, GAME_DURATION } from './constants';
+import Settings from './components/settings';
+import Dialog from 'material-ui/Dialog';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameStatus: AWAITS_TYPING
+      gameStatus: AWAITS_TYPING,
+      settingsOpen: false,
+      customWords: null,
+      gameDuration: GAME_DURATION
     };
     this.isGameFinished = false;
     this.correctTypedWords = 0;
     this.wpm = 0;
-    this.customWords = null;
-    this.gameDuration = GAME_DURATION;
   }
   onWelcomeContinue = () => {
     this.isWelcome = false;
@@ -49,19 +52,28 @@ class App extends Component {
       gameStatus: AWAITS_TYPING
     });
   };
-  onWelcomeContinue = () => {
+  toggleSettings = () => {
+    const gameStatus = this.isGameActive ? AWAITS_TYPING : GAME_IS_ACTIVE;
     this.setState({
-      gameStatus: AWAITS_TYPING
+      gameStatus,
+      settingsOpen: !this.state.settingsOpen
     });
   };
-  setCustomWords = value => {
-    this.customWords = value;
+  onFormSubmit = options => {
+    const { customWords, gameDuration } = options;
+    this.setState(
+      {
+        customWords,
+        gameDuration,
+        gameStatus: GAME_IS_ACTIVE
+      },
+      () => {
+        this.toggleSettings();
+      }
+    );
   };
-  setGameDuration = (event, value) => {
-    this.gameDuration = value;
-  };
-  get showWelcome() {
-    return this.state.gameStatus === INITIAL_START;
+  get isGameActive() {
+    return this.state.gameStatus === GAME_IS_ACTIVE;
   }
   render() {
     const {
@@ -74,15 +86,15 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <React.Fragment>
-          <AppBar />
-            <GameContainer
-              onGameBegins={onGameBegins}
-              onGameEnd={onGameEnd}
-              onGameRestart={onGameRestart}
-              gameStatus={gameStatus}
-              customWords={this.customWords}
-              gameDuration={this.gameDuration}
-            />
+          <AppBar onSettingsClick={this.toggleSettings} />
+          <GameContainer
+            onGameBegins={onGameBegins}
+            onGameEnd={onGameEnd}
+            onGameRestart={onGameRestart}
+            gameStatus={gameStatus}
+            customWords={this.state.customWords}
+            gameDuration={this.state.gameDuration}
+          />
           <CompletionModal
             open={gameStatus === RESTART_PENDING}
             wpmScore={this.wpm}
@@ -90,6 +102,13 @@ class App extends Component {
             onRestart={this.onGameRestart}
             wpm={wpm}
           />
+          <Dialog open={this.state.settingsOpen}>
+            <Settings
+              setCustomWords={this.setCustomWords}
+              setGameDuration={this.setGameDuration}
+              onSubmit={this.onFormSubmit}
+            />
+          </Dialog>
         </React.Fragment>
       </MuiThemeProvider>
     );
