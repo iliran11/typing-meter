@@ -19,6 +19,5 @@ export default function WordsBoard(props) {
       </Fragment>
     );
   };
-  console.log(words)
   return <div className={wordsBoardClasses}>{words.map(renderWords)}</div>;
 }
