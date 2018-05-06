@@ -6,7 +6,7 @@ import AppBar from './components/appbar2';
 import 'animate.css';
 import './App.css';
 import CompletionModal from './components/completionModal';
-import { INITIAL_START, AWAITS_TYPING, GAME_IS_ACTIVE, RESTART_PENDING, GAME_DURATION } from './constants';
+import {  AWAITS_TYPING, GAME_IS_ACTIVE, RESTART_PENDING, GAME_DURATION } from './constants';
 import Settings from './components/settings';
 import Dialog from 'material-ui/Dialog';
 

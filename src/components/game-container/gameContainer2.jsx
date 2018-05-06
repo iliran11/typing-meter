@@ -14,7 +14,6 @@ import {
   generateLoremIpsum,
   secondstoMillisecond,
   millisecondsToSeconds,
-  createWordObject,
   isLastCharIsSpace
 } from '../../utils';
 import CompletionModal from '../completionModal';
@@ -248,7 +247,6 @@ export default GameContainer;
 const initialState = (customWords, gameDuration) => {
   const customWordArray = isString(customWords) ? replaceLineBreaks(customWords).split(' ') : null;
   const overallTime = secondstoMillisecond(gameDuration);
-  const nextWords = generateLoremIpsum(customWordArray);
   return {
     overallTime,
     timeLeft: millisecondsToSeconds(overallTime),
