@@ -12,5 +12,5 @@ export const AWAITS_TYPING = 1;
 export const GAME_IS_ACTIVE = 2;
 export const RESTART_PENDING = 3;
 
-export const DECREMENT_INDEX = -1
-export const INCREMENT_INDEX = 1
+export const INCREMENT_INDEX = 1;
+export const DECREMENT_INDEX = -1;

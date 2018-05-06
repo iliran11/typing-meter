@@ -81,6 +81,7 @@ class Word extends React.Component {
   };
   focusWord = () => {
     const nextWord = this.nodeDom;
+    console.log(nextWord)
     const wordsContainer = this.nodeDom.parentNode.parentNode;
     /** height of the words container */
     const containerHeight = wordsContainer.clientHeight;
