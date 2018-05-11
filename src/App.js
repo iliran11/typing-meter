@@ -18,7 +18,7 @@ class App extends Component {
       settingsOpen: false,
       customWords: null,
       gameDuration: GAME_DURATION
-    };
+    ;
     this.isGameFinished = false;
     this.correctTypedWords = 0;
     this.wpm = 0;
