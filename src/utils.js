@@ -1,5 +1,6 @@
 import randomWords from 'random-words';
 import { WORDS_AMOUNT } from './constants';
+import keyIndex from 'react-key-index';
 
 export function generateWordsArray() {
   return Array.from(new Array(WORDS_AMOUNT), () => {
@@ -7,9 +8,11 @@ export function generateWordsArray() {
   });
 }
 export function generateLoremIpsum(customWords) {
-  const text = customWords || generateWordsArray();
-  return text.filter(filterEmptyStrings).map(word => {
-    return createWordObject({ challenge: word });
+  const wordsArray = customWords || generateWordsArray();
+  /** adding a unique key to each word in the array. */
+  const keyedWordsArray = keyIndex(wordsArray, getRandomNumber());
+  return keyedWordsArray.filter(filterEmptyStrings).map(word => {
+    return createWordObject({ challenge: word.value, key: word.id });
   });
 }
 export function secondstoMillisecond(number) {
@@ -22,10 +25,11 @@ export function millisecondsToSeconds(number) {
 export function millisecondsToMinutes(number) {
   return number / 60000;
 }
-export function createWordObject({ challenge = '', typed = '', id }) {
+export function createWordObject({ challenge = '', typed = '', key }) {
   return {
     challenge,
     typed,
+    key,
     get isCompleted() {
       const { challenge, typed } = this;
       return challenge.length <= typed.length;
@@ -41,7 +45,7 @@ export function createWordObject({ challenge = '', typed = '', id }) {
       return this.ChallengeLowerCase === relevantTyped;
     },
     get ChallengeLowerCase() {
-      return this.challenge.toLowerCase()
+      return this.challenge.toLowerCase();
     },
     get wordArray() {
       return this.challenge.split('');
@@ -75,14 +79,18 @@ export function createWordObject({ challenge = '', typed = '', id }) {
   };
 }
 function filterEmptyStrings(value) {
-  return value !== ""
+  return value !== '';
 }
 export function replaceLineBreaks(string) {
   /**https://stackoverflow.com/questions/784539/how-do-i-replace-all-line-breaks-in-a-string-with-br-tags?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa */
-  return string.replace(/(?:\r\n|\r|\n)/g, ' ' );
+  return string.replace(/(?:\r\n|\r|\n)/g, ' ');
 }
 export function isLastCharIsSpace(str) {
   /**https://stackoverflow.com/questions/36701001/check-if-last-typed-character-was-space?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa */
-  return str.substr(str.length-1, str.length-2)===" "
+  return str.substr(str.length - 1, str.length - 2) === ' ';
 }
 export const noop = () => {};
+
+export function getRandomNumber() {
+  return Math.floor(Math.random() * 200) + 1;
+}

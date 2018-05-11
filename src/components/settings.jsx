@@ -13,7 +13,6 @@ class SettingsForm extends React.Component {
       customText: false
     };
     this.handleCustomWords = event => {
-      this.props.setCustomWords(event.target.value);
       this.setState({
         customWords: event.target.value
       });
@@ -22,7 +21,13 @@ class SettingsForm extends React.Component {
       this.setState({
         gameDuration: value
       });
-      this.props.setGameDuration(event, value);
+    };
+    this.onSubmit = (event) => {
+      event.preventDefault();
+      this.props.onSubmit({
+        customWords: this.state.customWords,
+        gameDuration: this.state.gameDuration
+      });
     };
     this.onToggle = (event, value) => {
       console.log(value);
@@ -39,7 +44,7 @@ class SettingsForm extends React.Component {
     return 'Custom Text';
   }
   get typeCustomText() {
-    return 'Put your custom text here'
+    return 'Put your custom text here';
   }
 
   render() {
@@ -50,7 +55,14 @@ class SettingsForm extends React.Component {
           <Toggle onToggle={this.onToggle} defaultToggled={false} />
         </div>
         {this.state.customText && (
-          <TextField multiLine={true} rows={1} hintText={this.typeCustomText} fullWidth={true} onChange={this.handleCustomWords} />
+          <TextField
+            multiLine={true}
+            rows={1}
+            rowsMax={6}
+            hintText={this.typeCustomText}
+            fullWidth={true}
+            onChange={this.handleCustomWords}
+          />
         )}
         <div>
           <div className="slider-control">
@@ -65,6 +77,7 @@ class SettingsForm extends React.Component {
             />
           </div>
         </div>
+        <button onClick={this.onSubmit}>submit</button>
       </form>
     );
   }

@@ -14,7 +14,6 @@ import {
   generateLoremIpsum,
   secondstoMillisecond,
   millisecondsToSeconds,
-  createWordObject,
   isLastCharIsSpace
 } from '../../utils';
 import CompletionModal from '../completionModal';
@@ -49,12 +48,9 @@ class GameContainer extends Component {
         .toLowerCase()
         .substring(0, this.currentWord.challengeLength);
       const nextWordsArray = this.state.words.slice(0);
-      /** create a new word object according to the new input */
-      const nextCurrentWord = new createWordObject({
-        challenge: this.currentWord.challenge,
-        typed: newInputValue
-      });
-      nextWordsArray[this.currentIndex] = nextCurrentWord;
+      /** mutate the current word in next words array */
+      nextWordsArray[this.currentIndex].typed = newInputValue;
+      const nextCurrentWord = nextWordsArray[this.currentIndex].typed;
       this.setState(
         {
           words: nextWordsArray
@@ -80,10 +76,7 @@ class GameContainer extends Component {
             /** do not proceed to handleChange event. */
             event.preventDefault();
             const nextWordsArray = this.state.words.slice(0);
-            nextWordsArray[this.previousIndex] = createWordObject({
-              challenge: this.previousWord.challenge,
-              typed: this.previousWord.removeLastTypedLetter
-            });
+            nextWordsArray[this.previousIndex].typed = this.previousWord.removeLastTypedLetter;
             this.setState({
               words: nextWordsArray,
               index: this.currentIndex + DECREMENT_INDEX
@@ -98,7 +91,9 @@ class GameContainer extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     const { gameStatus: nextGameStatus } = nextProps;
     const { gameStatus: prevGameStatus } = prevState;
-    const isRestarting = nextGameStatus === AWAITS_TYPING && prevGameStatus === RESTART_PENDING;
+    /** ADD COMMENT */
+    const isRestarting =
+      nextGameStatus === AWAITS_TYPING && (prevGameStatus === RESTART_PENDING || prevGameStatus === GAME_IS_ACTIVE);
     if (isRestarting) {
       return { ...initialState(nextProps.customWords, nextProps.gameDuration), gameStatus: nextProps.gameStatus };
     }
