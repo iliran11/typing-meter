@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "animate.css": "^3.6.1",
+    "hashids": "^1.1.4",
     "i": "^0.3.6",
     "lodash.countby": "^4.6.0",
     "lodash.isfinite": "^3.3.2",
@@ -22,7 +23,6 @@
     "react-dom": "^16.3.1",
     "react-fontawesome": "^1.6.1",
     "react-joyride": "^1.11.4",
-    "react-key-index": "^0.1.1",
     "react-scripts": "1.0.17",
     "scroll-into-view": "^1.9.3"
   },
