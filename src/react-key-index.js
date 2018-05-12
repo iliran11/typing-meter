@@ -3,15 +3,19 @@
  *  TODO: Find another supported library.
  */
 
-'use strict';
-var Hashids = require('hashids');
+import Hashids from 'hashids'
 
 export default  function (arr, label) {
-  var hashids = new Hashids();
+	var hashids = new Hashids();
+	// eslint-disable-next-line
 	var x = parseInt(label);
+	// eslint-disable-next-line
 	var digits = [9, 9, x];
-  var obj = {};
+	// eslint-disable-next-line
+	var obj = {};
+	// eslint-disable-next-line
 	var array = arr;
+	// eslint-disable-next-line
 	var matrix = [];
 
 	var result = arr.map(function(arr, index) {

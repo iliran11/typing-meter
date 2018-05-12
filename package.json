@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "animate.css": "^3.6.1",
+    "hashids": "^1.1.4",
     "i": "^0.3.6",
     "lodash.countby": "^4.6.0",
     "lodash.isfinite": "^3.3.2",
