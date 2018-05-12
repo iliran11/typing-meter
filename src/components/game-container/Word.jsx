@@ -47,7 +47,7 @@ class Word extends React.Component {
       return <Letter value={element.letter} status={element.status} key={index} />;
     });
   };
-  componentWillUpdate = nextProps => {
+  UNSAFE_componentWillUpdat = nextProps => {
     // console.log(this.props.displayedLetters.join(''),nextProps)
     const { isCompleted, isActive } = nextProps;
     const isJustCompleted = isCompleted && isActive === false;
