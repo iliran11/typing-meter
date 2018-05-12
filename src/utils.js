@@ -1,6 +1,6 @@
 import randomWords from 'random-words';
 import { WORDS_AMOUNT } from './constants';
-import keyIndex from 'react-key-index';
+import keyIndex from './react-key-index';
 
 export function generateWordsArray() {
   return Array.from(new Array(WORDS_AMOUNT), () => {
