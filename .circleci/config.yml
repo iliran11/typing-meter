@@ -7,22 +7,3 @@ jobs:
       - checkout
       # - run: npm install
       # - run: npm run build
-  deploy:
-    docker: 
-      - image: circleci/node:7.10
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run: docker container run garland/aws-cli-docker aws --version
-
-workflows:
-  version: 2
-  build-and-deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-    filters:
-      branches:
-        only: continuous-deployment
