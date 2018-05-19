@@ -5,11 +5,24 @@ jobs:
       - image: circleci/node:7.10
     steps:
       - checkout
-      - run: npm install
-      # - run: npm run lint
-      - run: npm run build
-deployment:
-  prod:
-    branch: circle-config-test
-    commands: 
-      - aws s3 sync build/ s3://http://www.typing-coacher.net.s3-website.eu-central-1.amazonaws.com/ --delete
+      # - run: npm install
+      # - run: npm run build
+  deploy:
+    docker: 
+      - image: circleci/node:7.10
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: docker container run garland/aws-cli-docker aws --version
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+    filters:
+      branches:
+      only: continuous-deployment
