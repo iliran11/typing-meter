@@ -15,7 +15,7 @@ jobs:
       - setup_remote_docker
       - run: npm install
       - run: npm run build
-      - run: ls
+      - run: ./deploy.sh
 
 workflows:
   version: 2
