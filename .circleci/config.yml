@@ -13,7 +13,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: ./deploy.sh
+      - run: ls
 
 workflows:
   version: 2
