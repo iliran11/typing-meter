@@ -25,4 +25,4 @@ workflows:
             - build
     filters:
       branches:
-      only: continuous-deployment
+      only: master
