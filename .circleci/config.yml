@@ -5,8 +5,8 @@ jobs:
       - image: circleci/node:7.10
     steps:
       - checkout
-      # - run: npm install
-      # - run: npm run build
+      - run: npm install
+      - run: npm run lint
   deploy:
     machine: true
     steps:
@@ -23,3 +23,7 @@ workflows:
       - deploy:
           requires:
             - build
+          filter: 
+            branches:
+              only: master
+
