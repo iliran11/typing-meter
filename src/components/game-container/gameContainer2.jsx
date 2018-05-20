@@ -219,7 +219,9 @@ class GameContainer extends Component {
           correctTypedWords={this.correctWordsNumber}
           disabled={this.isWordBoardDisabled}
         />
-        <ProgressBar isProgressCounting={this.isGameActive} animationTime={this.props.gameDuration} />
+        {this.props.gameStatus === GAME_IS_ACTIVE && (
+          <ProgressBar isProgressCounting={this.isGameActive} animationTime={this.props.gameDuration} />
+        )}
         <input
           autoFocus
           value={this.inputValue}
