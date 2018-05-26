@@ -1,22 +1,28 @@
-import React, { Component,createRef } from 'react';
-import Letter from './Letter.jsx';
-import scrollIntoView from 'scroll-into-view';
+import React, { Component, createRef } from 'react';
 import { FAILURE_ANIMATION, SUCCESS_ANIMATION } from '../../constants';
 import LettersList from './LettersList';
-import {focusNode} from '../../utils'
+import { focusNode } from '../../utils';
 
 export default class Word extends Component {
   constructor(props) {
     super(props);
     this.wordRef = createRef();
   }
+  shouldComponentUpdate = (nextProps, nextState) => {
+    const typedWordsChanged =
+      this.props.typedLetters.length !== nextProps.typedLetters.length;
+    const isGoingActive =
+      nextProps.isActive === true && this.props.isActive === false;
+    /** render the component if there is a new typing information OR the word is going to get active. */
+    return typedWordsChanged || isGoingActive;
+  };
   componentDidUpdate = prevProps => {
     const { isActive: prevIsActive } = prevProps;
     const { isActive: currentIsActive } = this.props;
     /** check if unactive word, is going into active state. */
     const beingActivated = currentIsActive === true && prevIsActive === false;
     if (beingActivated) {
-      console.log(this.wordRef)
+      console.log(this.wordRef);
       focusNode(this.wordRef.current);
     }
   };
