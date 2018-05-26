@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import ScoreBoard from '../scoreboard/scoreBoard';
-import WordsBoard from './WordsBoard';
+import WordsList from './WordsList';
 import {
   AWAITS_TYPING,
   GAME_IS_ACTIVE,
@@ -232,7 +232,7 @@ class GameContainer extends Component {
           placeholder={this.inputPlaceHolder}
           ref={this.inputRef}
         />
-        <WordsBoard words={this.state.words} currentGamePosition={this.currentIndex} isActive={this.isGameActive} />
+        <WordsList words={this.state.words} currentGamePosition={this.currentIndex} isActive={this.isGameActive} />
         <CompletionModal
           open={this.isGameFinished}
           wpmScore={this.wpm}

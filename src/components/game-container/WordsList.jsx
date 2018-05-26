@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import Word from './Word';
+import Word from './Word2';
 
-export default function WordsBoard(props) {
+export default function WordsList(props) {
   const { words, currentGamePosition,isActive } = props;
   const disableClass = isActive ? '' : 'disabled'
   const wordsBoardClasses = `words-container size1 transitionable ${disableClass}`
