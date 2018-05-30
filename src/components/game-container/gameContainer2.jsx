@@ -7,7 +7,8 @@ import {
   WPM_NULL,
   RESTART_PENDING,
   INCREMENT_INDEX,
-  DECREMENT_INDEX
+  DECREMENT_INDEX,
+  GAME_DURATION
 } from '../../constants';
 import {
   replaceLineBreaks,
@@ -26,7 +27,7 @@ import Joyride from 'react-joyride';
 class GameContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = initialState(this.props.customWords, this.props.gameDuration);
+    this.state = initialState(AWAITS_TYPING);
     this.startTime = null;
     this.inputRef = React.createRef();
     this.joyride = React.createRef();
@@ -38,7 +39,7 @@ class GameContainer extends Component {
         this.changeIndex({ changeType: INCREMENT_INDEX });
         return;
       }
-      const { gameStatus } = this.props;
+      const { gameStatus } = this.state;
       if (gameStatus === AWAITS_TYPING) {
         this.onGameStart();
       }
@@ -76,7 +77,9 @@ class GameContainer extends Component {
             /** do not proceed to handleChange event. */
             event.preventDefault();
             const nextWordsArray = this.state.words.slice(0);
-            nextWordsArray[this.previousIndex].typed = this.previousWord.removeLastTypedLetter;
+            nextWordsArray[
+              this.previousIndex
+            ].typed = this.previousWord.removeLastTypedLetter;
             this.setState({
               words: nextWordsArray,
               index: this.currentIndex + DECREMENT_INDEX
@@ -88,19 +91,10 @@ class GameContainer extends Component {
       }
     };
   }
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const { gameStatus: nextGameStatus } = nextProps;
-    const { gameStatus: prevGameStatus } = prevState;
-    /** ADD COMMENT */
-    const isRestarting =
-      nextGameStatus === AWAITS_TYPING && (prevGameStatus === RESTART_PENDING || prevGameStatus === GAME_IS_ACTIVE);
-    if (isRestarting) {
-      return { ...initialState(nextProps.customWords, nextProps.gameDuration), gameStatus: nextProps.gameStatus };
-    }
-    return { gameStatus: nextProps.gameStatus };
-  }
   onGameStart = () => {
-    this.props.onGameBegins();
+    this.setState({
+      gameStatus: GAME_IS_ACTIVE
+    });
     this.startTime = Date.now();
     this.timeLeftInterval = setInterval(() => {
       if (this.timeLeft <= 0) {
@@ -113,11 +107,14 @@ class GameContainer extends Component {
   };
   onGameEnd = () => {
     clearInterval(this.timeLeftInterval);
-    this.props.onGameEnd({
-      correctTypedWords: this.correctWordsNumber,
-      wpm: this.wpmNormalized
+    this.setState({
+      gameStatus: RESTART_PENDING
     });
     this.inputRef.current.blur();
+  };
+  onGameRestart = () => {
+    const nextState = initialState();
+    this.setState(nextState);
   };
   changeIndex = options => {
     const { changeType } = options;
@@ -127,7 +124,7 @@ class GameContainer extends Component {
   };
   get timePassed() {
     /** returns time passed in seconds */
-    return this.props.gameDuration - this.timeLeft;
+    return GAME_DURATION - this.timeLeft;
   }
   get timePassedMinutes() {
     /** returns time passed in minutes. */
@@ -135,7 +132,7 @@ class GameContainer extends Component {
   }
 
   get timeLeft() {
-    if (isNull(this.startTime)) return this.props.gameDuration;
+    if (isNull(this.startTime)) return this.state.gameDuration;
     const millisecondsPassed = Date.now() - this.startTime;
     const millisecondsLeft = this.state.overallTime - millisecondsPassed;
     return millisecondsToSeconds(millisecondsLeft);
@@ -182,6 +179,7 @@ class GameContainer extends Component {
   }
   get wpmNormalized() {
     const wpmScore = this.wpmScore;
+
     if (isFinite(wpmScore)) {
       /** if the number is smaller than 0, just return 0. */
       if (wpmScore < 0) return 0;
@@ -199,7 +197,7 @@ class GameContainer extends Component {
     return this.isGameActive;
   }
   get isGameActive() {
-    return this.props.gameStatus === GAME_IS_ACTIVE;
+    return this.state.gameStatus === GAME_IS_ACTIVE;
   }
   get isGameFinished() {
     return false;
@@ -213,14 +211,23 @@ class GameContainer extends Component {
   render() {
     return (
       <Fragment>
-        <Joyride ref={this.joyride} run={true} steps={this.state.steps} autoStart={true} type="continuous" />
+        <Joyride
+          ref={this.joyride}
+          run={true}
+          steps={this.state.steps}
+          autoStart={true}
+          type="continuous"
+        />
         <ScoreBoard
           wpm={this.wpmNormalized}
           correctTypedWords={this.correctWordsNumber}
           disabled={this.isWordBoardDisabled}
         />
-        {this.props.gameStatus === GAME_IS_ACTIVE && (
-          <ProgressBar isProgressCounting={this.isGameActive} animationTime={this.props.gameDuration} />
+        {this.state.gameStatus === GAME_IS_ACTIVE && (
+          <ProgressBar
+            isProgressCounting={this.isGameActive}
+            animationTime={GAME_DURATION}
+          />
         )}
         <input
           autoFocus
@@ -228,16 +235,22 @@ class GameContainer extends Component {
           onChange={this.onInputChange}
           onKeyDown={this.handleKeyPress}
           tabIndex="0"
-          className={`input is-large is-primary size3 joyride-step--input ${this.inputClasses}`}
+          className={`input is-large is-primary size3 joyride-step--input ${
+            this.inputClasses
+          }`}
           placeholder={this.inputPlaceHolder}
           ref={this.inputRef}
         />
-        <WordsList words={this.state.words} currentGamePosition={this.currentIndex} isActive={this.isGameActive} />
+        <WordsList
+          words={this.state.words}
+          currentGamePosition={this.currentIndex}
+          isActive={this.isGameActive}
+        />
         <CompletionModal
-          open={this.isGameFinished}
-          wpmScore={this.wpm}
-          correctTypedWords={this.correctTypedWords}
-          wpm={this.wpmNormalized}
+          open={this.state.gameStatus === RESTART_PENDING}
+          wpmScore={this.wpmNormalized}
+          correctTypedWords={this.correctWordsNumber}
+          onRestart={this.onGameRestart}
         />
       </Fragment>
     );
@@ -246,9 +259,11 @@ class GameContainer extends Component {
 
 export default GameContainer;
 
-const initialState = (customWords, gameDuration) => {
-  const customWordArray = isString(customWords) ? replaceLineBreaks(customWords).split(' ') : null;
-  const overallTime = secondstoMillisecond(gameDuration);
+const initialState = customWords => {
+  const customWordArray = isString(customWords)
+    ? replaceLineBreaks(customWords).split(' ')
+    : null;
+  const overallTime = secondstoMillisecond(GAME_DURATION);
   return {
     overallTime,
     timeLeft: millisecondsToSeconds(overallTime),
@@ -256,7 +271,9 @@ const initialState = (customWords, gameDuration) => {
     scrollIndex: 0,
     words: generateLoremIpsum(customWordArray),
     wpm: WPM_NULL,
+    gameDuration: GAME_DURATION,
     gameAboutToBegin: false,
+    gameStatus: AWAITS_TYPING,
     steps: [
       {
         title: 'Score Board',
@@ -267,7 +284,8 @@ const initialState = (customWords, gameDuration) => {
         position: 'top-left',
         selector: '.joyride-step--correct',
         title: 'Number of Correctly Typed Words',
-        text: 'The number of wholly correct words. a correct word has a green background.'
+        text:
+          'The number of wholly correct words. a correct word has a green background.'
       },
       {
         title: 'Words Per Minute',
@@ -279,16 +297,22 @@ const initialState = (customWords, gameDuration) => {
             <br />
             <span>Will update as you type.</span>
             <br />
-            <span>The less errors your make, and the faster you type, the score will be higher.</span>
+            <span>
+              The less errors your make, and the faster you type, the score will
+              be higher.
+            </span>
             <br />
-            <a href="http://indiatyping.com/index.php/typing-tips/typing-speed-calculation-formula">Read More ... </a>
+            <a href="http://indiatyping.com/index.php/typing-tips/typing-speed-calculation-formula">
+              Read More ...{' '}
+            </a>
           </div>
         )
       },
       {
         title: 'Time Left',
         selector: '.joyride-step--progress-bar',
-        text: 'Indicates how much time is left to play. You can adjust game duration in settings.'
+        text:
+          'Indicates how much time is left to play. You can adjust game duration in settings.'
       },
       {
         title: 'Start Typing',
