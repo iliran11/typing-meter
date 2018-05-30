@@ -4,7 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import GameContainer from './components/game-container/gameContainer2';
 import AppBar from './components/appbar2';
 import Settings from './components/settings';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import 'animate.css';
 import './App.css';
 
