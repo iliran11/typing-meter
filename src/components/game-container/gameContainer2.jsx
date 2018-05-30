@@ -259,7 +259,8 @@ class GameContainer extends Component {
 
 export default GameContainer;
 
-const initialState = customWords => {
+const initialState = () => {
+  const customWords = localStorage.getItem('customWords')
   const customWordArray = isString(customWords)
     ? replaceLineBreaks(customWords).split(' ')
     : null;

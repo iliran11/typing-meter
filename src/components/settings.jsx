@@ -10,7 +10,8 @@ class SettingsForm extends React.Component {
     super(props);
     this.state = {
       gameDuration: GAME_DURATION,
-      customText: false
+      customText: false,
+      customWords: null
     };
     this.handleCustomWords = event => {
       this.setState({
@@ -22,17 +23,14 @@ class SettingsForm extends React.Component {
         gameDuration: value
       });
     };
-    this.onSubmit = (event) => {
+    this.onSubmit = event => {
       event.preventDefault();
-      this.props.onSubmit({
-        customWords: this.state.customWords,
-        gameDuration: this.state.gameDuration
-      });
+      localStorage.setItem('customWords', this.state.customWords);
+      localStorage.setItem('gameDuration', this.state.gameDuration);
+      this.props.history.push('/')
     };
     this.onToggle = (event, value) => {
-      console.log(value);
       if (value === false) {
-        this.props.setCustomWords(null);
       }
       this.setState({
         customText: value
