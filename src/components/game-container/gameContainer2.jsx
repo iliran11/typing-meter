@@ -23,7 +23,10 @@ import isNull from 'lodash.isnull';
 import isFinite from 'lodash.isfinite';
 import isString from 'lodash.isstring';
 import Joyride from 'react-joyride';
-import {getGameDurationStorage,getCustomWordsStorage} from '../../storageGetters'
+import {
+  getGameDurationStorage,
+  getCustomWordsStorage
+} from '../../storageHelpers';
 
 class GameContainer extends Component {
   constructor(props) {
@@ -209,12 +212,15 @@ class GameContainer extends Component {
   get inputPlaceHolder() {
     return this.state.gameStatus === GAME_IS_ACTIVE ? '' : 'Type to start ...';
   }
+  get shouldRunJoyride() {
+    return false;
+  }
   render() {
     return (
       <Fragment>
         <Joyride
           ref={this.joyride}
-          run={true}
+          run={this.shouldRunJoyride}
           steps={this.state.steps}
           autoStart={true}
           type="continuous"

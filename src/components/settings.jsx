@@ -6,7 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import {
   getCustomWordsStorage,
   getGameDurationStorage
-} from '../storageGetters';
+} from '../storageHelpers';
 import isNan from 'lodash.isnan';
 
 class SettingsForm extends React.Component {
