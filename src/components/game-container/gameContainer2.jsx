@@ -23,6 +23,7 @@ import isNull from 'lodash.isnull';
 import isFinite from 'lodash.isfinite';
 import isString from 'lodash.isstring';
 import Joyride from 'react-joyride';
+import {getGameDurationStorage,getCustomWordsStorage} from '../../storageGetters'
 
 class GameContainer extends Component {
   constructor(props) {
@@ -260,7 +261,9 @@ class GameContainer extends Component {
 export default GameContainer;
 
 const initialState = () => {
-  const customWords = localStorage.getItem('customWords')
+  const customWords = getCustomWordsStorage();
+  const customGameDuration = getGameDurationStorage();
+  const gameDuration = customGameDuration || GAME_DURATION;
   const customWordArray = isString(customWords)
     ? replaceLineBreaks(customWords).split(' ')
     : null;
@@ -272,7 +275,7 @@ const initialState = () => {
     scrollIndex: 0,
     words: generateLoremIpsum(customWordArray),
     wpm: WPM_NULL,
-    gameDuration: GAME_DURATION,
+    gameDuration,
     gameAboutToBegin: false,
     gameStatus: AWAITS_TYPING,
     steps: [

@@ -1,5 +1,5 @@
 export const WPM_NULL = '0';
-export const GAME_DURATION = 200;
+export const GAME_DURATION = 60;
 export const METRICS_INTERVAL_DELAY = 500;
 export const DEBUG_MODE = false;
 export const FAILURE_ANIMATION = `animated jello`;
@@ -14,3 +14,11 @@ export const RESTART_PENDING = 3;
 
 export const INCREMENT_INDEX = 1;
 export const DECREMENT_INDEX = -1;
+
+export const GAME_DURATION_OPTIONS = [
+  { value: 20, label: '20' },
+  { value: 30, label: '30' },
+  { value: 40, label: '40' },
+  { value: 50, label: '50' },
+  { value: 60, label: '60' }
+];
