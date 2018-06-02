@@ -22,6 +22,7 @@ import ProgressBar from './progress-bar';
 import isNull from 'lodash.isnull';
 import isFinite from 'lodash.isfinite';
 import isString from 'lodash.isstring';
+import isUndefined from 'lodash.isundefined'
 import Joyride from 'react-joyride';
 import {
   getGameDurationStorage,
@@ -55,16 +56,16 @@ class GameContainer extends Component {
       const nextWordsArray = this.state.words.slice(0);
       /** mutate the current word in next words array */
       nextWordsArray[this.currentIndex].typed = newInputValue;
-      const nextCurrentWord = nextWordsArray[this.currentIndex].typed;
+      const nextCurrentWord = nextWordsArray[this.currentIndex];
       this.setState(
         {
-          words: nextWordsArray
+          words: nextWordsArray,
         },
         () => {
           /** check if this word is completed, and it is the last. if so - complete the game. */
           if (nextCurrentWord.isCompleted) {
             /** second if is nested to run the getter only on isCompleted===true word. */
-            if (this.currentIndex === -1) {
+            if (this.isLastWord) {
               this.onGameEnd();
             }
           }
@@ -101,7 +102,7 @@ class GameContainer extends Component {
     });
     this.startTime = Date.now();
     this.timeLeftInterval = setInterval(() => {
-      if (this.timeLeft <= 0) {
+      if (this.timeLeft <= 0 || this.state.gameStatus=== RESTART_PENDING) {
         this.onGameEnd();
       }
       this.setState({
@@ -153,6 +154,14 @@ class GameContainer extends Component {
   }
   get currentIndex() {
     return this.state.index;
+  }
+  get wordsNumber() {
+    return this.state.words.length
+  }
+  get isLastWord() {
+    const index =  this.state.words[this.currentIndex + 1]
+    console.log(index)
+    return isUndefined(index)
   }
   get previousIndex() {
     return this.currentIndex - 1;
