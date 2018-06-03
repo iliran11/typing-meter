@@ -16,12 +16,23 @@
   display: flex;
   flex-direction: column;
 }
+.input-container {
+  background-color: $primary-color;
+  padding-bottom: 10px;
+  display: flex;
+  flex: none;
+  justify-content: center;
+}
 input {
   margin-top: auto;
   height: 40px;
+  width: 95%;
   flex: none;
   font-weight: bold;
   padding-left: 2%;
+  border-radius:10px;
+  outline: none;
+
 }
 .metric-score {
   font-family: 'Fredoka One', cursive;
@@ -144,6 +155,7 @@ input {
   background-color: rgba(255, 0, 0, 0.09019607843137255);
   color: rgba(255, 0, 0, 0.9490196078431372);
 }
+
 .restart {
   cursor: pointer;
 }
