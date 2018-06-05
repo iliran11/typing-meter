@@ -47,7 +47,7 @@ export default class Word extends Component {
     return '';
   }
   get containerClasses() {
-    return `word ${this.isWordCorrectClass} ${this.activeClass}`;
+    return `word ${this.isWordCorrectClass} ${this.activeClass} ${this.animationClass}`;
   }
   get letters() {
     return 'hello world';
