@@ -23,7 +23,6 @@ import isNull from 'lodash.isnull';
 import isFinite from 'lodash.isfinite';
 import isString from 'lodash.isstring';
 import isUndefined from 'lodash.isundefined'
-import Joyride from 'react-joyride';
 import {
   getGameDurationStorage,
   getCustomWordsStorage
@@ -227,13 +226,6 @@ class GameContainer extends Component {
   render() {
     return (
       <Fragment>
-        <Joyride
-          ref={this.joyride}
-          run={this.shouldRunJoyride}
-          steps={this.state.steps}
-          autoStart={true}
-          type="continuous"
-        />
         <ScoreBoard
           wpm={this.wpmNormalized}
           correctTypedWords={this.correctWordsNumber}
@@ -294,52 +286,6 @@ const initialState = () => {
     wpm: WPM_NULL,
     gameDuration,
     gameAboutToBegin: false,
-    gameStatus: AWAITS_TYPING,
-    steps: [
-      {
-        title: 'Score Board',
-        selector: '.joyride-step-scoreboard',
-        text: 'Your metrics will update while you play typing.'
-      },
-      {
-        position: 'top-left',
-        selector: '.joyride-step--correct',
-        title: 'Number of Correctly Typed Words',
-        text:
-          'The number of wholly correct words. a correct word has a green background.'
-      },
-      {
-        title: 'Words Per Minute',
-        position: 'top-right',
-        selector: '.joyride-step--wpm',
-        text: (
-          <div className="joyride-box--wpm">
-            <span>The Score of Your Game.</span>
-            <br />
-            <span>Will update as you type.</span>
-            <br />
-            <span>
-              The less errors your make, and the faster you type, the score will
-              be higher.
-            </span>
-            <br />
-            <a href="http://indiatyping.com/index.php/typing-tips/typing-speed-calculation-formula">
-              Read More ...{' '}
-            </a>
-          </div>
-        )
-      },
-      {
-        title: 'Time Left',
-        selector: '.joyride-step--progress-bar',
-        text:
-          'Indicates how much time is left to play. You can adjust game duration in settings.'
-      },
-      {
-        title: 'Start Typing',
-        selector: '.joyride-step--input',
-        text: 'Start the game by typing in the input!'
-      }
-    ]
+    gameStatus: AWAITS_TYPING
   };
 };
