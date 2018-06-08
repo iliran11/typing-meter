@@ -51,10 +51,12 @@ const steps = [
 export default function WalkThrough(props) {
   return (
     <Joyride
-      run={true}
+      run={props.run}
+      beacon={true}
       steps={steps}
       autoStart={true}
       type="continuous"
+      callback={props.callback}
     />
   );
 }
