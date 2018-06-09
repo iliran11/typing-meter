@@ -5,6 +5,7 @@ import AutoRenew from 'material-ui/svg-icons/action/autorenew';
 import { checkCircleStyle } from '../styles';
 import ScoreSection from './scoreboard/score-section';
 import { svgStyle,  } from '../styles';
+import ResultComparison from './game-statistics/ResultComparison'
 
 const Title = function() {
   return (
@@ -20,6 +21,7 @@ export default function CompletionModal(props) {
   return (
     <Dialog repositionOnUpdate={false} modal={modal} open={open} title={TitleNode} className="completion-dialog">
       <div id="completion-content">
+        <ResultComparison result={10}/>
         <h4 className="size2">Your Score</h4>
         <div className="score-report">
           <ScoreSection
