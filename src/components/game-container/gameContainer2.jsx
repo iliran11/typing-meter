@@ -159,7 +159,6 @@ class GameContainer extends Component {
   }
   get isLastWord() {
     const index =  this.state.words[this.currentIndex + 1]
-    console.log(index)
     return isUndefined(index)
   }
   get previousIndex() {
