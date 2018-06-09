@@ -1,5 +1,36 @@
-.result-comparison{
-  height:100px;
-  width:100px;
-  background-color:green;
+.result-comparison {
+  height: 100px;
+  width: 100%;
+}
+.expanding-graph {
+  display:flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: 50px;
+  border: 3px solid #dff9df;
+  border-radius:3px;
+  background: rgba(209, 57, 57, 1);
+  background: linear-gradient(
+    to right,
+    rgba(209, 57, 57, 1) 0%,
+    rgba(250, 250, 0, 0.9) 55%,
+    rgba(77, 201, 66, 1) 100%
+  );
+}
+.revealer {
+  width:100%;
+  background-color: white;
+  height:100%;
+  transition: all 4s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  position:relative;
+}
+.tooltip {
+  background-color: #eebf3f;
+  padding: 5px 15px;
+  color: rgb(23, 44, 66);
+  font-weight: bold;
+  font-size: 13px;
+  border-radius: 4px;
+  transform: translate(-25%,-100%);
+  position: absolute;
 }
