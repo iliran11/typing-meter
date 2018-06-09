@@ -8,6 +8,7 @@ function closestMatchIndex(wpmResult) {
       indexOfClosestMatch = index;
       return true;
     }
+    return false;
   });
   return indexOfClosestMatch;
 }
