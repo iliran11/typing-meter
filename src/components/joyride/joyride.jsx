@@ -22,9 +22,6 @@ const steps = [
     text: (
       <div className="joyride-box--wpm">
         <span
-          onClick={() => {
-            console.log('helloo');
-          }}
         >
           The Score of Your Game.
         </span>

@@ -28,7 +28,6 @@ export default  function (arr, label) {
 				x = '_' + key + 'Id';
 				arr[x] = hashids.encode(digits);
 				digits = digits.slice(0, 6);
-				console.log(digits);
 				i++;
 			});
 			return arr;

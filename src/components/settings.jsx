@@ -12,7 +12,6 @@ import isNan from 'lodash.isnan';
 class SettingsForm extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.gameDurationStorage);
     this.state = {
       gameDuration: this.gameDurationStorage,
       customWords: null

@@ -24,7 +24,6 @@ class App extends Component {
   };
   walkThroughCallback = event => {
     const { action, type } = event;
-    console.log(this.joyrideRef)
     if (action === 'start' && type === 'step:before') {
       this.setState({
         walkThroughIconStatus: false

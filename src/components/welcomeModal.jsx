@@ -5,7 +5,6 @@ import { StepLabel, Step, Stepper } from 'material-ui/Stepper';
 import StepperNumber from './welcome/stepperNumber'
 
 export default function WelcomeModal(props) {
-  console.log(svgStyle);
   const { open, onContinue } = props;
   if (!open) return null;
   return (
