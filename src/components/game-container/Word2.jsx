@@ -16,16 +16,23 @@ export default class Word extends Component {
     /** render the component if there is a new typing information OR the word is going to get active. */
     return typedWordsChanged || isGoingActive;
   };
+  componentDidMount() {
+    if(this.props.isFirst) {
+      this.focusNode();
+    }
+  }
   componentDidUpdate = prevProps => {
     const { isActive: prevIsActive } = prevProps;
     const { isActive: currentIsActive } = this.props;
     /** check if unactive word, is going into active state. */
     const beingActivated = currentIsActive === true && prevIsActive === false;
     if (beingActivated) {
-      console.log(this.wordRef);
-      focusNode(this.wordRef.current);
+      this.focusNode();
     }
   };
+  focusNode() {
+    focusNode(this.wordRef.current);
+  }
   get isWordCorrectClass() {
     const { isCompleted, isCorrect } = this.props;
     /** we can assume if word is correct or not -

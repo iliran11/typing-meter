@@ -15,6 +15,7 @@ export default function WordsList(props) {
           isCompleted={word.isCompleted}
           isCorrect={word.isCorrect}
           isActive={isActive}
+          isFirst={index===0}
         />{' '}
       </Fragment>
     );
