@@ -1,5 +1,4 @@
 import { firstCloseMatchIndex, getPercentile } from './gameStats';
-import { wpm } from './gameStatsConstants';
 
 describe('maps correctly the actual result to the wpm array of available results', () => {
   test('Wpm is 58', () => {
