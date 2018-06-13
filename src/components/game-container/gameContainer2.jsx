@@ -27,6 +27,9 @@ import {
   getGameDurationStorage,
   getCustomWordsStorage
 } from '../../storageHelpers';
+import gameStats from '../game-statistics/gameStats'
+
+console.log(gameStats(58))
 
 class GameContainer extends Component {
   constructor(props) {
@@ -184,6 +187,7 @@ class GameContainer extends Component {
     /**http://indiatyping.com/index.php/typing-tips/typing-speed-calculation-formula */
     /** returns an object of total number of correct and wrong chars */
     const { correct, wrong } = this.typingStatistcs;
+    console.log(this.typingStatistcs)
     const grossWpm = (correct + wrong) / 5 / this.timePassedMinutes;
     const errorFactor = wrong / this.timePassedMinutes;
     return grossWpm - errorFactor;
