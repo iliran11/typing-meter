@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import simpleReducer from './reducers';
+import gameSettings from '../components/game-container/gameSettingsReducer';
 export default combineReducers({
- simpleReducer
+ gameSettings
 });

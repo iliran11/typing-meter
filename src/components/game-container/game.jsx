@@ -28,7 +28,7 @@ import {
   getCustomWordsStorage
 } from '../../storageHelpers';
 
-class GameContainer extends Component {
+class Game extends Component {
   constructor(props) {
     super(props);
     this.state = initialState(AWAITS_TYPING);
@@ -266,7 +266,7 @@ class GameContainer extends Component {
   }
 }
 
-export default GameContainer;
+export default Game;
 
 const initialState = () => {
   const customWords = getCustomWordsStorage();

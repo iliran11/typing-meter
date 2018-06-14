@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import 'normalize.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import GameContainer from './components/game-container/gameContainer2';
+import GameContainer from './components/game-container/gameContainer';
 import AppBar from './components/appbar2';
 import Settings from './components/settings';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
