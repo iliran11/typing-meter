@@ -1,13 +1,14 @@
-import React from 'react';
-import TextField from 'material-ui/TextField';
-import { GAME_DURATION_OPTIONS, GAME_DURATION } from '../constants';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+import React from "react";
+import TextField from "material-ui/TextField";
+import { GAME_DURATION_OPTIONS, GAME_DURATION } from "../../constants";
+import SelectField from "material-ui/SelectField";
+import MenuItem from "material-ui/MenuItem";
 import {
   getCustomWordsStorage,
   getGameDurationStorage
-} from '../storageHelpers';
-import isNan from 'lodash.isnan';
+} from "../../storageHelpers";
+import isNan from "lodash.isnan";
+import { updateCustomWords } from "./settingsActions";
 
 class SettingsForm extends React.Component {
   constructor(props) {
@@ -28,10 +29,11 @@ class SettingsForm extends React.Component {
     };
     this.onSubmit = event => {
       event.preventDefault();
-      sessionStorage.setItem('customWords', this.state.customWords);
+      console.log(this.props.updateCustomWords)
+      this.props.updateCustomWords(this.state.customWords);
 
-      sessionStorage.setItem('gameDuration', this.state.gameDuration);
-      this.props.history.push('/');
+      sessionStorage.setItem("gameDuration", this.state.gameDuration);
+      this.props.history.push("/");
     };
   }
   get gameDurationStorage() {

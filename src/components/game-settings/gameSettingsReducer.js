@@ -6,10 +6,10 @@ const initialState = {
 }
 export default (state = initialState, action) => {
   switch (action.type) {
-  //  case 'SIMPLE_ACTION':
-  //   return {
-  //    result: action.payload
-  //   }
+   case 'UPDATE_CUSTOM_WORDS':
+    return {
+     result: 'ssss'
+    }
    default:
     return state
   }
