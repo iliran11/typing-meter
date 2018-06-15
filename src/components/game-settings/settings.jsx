@@ -4,6 +4,7 @@ import { GAME_DURATION_OPTIONS } from '../../constants';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import { processTextToArray } from '../../utils';
 
 class SettingsForm extends React.Component {
   constructor(props) {
@@ -29,6 +30,13 @@ class SettingsForm extends React.Component {
       this.props.history.push('/');
     };
   }
+  get customTextErrorMessage() {
+    const numbersOfWords = processTextToArray(this.state.customWords || '').length;
+    if (numbersOfWords < 25) {
+      return `Current Number Of words is ${numbersOfWords}. Minimum Allowed is 25`;
+    }
+    return '';
+  }
 
   render() {
     return (
@@ -36,6 +44,7 @@ class SettingsForm extends React.Component {
         <h2>Settings</h2>
         <div className="toggle-control" />
         <TextField
+          errorText={this.customTextErrorMessage}
           defaultValue={this.props.customWords}
           multiLine={true}
           rows={1}

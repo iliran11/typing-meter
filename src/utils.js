@@ -2,6 +2,8 @@ import randomWords from 'random-words';
 import { WORDS_AMOUNT } from './constants';
 import keyIndex from './react-key-index';
 import scrollIntoView from 'scroll-into-view';
+import ow from 'ow';
+
 
 export function generateWordsArray() {
   return Array.from(new Array(WORDS_AMOUNT), () => {
@@ -9,6 +11,7 @@ export function generateWordsArray() {
   });
 }
 export function processTextToArray(text) {
+  // ow(text, ow.string);
   return replaceLineBreaks(text).split(' ').filter(filterEmptyStrings)
 }
 export function generateLoremIpsum(customWords) {
