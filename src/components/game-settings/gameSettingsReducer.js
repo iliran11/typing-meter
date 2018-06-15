@@ -5,11 +5,13 @@ const initialState = {
   customWords: null
 }
 export default (state = initialState, action) => {
-  switch (action.type) {
+  const {type,payload} = action
+  switch (type) {
    case 'UPDATE_CUSTOM_WORDS':
-    return {
-     result: 'ssss'
-    }
+   return {
+     ...state,
+     customWords:payload
+   }
    default:
     return state
   }

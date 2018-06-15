@@ -1,11 +1,9 @@
-import { connect } from "react-redux";
-import { updateCustomWords } from "./settingsActions";
-import Settings from "./settings";
+import { connect } from 'react-redux';
+import { updateCustomWords } from './settingsActions';
+import Settings from './settings';
 
-const mapDispatchToProps = () => {
-  return {
-    updateCustomWords
-  };
+const mapDispatchToProps = {
+  updateCustomWords
 };
 
 export default connect(
