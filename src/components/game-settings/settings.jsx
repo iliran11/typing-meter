@@ -51,7 +51,7 @@ class SettingsForm extends React.Component {
         <h2>Settings</h2>
         <div className="toggle-control" />
         <TextField
-          defaultValue={this.CustomWordsStorage}
+          defaultValue={this.props.customWords}
           multiLine={true}
           rows={1}
           rowsMax={6}

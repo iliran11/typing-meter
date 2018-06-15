@@ -31,7 +31,7 @@ import {
 class Game extends Component {
   constructor(props) {
     super(props);
-    this.state = initialState(AWAITS_TYPING);
+    this.state = initialState(this.props.customWords);
     this.startTime = null;
     this.inputRef = React.createRef();
     this.joyride = React.createRef();
@@ -268,8 +268,7 @@ class Game extends Component {
 
 export default Game;
 
-const initialState = () => {
-  const customWords = getCustomWordsStorage();
+const initialState = (customWords) => {
   const customGameDuration = getGameDurationStorage();
   const gameDuration = customGameDuration || GAME_DURATION;
   const customWordArray = isString(customWords)
