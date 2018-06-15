@@ -22,16 +22,12 @@ import ProgressBar from './progress-bar';
 import isNull from 'lodash.isnull';
 import isFinite from 'lodash.isfinite';
 import isString from 'lodash.isstring';
-import isUndefined from 'lodash.isundefined'
-import {
-  getGameDurationStorage,
-  getCustomWordsStorage
-} from '../../storageHelpers';
+import isUndefined from 'lodash.isundefined';
 
-class GameContainer extends Component {
+class Game extends Component {
   constructor(props) {
     super(props);
-    this.state = initialState(AWAITS_TYPING);
+    this.state = initialState(this.props.customWords,this.props.gameDuration);
     this.startTime = null;
     this.inputRef = React.createRef();
     this.joyride = React.createRef();
@@ -58,7 +54,7 @@ class GameContainer extends Component {
       const nextCurrentWord = nextWordsArray[this.currentIndex];
       this.setState(
         {
-          words: nextWordsArray,
+          words: nextWordsArray
         },
         () => {
           /** check if this word is completed, and it is the last. if so - complete the game. */
@@ -101,7 +97,7 @@ class GameContainer extends Component {
     });
     this.startTime = Date.now();
     this.timeLeftInterval = setInterval(() => {
-      if (this.timeLeft <= 0 || this.state.gameStatus=== RESTART_PENDING) {
+      if (this.timeLeft <= 0 || this.state.gameStatus === RESTART_PENDING) {
         this.onGameEnd();
       }
       this.setState({
@@ -117,7 +113,7 @@ class GameContainer extends Component {
     this.inputRef.current.blur();
   };
   onGameRestart = () => {
-    const nextState = initialState();
+    const nextState = initialState(this.props.customWords,this.props.gameDuration);
     this.setState(nextState);
   };
   changeIndex = options => {
@@ -155,11 +151,11 @@ class GameContainer extends Component {
     return this.state.index;
   }
   get wordsNumber() {
-    return this.state.words.length
+    return this.state.words.length;
   }
   get isLastWord() {
-    const index =  this.state.words[this.currentIndex + 1]
-    return isUndefined(index)
+    const index = this.state.words[this.currentIndex + 1];
+    return isUndefined(index);
   }
   get previousIndex() {
     return this.currentIndex - 1;
@@ -231,23 +227,23 @@ class GameContainer extends Component {
           disabled={this.isWordBoardDisabled}
         />
         <div className="input-container">
-        <input
-          autoFocus
-          value={this.inputValue}
-          onChange={this.onInputChange}
-          onKeyDown={this.handleKeyPress}
-          tabIndex="0"
-          className={`input is-large is-primary size3 joyride-step--input ${
-            this.inputClasses
-          }`}
-          placeholder={this.inputPlaceHolder}
-          ref={this.inputRef}
-        />
+          <input
+            autoFocus
+            value={this.inputValue}
+            onChange={this.onInputChange}
+            onKeyDown={this.handleKeyPress}
+            tabIndex="0"
+            className={`input is-large is-primary size3 joyride-step--input ${
+              this.inputClasses
+            }`}
+            placeholder={this.inputPlaceHolder}
+            ref={this.inputRef}
+          />
         </div>
         {this.state.gameStatus === GAME_IS_ACTIVE && (
           <ProgressBar
             isProgressCounting={this.isGameActive}
-            animationTime={GAME_DURATION}
+            animationTime={this.state.timeLeft}
           />
         )}
         <WordsList
@@ -266,16 +262,13 @@ class GameContainer extends Component {
   }
 }
 
-export default GameContainer;
+export default Game;
 
-const initialState = () => {
-  const customWords = getCustomWordsStorage();
-  const customGameDuration = getGameDurationStorage();
-  const gameDuration = customGameDuration || GAME_DURATION;
+const initialState = (customWords,gameDuration) => {
   const customWordArray = isString(customWords)
     ? replaceLineBreaks(customWords).split(' ')
     : null;
-  const overallTime = secondstoMillisecond(GAME_DURATION);
+  const overallTime = secondstoMillisecond(gameDuration);
   return {
     overallTime,
     timeLeft: millisecondsToSeconds(overallTime),
