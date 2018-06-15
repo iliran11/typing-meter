@@ -23,12 +23,11 @@ import isNull from 'lodash.isnull';
 import isFinite from 'lodash.isfinite';
 import isString from 'lodash.isstring';
 import isUndefined from 'lodash.isundefined';
-import { getGameDurationStorage } from '../../storageHelpers';
 
 class Game extends Component {
   constructor(props) {
     super(props);
-    this.state = initialState(this.props.customWords);
+    this.state = initialState(this.props.customWords,this.props.gameDuration);
     this.startTime = null;
     this.inputRef = React.createRef();
     this.joyride = React.createRef();
@@ -114,7 +113,7 @@ class Game extends Component {
     this.inputRef.current.blur();
   };
   onGameRestart = () => {
-    const nextState = initialState();
+    const nextState = initialState(this.props.customWords,this.props.gameDuration);
     this.setState(nextState);
   };
   changeIndex = options => {
@@ -244,7 +243,7 @@ class Game extends Component {
         {this.state.gameStatus === GAME_IS_ACTIVE && (
           <ProgressBar
             isProgressCounting={this.isGameActive}
-            animationTime={GAME_DURATION}
+            animationTime={this.state.timeLeft}
           />
         )}
         <WordsList
@@ -265,13 +264,11 @@ class Game extends Component {
 
 export default Game;
 
-const initialState = customWords => {
-  const customGameDuration = getGameDurationStorage();
-  const gameDuration = customGameDuration || GAME_DURATION;
+const initialState = (customWords,gameDuration) => {
   const customWordArray = isString(customWords)
     ? replaceLineBreaks(customWords).split(' ')
     : null;
-  const overallTime = secondstoMillisecond(GAME_DURATION);
+  const overallTime = secondstoMillisecond(gameDuration);
   return {
     overallTime,
     timeLeft: millisecondsToSeconds(overallTime),
