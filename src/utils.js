@@ -8,6 +8,9 @@ export function generateWordsArray() {
     return randomWords();
   });
 }
+export function processTextToArray(text) {
+  return replaceLineBreaks(text).split(' ').filter(filterEmptyStrings)
+}
 export function generateLoremIpsum(customWords) {
   const wordsArray = customWords || generateWordsArray();
   /** adding a unique key to each word in the array. */
