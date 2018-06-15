@@ -9,6 +9,8 @@ import {
 } from "../../storageHelpers";
 import isNan from "lodash.isnan";
 import { updateCustomWords } from "./settingsActions";
+import RaisedButton from 'material-ui/RaisedButton';
+
 
 class SettingsForm extends React.Component {
   constructor(props) {
@@ -29,9 +31,7 @@ class SettingsForm extends React.Component {
     };
     this.onSubmit = event => {
       event.preventDefault();
-      console.log(this.props.updateCustomWords)
       this.props.updateCustomWords(this.state.customWords);
-
       sessionStorage.setItem("gameDuration", this.state.gameDuration);
       this.props.history.push("/");
     };
@@ -79,7 +79,7 @@ class SettingsForm extends React.Component {
             </SelectField>
           </div>
         </div>
-        <button onClick={this.onSubmit}>submit</button>
+        <RaisedButton label="submit" primary={true} onClick={this.onSubmit} />
       </form>
     );
   }
