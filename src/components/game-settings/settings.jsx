@@ -8,7 +8,6 @@ import {
   getGameDurationStorage
 } from "../../storageHelpers";
 import isNan from "lodash.isnan";
-import { updateCustomWords } from "./settingsActions";
 import RaisedButton from 'material-ui/RaisedButton';
 
 
