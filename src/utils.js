@@ -4,21 +4,20 @@ import keyIndex from './react-key-index';
 import scrollIntoView from 'scroll-into-view';
 // import ow from 'ow';
 
-
-export function generateWordsArray() {
+export function generateLoremIpsum() {
   return Array.from(new Array(WORDS_AMOUNT), () => {
     return randomWords();
   });
 }
 export function processTextToArray(text) {
   // ow(text, ow.string);
-  return replaceLineBreaks(text).split(' ').filter(filterEmptyStrings)
+  return replaceLineBreaks(text)
+    .split(' ')
+    .filter(filterEmptyStrings);
 }
-export function generateLoremIpsum(customWords) {
-  const wordsArray = customWords || generateWordsArray();
-  /** adding a unique key to each word in the array. */
-  const keyedWordsArray = keyIndex(wordsArray, getRandomNumber());
-  return keyedWordsArray.filter(filterEmptyStrings).map(word => {
+export function createIndexWordObjects(wordsArray) {
+  const indexedWordsArray = keyIndex(wordsArray, getRandomNumber());
+  return indexedWordsArray.map(word => {
     return createWordObject({ challenge: word.value, key: word.id });
   });
 }
@@ -93,8 +92,8 @@ export function replaceLineBreaks(string) {
   return string.replace(/(?:\r\n|\r|\n)/g, ' ');
 }
 export function isLastCharIsSpace(str) {
- // https://stackoverflow.com/questions/3884632/how-to-get-the-last-character-of-a-string?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa  return str.substr(str.length - 1, str.length - 2) === ' ';
-  return str.slice(-1) === " "
+  // https://stackoverflow.com/questions/3884632/how-to-get-the-last-character-of-a-string?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa  return str.substr(str.length - 1, str.length - 2) === ' ';
+  return str.slice(-1) === ' ';
 }
 export const noop = () => {};
 
