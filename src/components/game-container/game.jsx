@@ -11,7 +11,6 @@ import {
   GAME_DURATION
 } from '../../constants';
 import {
-  replaceLineBreaks,
   generateLoremIpsum,
   secondstoMillisecond,
   millisecondsToSeconds,
@@ -23,7 +22,6 @@ import CompletionModal from '../completionModal';
 import ProgressBar from './progress-bar';
 import isNull from 'lodash.isnull';
 import isFinite from 'lodash.isfinite';
-import isString from 'lodash.isstring';
 import isUndefined from 'lodash.isundefined';
 
 class Game extends Component {
