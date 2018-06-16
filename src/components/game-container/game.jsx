@@ -11,23 +11,23 @@ import {
   GAME_DURATION
 } from '../../constants';
 import {
-  replaceLineBreaks,
   generateLoremIpsum,
   secondstoMillisecond,
   millisecondsToSeconds,
-  isLastCharIsSpace
+  isLastCharIsSpace,
+  processTextToArray,
+  createIndexWordObjects
 } from '../../utils';
 import CompletionModal from '../completionModal';
 import ProgressBar from './progress-bar';
 import isNull from 'lodash.isnull';
 import isFinite from 'lodash.isfinite';
-import isString from 'lodash.isstring';
 import isUndefined from 'lodash.isundefined';
 
 class Game extends Component {
   constructor(props) {
     super(props);
-    this.state = initialState(this.props.customWords,this.props.gameDuration);
+    this.state = this.initialState;
     this.startTime = null;
     this.inputRef = React.createRef();
     this.joyride = React.createRef();
@@ -113,7 +113,7 @@ class Game extends Component {
     this.inputRef.current.blur();
   };
   onGameRestart = () => {
-    const nextState = initialState(this.props.customWords,this.props.gameDuration);
+    const nextState = this.initialState;
     this.setState(nextState);
   };
   changeIndex = options => {
@@ -122,6 +122,29 @@ class Game extends Component {
       index: this.currentIndex + changeType
     });
   };
+  get wordsArray() {
+    if (isNull(this.props.customWords)) {
+      return generateLoremIpsum();
+    }
+    return processTextToArray(this.props.customWords);
+  }
+  get wordsObjectArray() {
+    return createIndexWordObjects(this.wordsArray);
+  }
+  get initialState() {
+    const overallTime = secondstoMillisecond(this.props.gameDuration);
+    return {
+      overallTime,
+      timeLeft: millisecondsToSeconds(overallTime),
+      index: 0,
+      scrollIndex: 0,
+      words: this.wordsObjectArray,
+      wpm: WPM_NULL,
+      gameDuration: this.props.gameDuration,
+      gameAboutToBegin: false,
+      gameStatus: AWAITS_TYPING
+    };
+  }
   get timePassed() {
     /** returns time passed in seconds */
     return GAME_DURATION - this.timeLeft;
@@ -243,7 +266,7 @@ class Game extends Component {
         {this.state.gameStatus === GAME_IS_ACTIVE && (
           <ProgressBar
             isProgressCounting={this.isGameActive}
-            animationTime={this.state.timeLeft}
+            animationTime={this.state.gameDuration}
           />
         )}
         <WordsList
@@ -263,21 +286,3 @@ class Game extends Component {
 }
 
 export default Game;
-
-const initialState = (customWords,gameDuration) => {
-  const customWordArray = isString(customWords)
-    ? replaceLineBreaks(customWords).split(' ')
-    : null;
-  const overallTime = secondstoMillisecond(gameDuration);
-  return {
-    overallTime,
-    timeLeft: millisecondsToSeconds(overallTime),
-    index: 0,
-    scrollIndex: 0,
-    words: generateLoremIpsum(customWordArray),
-    wpm: WPM_NULL,
-    gameDuration,
-    gameAboutToBegin: false,
-    gameStatus: AWAITS_TYPING
-  };
-};
