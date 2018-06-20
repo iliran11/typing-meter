@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react';
-import ScoreBoard from '../scoreboard/scoreBoard';
-import WordsList from './WordsList';
+import React, { Component, Fragment } from "react";
+import ScoreBoard from "../scoreboard/scoreBoard";
+import WordsList from "./WordsList";
 import {
   AWAITS_TYPING,
   GAME_IS_ACTIVE,
@@ -9,7 +9,7 @@ import {
   INCREMENT_INDEX,
   DECREMENT_INDEX,
   GAME_DURATION
-} from '../../constants';
+} from "../../constants";
 import {
   generateLoremIpsum,
   secondstoMillisecond,
@@ -17,12 +17,13 @@ import {
   isLastCharIsSpace,
   processTextToArray,
   createIndexWordObjects
-} from '../../utils';
-import CompletionModal from '../completionModal';
-import ProgressBar from './progress-bar';
-import isNull from 'lodash.isnull';
-import isFinite from 'lodash.isfinite';
-import isUndefined from 'lodash.isundefined';
+} from "../../utils";
+import CompletionModal from "../completionModal";
+import ProgressBar from "./progress-bar";
+import isNull from "lodash.isnull";
+import isFinite from "lodash.isfinite";
+import isUndefined from "lodash.isundefined";
+import Snackbar from "material-ui/Snackbar";
 
 class Game extends Component {
   constructor(props) {
@@ -35,9 +36,14 @@ class Game extends Component {
     this.onInputChange = event => {
       /** check if space has been clicked after completing a word. */
       const spaceHasClicked = isLastCharIsSpace(event.target.value);
-      if (spaceHasClicked && this.currentWord.isCompleted) {
-        this.changeIndex({ changeType: INCREMENT_INDEX });
-        return;
+      if (this.currentWord.isCompleted) {
+        if (spaceHasClicked) {
+          this.changeIndex({ changeType: INCREMENT_INDEX });
+          return;
+        } else {
+          this.changeSpaceWarningStatus(true)
+          return;
+        }
       }
       const { gameStatus } = this.state;
       if (gameStatus === AWAITS_TYPING) {
@@ -122,6 +128,14 @@ class Game extends Component {
       index: this.currentIndex + changeType
     });
   };
+  changeSpaceWarningStatus = (nextStatus) => {
+    this.setState({
+      clickSpaceTip: nextStatus
+    })
+  }
+  closeSpaceWarning = () => {
+    this.changeSpaceWarningStatus(false)
+  }
   get wordsArray() {
     if (isNull(this.props.customWords)) {
       return generateLoremIpsum();
@@ -142,7 +156,8 @@ class Game extends Component {
       wpm: WPM_NULL,
       gameDuration: this.props.gameDuration,
       gameAboutToBegin: false,
-      gameStatus: AWAITS_TYPING
+      gameStatus: AWAITS_TYPING,
+      clickSpaceTip: false
     };
   }
   get timePassed() {
@@ -185,8 +200,8 @@ class Game extends Component {
   }
   get inputValue() {
     const { currentWord } = this;
-    if (isNull(currentWord)) return '';
-    return this.isGameActive ? this.currentWord.typed : '';
+    if (isNull(currentWord)) return "";
+    return this.isGameActive ? this.currentWord.typed : "";
   }
   get typingStatistcs() {
     return this.state.words.reduce(
@@ -233,10 +248,10 @@ class Game extends Component {
     return false;
   }
   get inputClasses() {
-    return 'input-class';
+    return "input-class";
   }
   get inputPlaceHolder() {
-    return this.state.gameStatus === GAME_IS_ACTIVE ? '' : 'Type to start ...';
+    return this.state.gameStatus === GAME_IS_ACTIVE ? "" : "Type to start ...";
   }
   get shouldRunJoyride() {
     return false;
@@ -279,6 +294,12 @@ class Game extends Component {
           wpmScore={this.wpmNormalized}
           correctTypedWords={this.correctWordsNumber}
           onRestart={this.onGameRestart}
+        />
+        <Snackbar
+          open={this.state.clickSpaceTip}
+          message="Press Space. Advance To Next Word"
+          autoHideDuration={2000}
+          onRequestClose={this.closeSpaceWarning}
         />
       </Fragment>
     );
