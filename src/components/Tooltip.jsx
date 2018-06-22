@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 
 
 export default function Tooltip(props) {
@@ -11,5 +11,5 @@ export default function Tooltip(props) {
 }
 
 Tooltip.propTypes = {
-  result: PropTypes.number.isRequired
+  result: propTypes.number.isRequired
 };
