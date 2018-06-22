@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 
 export default function Tooltip(props) {
   return (
@@ -8,3 +10,6 @@ export default function Tooltip(props) {
   )
 }
 
+Tooltip.propTypes = {
+  result: PropTypes.number.isRequired
+};
