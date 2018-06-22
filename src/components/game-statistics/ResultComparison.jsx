@@ -1,6 +1,7 @@
 import React from 'react';
 import Tooltip from '../Tooltip';
-import gameStats from './gameStats'
+import gameStats from './gameStats';
+import { shape,number } from 'prop-types';
 
 class ResultComparison extends React.Component {
   constructor() {
@@ -31,4 +32,9 @@ class ResultComparison extends React.Component {
   }
 }
 
+ResultComparison.propTypes = {
+  result: shape({
+    percentile: number
+  })
+};
 export default ResultComparison;
