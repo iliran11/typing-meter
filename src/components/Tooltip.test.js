@@ -11,7 +11,6 @@ describe('`ToolTip`',()=>{
   it ('renders properly',()=>{
     expect(wrapper).toMatchSnapshot();
   })
-  it ()
 })
 
 
