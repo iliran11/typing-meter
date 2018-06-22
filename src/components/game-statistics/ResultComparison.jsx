@@ -3,8 +3,6 @@ import Tooltip from '../Tooltip';
 import gameStats from './gameStats'
 
 class ResultComparison extends React.Component {
-  // const {wpmResult} = props
-  // const percentile = gameStats(wpmResult);
   constructor() {
     super();
     this.width = 100;
