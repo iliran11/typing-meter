@@ -15,8 +15,8 @@ export function processTextToArray(text) {
     .split(' ')
     .filter(filterEmptyStrings);
 }
-export function createIndexWordObjects(wordsArray) {
-  const indexedWordsArray = keyIndex(wordsArray, getRandomNumber());
+export function createIndexWordObjects(wordsArray,key) {
+  const indexedWordsArray = keyIndex(wordsArray, key);
   return indexedWordsArray.map(word => {
     return createWordObject({ challenge: word.value, key: word.id });
   });
