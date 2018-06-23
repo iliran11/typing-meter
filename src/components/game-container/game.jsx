@@ -17,7 +17,7 @@ import {
   isLastCharIsSpace,
   processTextToArray,
   createIndexWordObjects
-} from "../../utils";
+} from "../../utils/utils";
 import CompletionModal from "../completionModal";
 import ProgressBar from "./progress-bar";
 import isNull from "lodash.isnull";

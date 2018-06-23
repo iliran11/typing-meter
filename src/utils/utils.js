@@ -1,6 +1,6 @@
 import randomWords from 'random-words';
-import { WORDS_AMOUNT } from './constants';
-import keyIndex from './react-key-index';
+import { WORDS_AMOUNT } from '../constants';
+import keyIndex from '../react-key-index';
 import scrollIntoView from 'scroll-into-view';
 // import ow from 'ow';
 

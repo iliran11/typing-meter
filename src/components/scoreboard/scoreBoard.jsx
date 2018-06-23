@@ -2,7 +2,7 @@ import React from 'react';
 import { secondaryStyle } from '../../styles';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 import ScoreSection from './score-section';
-import { number,string,bool} from 'prop-types'
+import { number,bool} from 'prop-types'
 
 export default function ScoreBoard(props) {
   const { wpm, correctTypedWords, disabled } = props;
