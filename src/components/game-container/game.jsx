@@ -16,7 +16,8 @@ import {
   millisecondsToSeconds,
   isLastCharIsSpace,
   processTextToArray,
-  createIndexWordObjects
+  createIndexWordObjects,
+  getRandomNumber
 } from "../../utils/utils";
 import CompletionModal from "../completionModal";
 import ProgressBar from "./progress-bar";
@@ -143,7 +144,7 @@ class Game extends Component {
     return processTextToArray(this.props.customWords);
   }
   get wordsObjectArray() {
-    return createIndexWordObjects(this.wordsArray);
+    return createIndexWordObjects(this.wordsArray,getRandomNumber());
   }
   get initialState() {
     const overallTime = secondstoMillisecond(this.props.gameDuration);
