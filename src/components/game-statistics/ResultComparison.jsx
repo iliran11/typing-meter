@@ -4,8 +4,8 @@ import gameStats from './gameStats';
 import { shape,number } from 'prop-types';
 
 class ResultComparison extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.width = 100;
   }
   componentDidMount() {
@@ -32,9 +32,4 @@ class ResultComparison extends React.Component {
   }
 }
 
-ResultComparison.propTypes = {
-  result: shape({
-    percentile: number
-  })
-};
 export default ResultComparison;
