@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { FAILURE_ANIMATION, SUCCESS_ANIMATION } from '../../constants';
 import LettersList from './LettersList';
-import { focusNode } from '../../utils/utils';
+import  focusNode  from '../../utils/focusNode';
 
 export default class Word extends Component {
   constructor(props) {
