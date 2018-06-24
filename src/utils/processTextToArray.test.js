@@ -1,31 +1,27 @@
 import {processTextToArray} from './utils'
 
-describe('process custom text to array', () => {
-  test('3 normal words', () => {
+describe('`processTextToArray`', () => {
+  test('gets 3 normal words', () => {
     const textSample = `hello bye ffff`
     expect(processTextToArray(textSample)).toMatchSnapshot();
   });
-  test('empty string', () => {
+  test('gets empty string', () => {
     const textSample = ``
     expect(processTextToArray(textSample)).toMatchSnapshot();
   });
-  test('empty string with spaces', () => {
+  test('gets empty string with spaces', () => {
     const textSample = `       `
     expect(processTextToArray(textSample)).toMatchSnapshot();
   });
-  test('single letter word', () => {
+  test('gets single letter word', () => {
     const textSample = `hello . hello`
     expect(processTextToArray(textSample)).toMatchSnapshot();
   });
-  test('padding text', () => {
+  test('gets padding text', () => {
     const textSample = `     hello hello     `
     expect(processTextToArray(textSample)).toMatchSnapshot();
   });
-  // test('null', () => {
-  //   const textSample = null
-  //   expect(processTextToArray(textSample)).toThrow();
-  // });
-  test('line breaks', () => {
+  test('gets line breaks', () => {
     const textSample = `hello
        bye 
        

@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`\`AppBar\` renders properly 1`] = `
+<div
+  className="app-bar"
+>
+  <div
+    className="left-hand"
+  >
+    <Link
+      replace={false}
+      to="/"
+    >
+      <i
+        className="fab fa-angellist logo"
+      />
+    </Link>
+  </div>
+  <div
+    className="right-hand"
+  >
+    <Link
+      replace={false}
+      to="/settings"
+    >
+      <i
+        className="fas fa-cog"
+      />
+    </Link>
+    <i
+      className="fab fab fa-github github"
+    />
+    <i
+      className="fas fa-info-circle"
+      onClick={null}
+      style={
+        Object {
+          "opacity": 0.5,
+        }
+      }
+    />
+  </div>
+</div>
+`;

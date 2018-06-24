@@ -4,7 +4,7 @@ import { GAME_DURATION_OPTIONS } from '../../constants';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
-import { processTextToArray } from '../../utils';
+import { processTextToArray } from '../../utils/utils';
 
 class SettingsForm extends React.Component {
   constructor(props) {

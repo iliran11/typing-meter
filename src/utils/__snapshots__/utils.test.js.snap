@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`\`utils\` function createIndexWordObjects retuns an array of objects with keys 1`] = `
+Array [
+  Object {
+    "ChallengeLowerCase": "hello",
+    "challenegeArray": Array [
+      "h",
+      "e",
+      "l",
+      "l",
+      "o",
+    ],
+    "challenge": "hello",
+    "challengeLength": 5,
+    "isCompleted": false,
+    "isCorrect": false,
+    "isEmpty": true,
+    "key": "GYHqHKfX",
+    "numberOfCorrectEntities": Object {
+      "correct": 0,
+      "wrong": 0,
+    },
+    "removeLastTypedLetter": "",
+    "typed": "",
+    "typedArray": Array [],
+    "wordArray": Array [
+      "h",
+      "e",
+      "l",
+      "l",
+      "o",
+    ],
+  },
+  Object {
+    "ChallengeLowerCase": "bye",
+    "challenegeArray": Array [
+      "b",
+      "y",
+      "e",
+    ],
+    "challenge": "bye",
+    "challengeLength": 3,
+    "isCompleted": false,
+    "isCorrect": false,
+    "isEmpty": true,
+    "key": "JYHyHVf4cL",
+    "numberOfCorrectEntities": Object {
+      "correct": 0,
+      "wrong": 0,
+    },
+    "removeLastTypedLetter": "",
+    "typed": "",
+    "typedArray": Array [],
+    "wordArray": Array [
+      "b",
+      "y",
+      "e",
+    ],
+  },
+]
+`;
