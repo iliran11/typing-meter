@@ -1,5 +1,6 @@
 import { wpm, percentile } from './gameStatsConstants';
 import isUndefined from 'lodash.isundefined';
+import nerd from '../nerd-white.svg'
 
 export function firstCloseMatchIndex(wpmResult) {
   let indexOfClosestMatch;
@@ -26,8 +27,11 @@ export function getPercentile(result) {
   if (percentileResult < 0) return 0;
   return Math.round(percentileResult);
 }
-export default function gameStats(result) {
+export function gameStats(result) {
   return {
     percentile: getPercentile(result)
   };
+}
+export  function delightPicture() {
+  return nerd;
 }

@@ -10,7 +10,8 @@ exports[`\`CompletionModal\` renders properly 1`] = `
   repositionOnUpdate={false}
   title={
     <h1>
-      <ActionCheckCircle
+      <img
+        src="nerd.svg"
         style={
           Object {
             "color": null,

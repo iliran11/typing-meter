@@ -1,18 +1,18 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
-import ChceckCircle from 'material-ui/svg-icons/action/check-circle';
 import AutoRenew from 'material-ui/svg-icons/action/autorenew';
 import { checkCircleStyle } from '../styles';
 import ScoreSection from './scoreboard/score-section';
 import { svgStyle } from '../styles';
 import ResultComparison from './game-statistics/ResultComparison';
-import gameStats from './game-statistics/gameStats';
+import {gameStats,delightPicture} from './game-statistics/gameStats';
 import { bool, number, func } from 'prop-types';
+import nerd from './nerd.svg'
 
 const Title = function() {
   return (
     <h1>
-      <ChceckCircle style={checkCircleStyle} />
+      <img src={delightPicture()} style={{width:150,height:150}} />
     </h1>
   );
 };

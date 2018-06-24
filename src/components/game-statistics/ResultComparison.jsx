@@ -1,6 +1,6 @@
 import React from 'react';
 import Tooltip from '../Tooltip';
-import gameStats from './gameStats';
+import {gameStats} from './gameStats';
 
 class ResultComparison extends React.Component {
   constructor(props) {
