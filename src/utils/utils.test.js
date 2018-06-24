@@ -66,7 +66,7 @@ describe('`utils` function', () => {
         const number = 9;
         expect(() => {
           isLastCharIsSpace(number);
-        }).toThrow;
+        }).toThrow();
       });
     });
   });
