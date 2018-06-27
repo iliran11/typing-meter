@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logo from './logo/logo'
 
 export default function AppBar(props) {
   const { walkThroughIconStatus, toggleWalkthrough } = props;
@@ -9,7 +10,7 @@ export default function AppBar(props) {
     <div className="app-bar">
       <div className="left-hand">
         <Link to="/">
-          <i className="fab fa-angellist logo" />
+          <Logo/>
         </Link>
       </div>
 
