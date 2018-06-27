@@ -1,5 +1,4 @@
-@import 'css/colors.scss';
-@import 'css/colors.scss';
+@import "css/colors.scss";
 
 .words-container {
   line-height: 80px;
@@ -30,12 +29,11 @@ input {
   flex: none;
   font-weight: bold;
   padding-left: 2%;
-  border-radius:10px;
+  border-radius: 10px;
   outline: none;
-
 }
 .metric-score {
-  font-family: 'Fredoka One', cursive;
+  font-family: "Fredoka One", cursive;
   color: $secondary-color;
   opacity: 0.7;
 }
@@ -121,7 +119,7 @@ input {
   height: 60%;
 }
 input {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   flex: none;
 }
 
@@ -141,7 +139,7 @@ input {
 
 .word {
   color: black;
-  font-family: 'Fredoka One', cursive;
+  font-family: "Fredoka One", cursive;
   border-radius: 15px;
   display: inline-block;
   transition: background-color 0.6s;
@@ -168,7 +166,13 @@ input {
     display: flex;
     justify-content: center;
     padding: 0px;
+    text-align: center;
   }
+}
+.delight-complete {
+  width: 150px;
+  height: 150px;
+  opacity: 0.6;
 }
 .completion-dialog {
   h1 {
@@ -188,7 +192,15 @@ input {
   }
   #your-score {
     align-self: end;
-    font-size:20px;
+    font-size: 20px;
+    text-align: center;
+    font-size: 40px;
+    opacity: 0.9;
+    align-self: center;
+    color: $primary-color;
+    @media all and (max-width: 480px) {
+      font-size: 25px;
+    }
   }
   h3,
   span {
@@ -198,7 +210,7 @@ input {
     display: flex;
     width: 100%;
     justify-content: space-around;
-    margin-top:10px;
+    margin-top: 10px;
   }
   i {
     color: $primary-color;

@@ -11,14 +11,9 @@ exports[`\`CompletionModal\` renders properly 1`] = `
   title={
     <h1>
       <img
-        src="nerd.svg"
-        style={
-          Object {
-            "color": null,
-            "height": null,
-            "width": null,
-          }
-        }
+        className="delight-complete"
+        src="nerd-white.svg"
+        style={Object {}}
       />
     </h1>
   }
@@ -30,7 +25,7 @@ exports[`\`CompletionModal\` renders properly 1`] = `
       className="size2"
       id="your-score"
     >
-      You type faster than 1% of others
+      Your Typing Speed is Below Average
     </h4>
     <ResultComparison
       result={10}

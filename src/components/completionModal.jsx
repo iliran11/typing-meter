@@ -5,14 +5,17 @@ import { checkCircleStyle } from '../styles';
 import ScoreSection from './scoreboard/score-section';
 import { svgStyle } from '../styles';
 import ResultComparison from './game-statistics/ResultComparison';
-import {gameStats,delightPicture} from './game-statistics/gameStats';
+import {
+  gameStats,
+  delightPicture,
+  resultDescription
+} from './game-statistics/gameStats';
 import { bool, number, func } from 'prop-types';
-import nerd from './nerd.svg'
 
-const Title = function() {
+const Title = function(props) {
   return (
     <h1>
-      <img src={delightPicture()} style={{width:150,height:150}} />
+      <img src={delightPicture(props.wpm)} className="delight-complete" />
     </h1>
   );
 };
@@ -25,7 +28,7 @@ export default function CompletionModal(props) {
     wpmScore,
     onRestart
   } = props;
-  const TitleNode = Title();
+  const TitleNode = <Title wpm={wpmScore} />;
   const percentileResult = gameStats(wpmScore);
   return (
     <Dialog
@@ -33,12 +36,11 @@ export default function CompletionModal(props) {
       modal={modal}
       open={open}
       title={TitleNode}
-      className="completion-dialog"
-    >
+      className="completion-dialog">
       <div id="completion-content">
-        <h4 className="size2" id="your-score">{`You type faster than ${
-          percentileResult.percentile
-        }% of others`}</h4>
+        <h4 className="size2" id="your-score">
+          {resultDescription()}
+        </h4>
         <ResultComparison result={wpmScore} />
         <div className="score-report">
           <ScoreSection
