@@ -170,12 +170,13 @@ input {
   }
 }
 .delight-complete {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   opacity: 0.6;
 }
 .completion-dialog {
   h1 {
+    padding:20px 0px;
     svg {
       width: 15vw;
       height: 15vw;
