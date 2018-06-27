@@ -1,4 +1,4 @@
-import { firstCloseMatchIndex, getPercentile,delightPicture } from './gameStats';
+import { firstCloseMatchIndex, getPercentile } from './gameStats';
 
 describe('maps correctly the actual result to the wpm array of available results', () => {
   test('Wpm is 58', () => {
@@ -61,9 +61,3 @@ describe('get the correct percentile', () => {
     expect(result).toBe(50);
   });
 });
-// describe('`delightPicture`', () => {
-//   it('returns the correct picture for wpm ', () => {
-//     const result  = delightPicture(50)
-//     expect(wrapper).toMatchSnapshot();
-//   });
-// });
