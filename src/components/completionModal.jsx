@@ -1,21 +1,20 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import AutoRenew from 'material-ui/svg-icons/action/autorenew';
-import { checkCircleStyle } from '../styles';
 import ScoreSection from './scoreboard/score-section';
 import { svgStyle } from '../styles';
 import ResultComparison from './game-statistics/ResultComparison';
-import {
-  gameStats,
-  delightPicture,
-  resultDescription
-} from './game-statistics/gameStats';
+import { delightPicture, resultDescription } from './game-statistics/gameStats';
 import { bool, number, func } from 'prop-types';
 
 const Title = function(props) {
   return (
     <h1>
-      <img src={delightPicture(props.wpm)} className="delight-complete" />
+      <img
+        alt={'Shows emotions about the result'}
+        src={delightPicture(props.wpm)}
+        className="delight-complete"
+      />
     </h1>
   );
 };
@@ -29,7 +28,6 @@ export default function CompletionModal(props) {
     onRestart
   } = props;
   const TitleNode = <Title wpm={wpmScore} />;
-  const percentileResult = gameStats(wpmScore);
   return (
     <Dialog
       repositionOnUpdate={false}
