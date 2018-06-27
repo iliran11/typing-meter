@@ -6,10 +6,10 @@ import {
   ABOVE_AVERAGE,
   SUPER_ABOVE_AVERAGE,
   AVERAGE
-} from "./gameStatsConstants";
-import isUndefined from "lodash.isundefined";
-import nerd from "./nerd-white.svg";
-import confused from "./confused.svg";
+} from './gameStatsConstants';
+import isUndefined from 'lodash.isundefined';
+import nerd from './nerd-white.svg';
+import confused from './confused.svg';
 import smilingAverage from './smiling-average.svg';
 import belowAverage from './below-average.svg';
 
@@ -67,6 +67,20 @@ export function delightPicture(wpmResult) {
       return nerd;
   }
 }
-export function resultDescription() {
-  return "Your Typing Speed is Below Average";
+export function resultDescription(wpmResult) {
+  const classification = resultClassification(wpmResult);
+  switch (classification) {
+    case NO_TYPING:
+      return 'Please Do Your Best!';
+    case BELOW_AVERAGE:
+      return 'Below Average';
+    case AVERAGE:
+      return 'Average. You Can Do Better!';
+    case ABOVE_AVERAGE:
+      return 'above Average. NICE!';
+    case SUPER_ABOVE_AVERAGE:
+      return 'What a Score. WOW!';
+    default:
+      return nerd;
+  }
 }

@@ -37,7 +37,7 @@ export default function CompletionModal(props) {
       className="completion-dialog">
       <div id="completion-content">
         <h4 className="size2" id="your-score">
-          {resultDescription()}
+          {resultDescription(wpmScore)}
         </h4>
         <ResultComparison result={wpmScore} />
         <div className="score-report">
