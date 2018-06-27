@@ -1,5 +1,17 @@
-import { wpm, percentile } from './gameStatsConstants';
+import {
+  wpm,
+  percentile,
+  NO_TYPING,
+  BELOW_AVERAGE,
+  ABOVE_AVERAGE,
+  SUPER_ABOVE_AVERAGE,
+  AVERAGE
+} from './gameStatsConstants';
 import isUndefined from 'lodash.isundefined';
+import nerd from './nerd-white.svg';
+import confused from './confused.svg';
+import smilingAverage from './smiling-average.svg';
+import belowAverage from './below-average.svg';
 
 export function firstCloseMatchIndex(wpmResult) {
   let indexOfClosestMatch;
@@ -26,8 +38,49 @@ export function getPercentile(result) {
   if (percentileResult < 0) return 0;
   return Math.round(percentileResult);
 }
-export default function gameStats(result) {
+export function gameStats(result) {
   return {
     percentile: getPercentile(result)
   };
+}
+function resultClassification(wpmResult) {
+  if (wpmResult < 20) return NO_TYPING;
+  if (wpmResult < 35) return BELOW_AVERAGE;
+  if (wpmResult < 45) return AVERAGE;
+  if (wpmResult < 59) return ABOVE_AVERAGE;
+  return SUPER_ABOVE_AVERAGE;
+}
+export function delightPicture(wpmResult) {
+  const classification = resultClassification(wpmResult);
+  switch (classification) {
+    case NO_TYPING:
+      return confused;
+    case BELOW_AVERAGE:
+      return belowAverage;
+    case AVERAGE:
+      return smilingAverage;
+    case ABOVE_AVERAGE:
+      return nerd;
+    case SUPER_ABOVE_AVERAGE:
+      return nerd;
+    default:
+      return nerd;
+  }
+}
+export function resultDescription(wpmResult) {
+  const classification = resultClassification(wpmResult);
+  switch (classification) {
+    case NO_TYPING:
+      return 'Please Do Your Best!';
+    case BELOW_AVERAGE:
+      return 'Below Average';
+    case AVERAGE:
+      return 'Average. You Can Do Better!';
+    case ABOVE_AVERAGE:
+      return 'above Average. NICE!';
+    case SUPER_ABOVE_AVERAGE:
+      return 'What a Score. WOW!';
+    default:
+      return nerd;
+  }
 }

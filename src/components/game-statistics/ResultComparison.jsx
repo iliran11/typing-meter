@@ -1,6 +1,6 @@
 import React from 'react';
 import Tooltip from '../Tooltip';
-import gameStats from './gameStats';
+import { gameStats } from './gameStats';
 
 class ResultComparison extends React.Component {
   constructor(props) {
@@ -26,6 +26,7 @@ class ResultComparison extends React.Component {
             <Tooltip result={this.percentile} />
           </div>
         </div>
+        <div className="small-label">Where You Stand Against Others</div>
       </div>
     );
   }

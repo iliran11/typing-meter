@@ -80,3 +80,12 @@ export const wpm = [
   84,
   86
 ];
+
+
+/** Result Classification */
+
+export const NO_TYPING  = 'no-typing'
+export const BELOW_AVERAGE = 'below-average'
+export const AVERAGE = 'average'
+export const ABOVE_AVERAGE = 'above-average'
+export const SUPER_ABOVE_AVERAGE = 'super-above-average'
