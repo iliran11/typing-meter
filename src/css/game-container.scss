@@ -169,54 +169,6 @@ input {
     text-align: center;
   }
 }
-.delight-complete {
-  width: 100px;
-  height: 100px;
-  opacity: 0.6;
-}
-.completion-dialog {
-  h1 {
-    padding:20px 0px;
-    svg {
-      width: 15vw;
-      height: 15vw;
-      color: $secondary-color;
-    }
-  }
-}
-#completion-content {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  h4 {
-    margin: 10px 0;
-  }
-  #your-score {
-    align-self: end;
-    font-size: 20px;
-    text-align: center;
-    font-size: 40px;
-    opacity: 0.9;
-    align-self: center;
-    color: $primary-color;
-    @media all and (max-width: 480px) {
-      font-size: 25px;
-    }
-  }
-  h3,
-  span {
-    color: $primary-color;
-  }
-  .score-report {
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-    margin-top: 10px;
-  }
-  i {
-    color: $primary-color;
-  }
-}
 
 .joyride-box--wpm {
   line-height: 25px;
