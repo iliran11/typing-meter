@@ -23,7 +23,7 @@ export default function AppBar(props) {
         </Link>
         <Link to="" className="bar-item">
           <img
-            className="fas fa-info-circle"
+            className="walkthrough"
             onClick={infoIconOnClick}
             style={infoIconStyle}
             src={tutorial}
