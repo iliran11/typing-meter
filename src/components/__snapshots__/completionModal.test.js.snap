@@ -9,13 +9,9 @@ exports[`\`CompletionModal\` renders properly 1`] = `
   open={true}
   repositionOnUpdate={false}
   title={
-    <h1>
-      <img
-        className="delight-complete"
-        src="nerd-white.svg"
-        style={Object {}}
-      />
-    </h1>
+    <Title
+      wpm={10}
+    />
   }
 >
   <div
@@ -25,7 +21,7 @@ exports[`\`CompletionModal\` renders properly 1`] = `
       className="size2"
       id="your-score"
     >
-      Your Typing Speed is Below Average
+      Please Do Your Best!
     </h4>
     <ResultComparison
       result={10}
