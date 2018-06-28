@@ -2,7 +2,6 @@ import React from 'react';
 import keyboard from './keyboard.svg';
 
 export default function Logo() {
-  const isMobile = true;
   return (
     <div className="logo">
       <img alt={'logo'} src={keyboard} />

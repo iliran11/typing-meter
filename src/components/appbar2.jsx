@@ -27,6 +27,7 @@ export default function AppBar(props) {
             onClick={infoIconOnClick}
             style={infoIconStyle}
             src={tutorial}
+            alt={'guide me'}
           />
           <span>Guide Me</span>
         </Link>
