@@ -5,10 +5,11 @@ jobs:
       - image: circleci/node:7.10
     steps:
       - checkout
-      - run: npm install
+      - run: 
+        command: npm install
+        no_output_timeout: 20m
       - run: npm run lint
       - run: npm run test
-    no_output_timeout: 20m
   deploy:
     machine: true
     steps:
