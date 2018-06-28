@@ -9,6 +9,10 @@ describe('maps correctly the actual result to the wpm array of available results
     const result = firstCloseMatchIndex(31);
     expect(result).toBe(10);
   });
+  test('Wpm is 40', () => {
+    const result = firstCloseMatchIndex(40);
+    expect(result).toBe(14);
+  });
   test('Wpm is 500', () => {
     const result = firstCloseMatchIndex(500);
     expect(result).toBe(38);
@@ -47,5 +51,9 @@ describe('get the correct percentile', () => {
   test('Wpm is -999', () => {
     const result = getPercentile(-999);
     expect(result).toBe(0);
+  });
+  test('Wpm is 45', () => {
+    const result = getPercentile(40);
+    expect(result).toBe(50);
   });
 });

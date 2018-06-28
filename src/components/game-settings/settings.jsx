@@ -1,19 +1,16 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
-import { GAME_DURATION_OPTIONS, GAME_DURATION } from '../constants';
+import { GAME_DURATION_OPTIONS } from '../../constants';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import {
-  getCustomWordsStorage,
-  getGameDurationStorage
-} from '../storageHelpers';
-import isNan from 'lodash.isnan';
+import RaisedButton from 'material-ui/RaisedButton';
+import { processTextToArray } from '../../utils/utils';
 
 class SettingsForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameDuration: this.gameDurationStorage,
+      gameDuration: this.props.gameDuration,
       customWords: null
     };
     this.handleCustomWords = event => {
@@ -28,20 +25,17 @@ class SettingsForm extends React.Component {
     };
     this.onSubmit = event => {
       event.preventDefault();
-      sessionStorage.setItem('customWords', this.state.customWords);
-
-      sessionStorage.setItem('gameDuration', this.state.gameDuration);
+      this.props.updateCustomWords(this.state.customWords);
+      this.props.updateGameDuration(this.state.gameDuration);
       this.props.history.push('/');
     };
   }
-  get gameDurationStorage() {
-    /** storage hold strings. we need integers for the values. */
-    const data = parseInt(getGameDurationStorage(), 10);
-    if (isNan(data)) return GAME_DURATION;
-    return data;
-  }
-  get CustomWordsStorage() {
-    return getCustomWordsStorage();
+  get customTextErrorMessage() {
+    const numbersOfWords = processTextToArray(this.state.customWords || '').length;
+    if (numbersOfWords < 25) {
+      return `Current Number Of words is ${numbersOfWords}. Minimum Allowed is 25`;
+    }
+    return '';
   }
 
   render() {
@@ -50,11 +44,11 @@ class SettingsForm extends React.Component {
         <h2>Settings</h2>
         <div className="toggle-control" />
         <TextField
-          defaultValue={this.CustomWordsStorage}
+          errorText={this.customTextErrorMessage}
+          defaultValue={this.props.customWords}
           multiLine={true}
           rows={1}
           rowsMax={6}
-          // hintText={this.typeCustomText}
           fullWidth={true}
           onChange={this.handleCustomWords}
           floatingLabelText="Insert Custom Typing Text"
@@ -77,7 +71,7 @@ class SettingsForm extends React.Component {
             </SelectField>
           </div>
         </div>
-        <button onClick={this.onSubmit}>submit</button>
+        <RaisedButton label="submit" primary={true} onClick={this.onSubmit} />
       </form>
     );
   }

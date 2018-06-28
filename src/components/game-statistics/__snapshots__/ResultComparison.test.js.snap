@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`\`ResultComparison\` renders properly 1`] = `
+<div
+  className="result-comparison"
+>
+  <div
+    className="expanding-graph"
+  >
+    <div
+      className="revealer"
+      style={
+        Object {
+          "width": "100%",
+        }
+      }
+    >
+      <Tooltip
+        result={98}
+      />
+    </div>
+  </div>
+  <div
+    className="small-label"
+  >
+    Where You Stand Against Others
+  </div>
+</div>
+`;

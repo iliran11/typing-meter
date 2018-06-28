@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`\`processTextToArray\` gets 3 normal words 1`] = `
+Array [
+  "hello",
+  "bye",
+  "ffff",
+]
+`;
+
+exports[`\`processTextToArray\` gets empty string 1`] = `Array []`;
+
+exports[`\`processTextToArray\` gets empty string with spaces 1`] = `Array []`;
+
+exports[`\`processTextToArray\` gets line breaks 1`] = `
+Array [
+  "hello",
+  "bye",
+  "line",
+  "breaks",
+]
+`;
+
+exports[`\`processTextToArray\` gets padding text 1`] = `
+Array [
+  "hello",
+  "hello",
+]
+`;
+
+exports[`\`processTextToArray\` gets single letter word 1`] = `
+Array [
+  "hello",
+  ".",
+  "hello",
+]
+`;

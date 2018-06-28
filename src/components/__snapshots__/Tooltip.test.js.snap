@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`\`ToolTip\` renders properly 1`] = `
+<div
+  className="tooltip"
+>
+  78%
+</div>
+`;

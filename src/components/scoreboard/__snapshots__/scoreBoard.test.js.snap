@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`\`ScoreBoard\` renders properly 1`] = `
+<div
+  className="scoreboard-container"
+>
+  <Toolbar
+    className="secondary-toolbar transitionable joyride-step-scoreboard"
+    noGutter={false}
+    style={
+      Object {
+        "backgroundColor": null,
+        "height": null,
+        "justifyContent": null,
+        "padding": null,
+      }
+    }
+    text="TITLE"
+  >
+    <ToolbarGroup
+      firstChild={false}
+      lastChild={false}
+    >
+      <ScoreSection
+        className="joyride-step--correct"
+        disabled={true}
+        iconClass="fas fa-check-circle"
+        score={20}
+        title="CORRECT"
+      />
+    </ToolbarGroup>
+    <ToolbarGroup
+      firstChild={false}
+      lastChild={false}
+    >
+      <ScoreSection
+        className="joyride-step--wpm"
+        disabled={true}
+        iconClass="fas fa-tachometer-alt"
+        score={23}
+        title="WPM"
+      />
+    </ToolbarGroup>
+  </Toolbar>
+</div>
+`;

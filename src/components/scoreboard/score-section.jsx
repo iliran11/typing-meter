@@ -1,4 +1,5 @@
 import React from 'react';
+import {string,number,object,bool} from 'prop-types'
 
 export default function ScoreSection(props) {
   const { title, score, iconClass, svgStyle, scoreStyle, titleStyle,disabled ,className} = props;
@@ -13,4 +14,15 @@ export default function ScoreSection(props) {
       </div>
     </div>
   );
+}
+
+ScoreSection.proptypes = {
+  title: string,
+  score: number,
+  iconClass: string,
+  svgStyle: object,
+  scoreStyle: object,
+  titleStyle: object,
+  disabled: bool,
+  className: string
 }

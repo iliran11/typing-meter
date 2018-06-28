@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react';
-import ScoreBoard from '../scoreboard/scoreBoard';
-import WordsList from './WordsList';
+import React, { Component, Fragment } from "react";
+import ScoreBoard from "../scoreboard/scoreBoard";
+import WordsList from "./WordsList";
 import {
   AWAITS_TYPING,
   GAME_IS_ACTIVE,
@@ -9,29 +9,27 @@ import {
   INCREMENT_INDEX,
   DECREMENT_INDEX,
   GAME_DURATION
-} from '../../constants';
+} from "../../constants";
 import {
-  replaceLineBreaks,
   generateLoremIpsum,
   secondstoMillisecond,
   millisecondsToSeconds,
-  isLastCharIsSpace
-} from '../../utils';
-import CompletionModal from '../completionModal';
-import ProgressBar from './progress-bar';
-import isNull from 'lodash.isnull';
-import isFinite from 'lodash.isfinite';
-import isString from 'lodash.isstring';
-import isUndefined from 'lodash.isundefined'
-import {
-  getGameDurationStorage,
-  getCustomWordsStorage
-} from '../../storageHelpers';
+  isLastCharIsSpace,
+  processTextToArray,
+  createIndexWordObjects,
+  getRandomNumber
+} from "../../utils/utils";
+import CompletionModal from "../completionModal";
+import ProgressBar from "./progress-bar";
+import isNull from "lodash.isnull";
+import isFinite from "lodash.isfinite";
+import isUndefined from "lodash.isundefined";
+import Snackbar from "material-ui/Snackbar";
 
-class GameContainer extends Component {
+class Game extends Component {
   constructor(props) {
     super(props);
-    this.state = initialState(AWAITS_TYPING);
+    this.state = this.initialState;
     this.startTime = null;
     this.inputRef = React.createRef();
     this.joyride = React.createRef();
@@ -39,9 +37,14 @@ class GameContainer extends Component {
     this.onInputChange = event => {
       /** check if space has been clicked after completing a word. */
       const spaceHasClicked = isLastCharIsSpace(event.target.value);
-      if (spaceHasClicked && this.currentWord.isCompleted) {
-        this.changeIndex({ changeType: INCREMENT_INDEX });
-        return;
+      if (this.currentWord.isCompleted) {
+        if (spaceHasClicked) {
+          this.changeIndex({ changeType: INCREMENT_INDEX });
+          return;
+        } else {
+          this.changeSpaceWarningStatus(true)
+          return;
+        }
       }
       const { gameStatus } = this.state;
       if (gameStatus === AWAITS_TYPING) {
@@ -58,7 +61,7 @@ class GameContainer extends Component {
       const nextCurrentWord = nextWordsArray[this.currentIndex];
       this.setState(
         {
-          words: nextWordsArray,
+          words: nextWordsArray
         },
         () => {
           /** check if this word is completed, and it is the last. if so - complete the game. */
@@ -101,7 +104,7 @@ class GameContainer extends Component {
     });
     this.startTime = Date.now();
     this.timeLeftInterval = setInterval(() => {
-      if (this.timeLeft <= 0 || this.state.gameStatus=== RESTART_PENDING) {
+      if (this.timeLeft <= 0 || this.state.gameStatus === RESTART_PENDING) {
         this.onGameEnd();
       }
       this.setState({
@@ -117,7 +120,7 @@ class GameContainer extends Component {
     this.inputRef.current.blur();
   };
   onGameRestart = () => {
-    const nextState = initialState();
+    const nextState = this.initialState;
     this.setState(nextState);
   };
   changeIndex = options => {
@@ -126,6 +129,38 @@ class GameContainer extends Component {
       index: this.currentIndex + changeType
     });
   };
+  changeSpaceWarningStatus = (nextStatus) => {
+    this.setState({
+      clickSpaceTip: nextStatus
+    })
+  }
+  closeSpaceWarning = () => {
+    this.changeSpaceWarningStatus(false)
+  }
+  get wordsArray() {
+    if (isNull(this.props.customWords)) {
+      return generateLoremIpsum();
+    }
+    return processTextToArray(this.props.customWords);
+  }
+  get wordsObjectArray() {
+    return createIndexWordObjects(this.wordsArray,getRandomNumber());
+  }
+  get initialState() {
+    const overallTime = secondstoMillisecond(this.props.gameDuration);
+    return {
+      overallTime,
+      timeLeft: millisecondsToSeconds(overallTime),
+      index: 0,
+      scrollIndex: 0,
+      words: this.wordsObjectArray,
+      wpm: WPM_NULL,
+      gameDuration: this.props.gameDuration,
+      gameAboutToBegin: false,
+      gameStatus: AWAITS_TYPING,
+      clickSpaceTip: false
+    };
+  }
   get timePassed() {
     /** returns time passed in seconds */
     return GAME_DURATION - this.timeLeft;
@@ -155,19 +190,19 @@ class GameContainer extends Component {
     return this.state.index;
   }
   get wordsNumber() {
-    return this.state.words.length
+    return this.state.words.length;
   }
   get isLastWord() {
-    const index =  this.state.words[this.currentIndex + 1]
-    return isUndefined(index)
+    const index = this.state.words[this.currentIndex + 1];
+    return isUndefined(index);
   }
   get previousIndex() {
     return this.currentIndex - 1;
   }
   get inputValue() {
     const { currentWord } = this;
-    if (isNull(currentWord)) return '';
-    return this.isGameActive ? this.currentWord.typed : '';
+    if (isNull(currentWord)) return "";
+    return this.isGameActive ? this.currentWord.typed : "";
   }
   get typingStatistcs() {
     return this.state.words.reduce(
@@ -214,10 +249,10 @@ class GameContainer extends Component {
     return false;
   }
   get inputClasses() {
-    return 'input-class';
+    return "input-class";
   }
   get inputPlaceHolder() {
-    return this.state.gameStatus === GAME_IS_ACTIVE ? '' : 'Type to start ...';
+    return this.state.gameStatus === GAME_IS_ACTIVE ? "" : "Type to start ...";
   }
   get shouldRunJoyride() {
     return false;
@@ -231,23 +266,23 @@ class GameContainer extends Component {
           disabled={this.isWordBoardDisabled}
         />
         <div className="input-container">
-        <input
-          autoFocus
-          value={this.inputValue}
-          onChange={this.onInputChange}
-          onKeyDown={this.handleKeyPress}
-          tabIndex="0"
-          className={`input is-large is-primary size3 joyride-step--input ${
-            this.inputClasses
-          }`}
-          placeholder={this.inputPlaceHolder}
-          ref={this.inputRef}
-        />
+          <input
+            autoFocus
+            value={this.inputValue}
+            onChange={this.onInputChange}
+            onKeyDown={this.handleKeyPress}
+            tabIndex="0"
+            className={`input is-large is-primary size3 joyride-step--input ${
+              this.inputClasses
+            }`}
+            placeholder={this.inputPlaceHolder}
+            ref={this.inputRef}
+          />
         </div>
         {this.state.gameStatus === GAME_IS_ACTIVE && (
           <ProgressBar
             isProgressCounting={this.isGameActive}
-            animationTime={GAME_DURATION}
+            animationTime={this.state.gameDuration}
           />
         )}
         <WordsList
@@ -261,30 +296,15 @@ class GameContainer extends Component {
           correctTypedWords={this.correctWordsNumber}
           onRestart={this.onGameRestart}
         />
+        <Snackbar
+          open={this.state.clickSpaceTip}
+          message="Press Space. Advance To Next Word"
+          autoHideDuration={2000}
+          onRequestClose={this.closeSpaceWarning}
+        />
       </Fragment>
     );
   }
 }
 
-export default GameContainer;
-
-const initialState = () => {
-  const customWords = getCustomWordsStorage();
-  const customGameDuration = getGameDurationStorage();
-  const gameDuration = customGameDuration || GAME_DURATION;
-  const customWordArray = isString(customWords)
-    ? replaceLineBreaks(customWords).split(' ')
-    : null;
-  const overallTime = secondstoMillisecond(GAME_DURATION);
-  return {
-    overallTime,
-    timeLeft: millisecondsToSeconds(overallTime),
-    index: 0,
-    scrollIndex: 0,
-    words: generateLoremIpsum(customWordArray),
-    wpm: WPM_NULL,
-    gameDuration,
-    gameAboutToBegin: false,
-    gameStatus: AWAITS_TYPING
-  };
-};
+export default Game;

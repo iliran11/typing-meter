@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`\`ScoreSection\` renders properly 1`] = `
+<div
+  className="score-section transitionable true undefined"
+>
+  <h3>
+    WPM
+  </h3>
+  <div
+    className="row"
+  >
+    <i
+      className="undefined icon"
+    />
+    <span
+      className="metric-score"
+    >
+      20
+    </span>
+  </div>
+</div>
+`;
