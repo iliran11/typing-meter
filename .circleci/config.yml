@@ -5,8 +5,11 @@ jobs:
       - image: circleci/node:7.10
     steps:
       - checkout
-      - run: npm install
+      - run: 
+          command: npm install
+          no_output_timeout: 20m
       - run: npm run lint
+      - run: npm run test
   deploy:
     machine: true
     steps:
@@ -14,7 +17,7 @@ jobs:
       - run: npm install
       - run: npm run build
       - run: bash ./deploy.sh
-
+    no_output_timeout: 20m
 workflows:
   version: 2
   build-and-deploy:

@@ -48,10 +48,6 @@ describe('get the correct percentile', () => {
     const result = getPercentile(0);
     expect(result).toBe(0);
   });
-  test('Wpm is 0', () => {
-    const result = getPercentile(59);
-    expect(result).toBe(0);
-  });
   test('Wpm is -999', () => {
     const result = getPercentile(-999);
     expect(result).toBe(0);

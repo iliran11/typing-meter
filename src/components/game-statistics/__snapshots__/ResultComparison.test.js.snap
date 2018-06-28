@@ -20,5 +20,10 @@ exports[`\`ResultComparison\` renders properly 1`] = `
       />
     </div>
   </div>
+  <div
+    className="small-label"
+  >
+    Where You Stand Against Others
+  </div>
 </div>
 `;

@@ -11,9 +11,7 @@ exports[`\`AppBar\` renders properly 1`] = `
       replace={false}
       to="/"
     >
-      <i
-        className="fab fa-angellist logo"
-      />
+      <Logo />
     </Link>
   </div>
   <div
