@@ -18,25 +18,49 @@ exports[`\`AppBar\` renders properly 1`] = `
     className="right-hand"
   >
     <Link
+      className="bar-item"
       replace={false}
       to="/settings"
     >
       <i
         className="fas fa-cog"
       />
+      <span>
+        Settings
+      </span>
     </Link>
-    <i
-      className="fab fab fa-github github"
-    />
-    <i
-      className="fas fa-info-circle"
-      onClick={null}
-      style={
-        Object {
-          "opacity": 0.5,
+    <Link
+      className="bar-item"
+      replace={false}
+      to=""
+    >
+      <img
+        alt="guide me"
+        className="walkthrough"
+        onClick={null}
+        src="play-button.svg"
+        style={
+          Object {
+            "opacity": 0.5,
+          }
         }
-      }
-    />
+      />
+      <span>
+        Guide Me
+      </span>
+    </Link>
+    <Link
+      className="bar-item"
+      replace={false}
+      to=""
+    >
+      <i
+        className="fas fa-info-circle"
+      />
+      <span>
+        About
+      </span>
+    </Link>
   </div>
 </div>
 `;

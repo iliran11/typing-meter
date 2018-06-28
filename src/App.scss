@@ -2,9 +2,15 @@
 
 /** BreakPoints */
 // .gameContainer {
-  @media all and (max-width: 991px) {  }
-  @media all and (max-width: 768px) {  }
-  @media all and (max-width: 480px) {  }
+@media all and (max-width: 991px) {
+}
+@media all and (max-width: 768px) {
+}
+@media all and (max-width: 480px) {
+}
+@media all and (max-width: 320px) {
+  /*Iphone 5 */
+}
 // }
 
 @import 'css/colors.scss';
@@ -18,8 +24,7 @@
 @import 'css/settings-form.scss';
 @import '../node_modules/react-joyride/lib/react-joyride.scss';
 @import 'css/result-comparison.scss';
-
-
+@import 'css/game-completion.scss';
 html {
   height: 100%;
   font-family: 'Roboto', sans-serif;
@@ -29,7 +34,9 @@ html {
 *:after {
   box-sizing: inherit;
 }
-a { color: inherit; } 
+a {
+  color: inherit;
+}
 
 body {
   height: 100%;
@@ -45,9 +52,9 @@ body {
   width: 100%;
 }
 .svg-wrapper {
-  display:flex;
+  display: flex;
   svg {
-    flex:auto;
-    height:100%;
+    flex: auto;
+    height: 100%;
   }
 }

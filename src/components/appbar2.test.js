@@ -7,7 +7,7 @@ function AppBarFactory(walkThroughIconStatus) {
 }
 function getInfoIconStyle(walkThroughIconStatus) {
   const wrapper = AppBarFactory(walkThroughIconStatus);
-  return wrapper.find('.fa-info-circle').prop('style');
+  return wrapper.find('.walkthrough').prop('style');
 }
 describe('`AppBar`', () => {
   it('renders properly', () => {

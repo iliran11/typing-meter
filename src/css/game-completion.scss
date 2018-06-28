@@ -1,0 +1,58 @@
+@import 'css/colors.scss';
+
+.delight-complete {
+  width: 100px;
+  height: 100px;
+  opacity: 0.6;
+  padding: 20px 0px;
+  @media all and (max-width: 320px) {
+    height:60px;
+    width:60px;
+    padding:5px 0px;
+    
+  }
+}
+
+
+#completion-content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  h4 {
+    margin: 10px 0;
+  }
+  #your-score {
+    text-align: center;
+    font-size: 40px;
+    opacity: 0.9;
+    align-self: center;
+    color: $primary-color;
+    @media all and (max-width: 480px) {
+      font-size: 25px;
+    }
+    @media all and (max-width: 320px) {
+      font-size: 20px;
+    }
+  }
+  h3,
+  span {
+    color: $primary-color;
+  }
+  .score-report {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 10px;
+    font-size: 5px;
+  }
+  i {
+    color: $primary-color;
+  }
+  .score-section {
+    h3 {
+      @media all and (max-width: 320px) {
+        font-size: 16px;
+      }
+    }
+  }
+}
