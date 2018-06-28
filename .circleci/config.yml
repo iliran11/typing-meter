@@ -6,19 +6,17 @@ jobs:
     steps:
       - checkout
       - run: npm install
-        - no_output_timeout: 20m
       - run: npm run lint
       - run: npm run test
+    no_output_timeout: 20m
   deploy:
     machine: true
     steps:
       - checkout
       - run: npm install
-        - no_output_timeout: 20m
       - run: npm run build
-        - no_output_timeout: 20m
       - run: bash ./deploy.sh
-
+    no_output_timeout: 20m
 workflows:
   version: 2
   build-and-deploy:
