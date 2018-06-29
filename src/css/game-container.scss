@@ -1,4 +1,4 @@
-@import "css/colors.scss";
+@import 'css/colors.scss';
 
 .words-container {
   line-height: 80px;
@@ -33,10 +33,14 @@ input {
   outline: none;
 }
 .metric-score {
-  font-family: "Fredoka One", cursive;
+  font-family: 'Fredoka One', cursive;
   color: $secondary-color;
   opacity: 0.7;
 }
+.metric-score.calculating {
+  font-size: 30px;
+}
+
 .transitionable {
   transition: all 0.5s;
 }
@@ -119,7 +123,7 @@ input {
   height: 60%;
 }
 input {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   flex: none;
 }
 
@@ -139,7 +143,7 @@ input {
 
 .word {
   color: black;
-  font-family: "Fredoka One", cursive;
+  font-family: 'Fredoka One', cursive;
   border-radius: 15px;
   display: inline-block;
   transition: background-color 0.6s;
