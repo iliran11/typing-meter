@@ -22,23 +22,11 @@ exports[`\`ScoreBoard\` renders properly 1`] = `
       lastChild={false}
     >
       <ScoreSection
-        className="joyride-step--correct"
-        disabled={true}
-        iconClass="fas fa-check-circle"
-        score={20}
-        title="CORRECT"
-      />
-    </ToolbarGroup>
-    <ToolbarGroup
-      firstChild={false}
-      lastChild={false}
-    >
-      <ScoreSection
         className="joyride-step--wpm"
         disabled={true}
         iconClass="fas fa-tachometer-alt"
         score={23}
-        title="WPM"
+        title="Words Per Minute"
       />
     </ToolbarGroup>
   </Toolbar>

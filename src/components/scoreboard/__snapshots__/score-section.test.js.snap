@@ -14,7 +14,7 @@ exports[`\`ScoreSection\` renders properly 1`] = `
       className="undefined icon"
     />
     <span
-      className="metric-score"
+      className="metric-score special-class"
     >
       20
     </span>
