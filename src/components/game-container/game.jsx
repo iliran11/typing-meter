@@ -8,7 +8,8 @@ import {
   RESTART_PENDING,
   INCREMENT_INDEX,
   DECREMENT_INDEX,
-  GAME_DURATION
+  START_CALCULATING_TIME,
+  CALCULATING_INTERVAL
 } from "../../constants";
 import {
   generateLoremIpsum,
@@ -42,7 +43,7 @@ class Game extends Component {
           this.changeIndex({ changeType: INCREMENT_INDEX });
           return;
         } else {
-          this.changeSpaceWarningStatus(true)
+          this.changeSpaceWarningStatus(true);
           return;
         }
       }
@@ -99,11 +100,21 @@ class Game extends Component {
     };
   }
   onGameStart = () => {
-    this.setState({
-      gameStatus: GAME_IS_ACTIVE
-    });
+    this.setState(
+      {
+        gameStatus: GAME_IS_ACTIVE
+      },
+      () => {
+        this.bouncedWpmResult = this.wpmNormalized;
+        this.bouncedWpmClassName = this.specialScoreClass;
+      }
+    );
     this.startTime = Date.now();
     this.timeLeftInterval = setInterval(() => {
+      if (this.timeLeft % CALCULATING_INTERVAL === 0) {
+        this.bouncedWpmResult = this.wpmNormalized;
+        this.bouncedWpmClassName = this.specialScoreClass;
+      }
       if (this.timeLeft <= 0 || this.state.gameStatus === RESTART_PENDING) {
         this.onGameEnd();
       }
@@ -129,14 +140,14 @@ class Game extends Component {
       index: this.currentIndex + changeType
     });
   };
-  changeSpaceWarningStatus = (nextStatus) => {
+  changeSpaceWarningStatus = nextStatus => {
     this.setState({
       clickSpaceTip: nextStatus
-    })
-  }
+    });
+  };
   closeSpaceWarning = () => {
-    this.changeSpaceWarningStatus(false)
-  }
+    this.changeSpaceWarningStatus(false);
+  };
   get wordsArray() {
     if (isNull(this.props.customWords)) {
       return generateLoremIpsum();
@@ -144,7 +155,7 @@ class Game extends Component {
     return processTextToArray(this.props.customWords);
   }
   get wordsObjectArray() {
-    return createIndexWordObjects(this.wordsArray,getRandomNumber());
+    return createIndexWordObjects(this.wordsArray, getRandomNumber());
   }
   get initialState() {
     const overallTime = secondstoMillisecond(this.props.gameDuration);
@@ -160,10 +171,6 @@ class Game extends Component {
       gameStatus: AWAITS_TYPING,
       clickSpaceTip: false
     };
-  }
-  get timePassed() {
-    /** returns time passed in seconds */
-    return GAME_DURATION - this.timeLeft;
   }
   get timePassedMinutes() {
     /** returns time passed in minutes. */
@@ -223,15 +230,39 @@ class Game extends Component {
     const errorFactor = wrong / this.timePassedMinutes;
     return grossWpm - errorFactor;
   }
+  get timePassed() {
+    const { gameDuration, timeLeft } = this.state;
+    return gameDuration - timeLeft;
+  }
   get wpmNormalized() {
     const wpmScore = this.wpmScore;
-
+    if (this.isWpmCalculating) return "Calculating ...";
+    /** while waiting for the game to start - show just 0. */
+    if (this.state.gameStatus === AWAITS_TYPING) return 0;
     if (isFinite(wpmScore)) {
       /** if the number is smaller than 0, just return 0. */
       if (wpmScore < 0) return 0;
       return Math.round(this.wpmScore);
     }
     return WPM_NULL;
+  }
+  get displayedWpmResult() {
+    return this.state.gameStatus === GAME_IS_ACTIVE
+      ? this.bouncedWpmResult
+      : this.wpmNormalized;
+  }
+  get isWpmCalculating() {
+    /** decide if to indicate that there is not enough
+     *  stable data to display about the wpm.
+     */
+    return (
+      this.timePassed < START_CALCULATING_TIME &&
+      this.state.gameStatus === GAME_IS_ACTIVE
+    );
+  }
+  get specialScoreClass() {
+    /** do not show the scoer in the start - it is still not stable ... */
+    if (this.isWpmCalculating) return "calculating";
   }
   get correctWordsNumber() {
     const correctWordsArray = this.state.words.filter(currentElement => {
@@ -261,9 +292,10 @@ class Game extends Component {
     return (
       <Fragment>
         <ScoreBoard
-          wpm={this.wpmNormalized}
+          wpm={this.displayedWpmResult}
           correctTypedWords={this.correctWordsNumber}
           disabled={this.isWordBoardDisabled}
+          specialScoreClass={this.bouncedWpmClassName}
         />
         <div className="input-container">
           <input
@@ -292,7 +324,7 @@ class Game extends Component {
         />
         <CompletionModal
           open={this.state.gameStatus === RESTART_PENDING}
-          wpmScore={this.wpmNormalized}
+          wpmScore={this.displayedWpmResult}
           correctTypedWords={this.correctWordsNumber}
           onRestart={this.onGameRestart}
         />

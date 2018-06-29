@@ -1,16 +1,21 @@
 import React from 'react';
-import {string,number,object,bool} from 'prop-types'
+import { string, number, object, bool } from 'prop-types';
 
 export default function ScoreSection(props) {
-  const { title, score, iconClass, svgStyle, scoreStyle, titleStyle,disabled ,className} = props;
+  const {
+    title,
+    score,
+    iconClass,
+    disabled,
+    className,
+    specialScoreClass
+  } = props;
   return (
     <div className={`score-section transitionable ${disabled} ${className}`}>
-      <h3 style={titleStyle}>{title}</h3>
+      <h3>{title}</h3>
       <div className="row">
-        <i className={`${iconClass} icon`} style={svgStyle} />
-        <span className="metric-score" style={scoreStyle}>
-          {score}
-        </span>
+        <i className={`${iconClass} icon`} />
+        <span className={`metric-score ${specialScoreClass}`}>{score}</span>
       </div>
     </div>
   );
@@ -25,4 +30,4 @@ ScoreSection.proptypes = {
   titleStyle: object,
   disabled: bool,
   className: string
-}
+};
