@@ -74,35 +74,6 @@ input {
     }
   }
 }
-
-.score-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  h3 {
-    margin: 0px;
-    color: $secondary-color;
-    opacity: 0.6;
-    font-weight: bold;
-    text-align: center;
-  }
-  h3,
-  .row {
-    font-size: 2.5rem;
-    @media all and (max-width: 480px) {
-      font-size: 1.25rem;
-    }
-  }
-  .icon {
-    color: $secondary-color;
-    opacity: 0.6;
-    margin-right: 1rem;
-  }
-  .row {
-    margin-top: 5px;
-    align-items: center;
-  }
-}
 .progress-bar {
   background-color: $primary-light;
   height: 3.125rem;
