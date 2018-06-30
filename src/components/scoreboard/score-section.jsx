@@ -5,17 +5,18 @@ export default function ScoreSection(props) {
   const {
     title,
     score,
-    iconClass,
     disabled,
     className,
     specialScoreClass,
-    getRef
+    getRef,
+    icon,
+    iconAlt
   } = props;
   return (
     <div className={`score-section transitionable ${disabled} ${className}`}>
       <h3>{title}</h3>
       <div className="row">
-        <i className={`${iconClass} icon`} ref={getRef} />
+        <img className="icon" src={icon} ref={getRef} alt={iconAlt} />
         <span className={`metric-score ${specialScoreClass}`}>{score}</span>
       </div>
     </div>

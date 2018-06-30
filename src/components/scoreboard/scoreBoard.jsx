@@ -3,6 +3,7 @@ import { secondaryStyle } from '../../styles';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 import ScoreSection from './score-section';
 import { number, bool } from 'prop-types';
+import speedometer from './speedometer.svg'
 
 export default function ScoreBoard(props) {
   const { wpm, disabled, specialScoreClass,wpmRef } = props;
@@ -15,12 +16,14 @@ export default function ScoreBoard(props) {
         <ToolbarGroup>
           <ScoreSection
             title="Words Per Minute"
-            iconClass="fas fa-tachometer-alt"
+            icon={speedometer}
+            iconAlt={'speedometer'}
             score={wpm}
             disabled={disabled}
             className="joyride-step--wpm"
             specialScoreClass={specialScoreClass}
             getRef={wpmRef}
+
           />
         </ToolbarGroup>
       </Toolbar>
