@@ -22,8 +22,9 @@ exports[`\`AppBar\` renders properly 1`] = `
       replace={false}
       to="/settings"
     >
-      <i
-        className="fas fa-cog"
+      <img
+        alt="settings.svg"
+        src="settings.svg"
       />
       <span>
         Settings
@@ -54,8 +55,9 @@ exports[`\`AppBar\` renders properly 1`] = `
       replace={false}
       to=""
     >
-      <i
-        className="fas fa-info-circle"
+      <img
+        alt="info"
+        src="information.svg"
       />
       <span>
         About
