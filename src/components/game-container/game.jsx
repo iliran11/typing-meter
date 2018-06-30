@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from "react";
-import ScoreBoard from "../scoreboard/scoreBoard";
-import WordsList from "./WordsList";
+import React, { Component, Fragment } from 'react';
+import ScoreBoard from '../scoreboard/scoreBoard';
+import WordsList from './WordsList';
 import {
   AWAITS_TYPING,
   GAME_IS_ACTIVE,
@@ -10,7 +10,7 @@ import {
   DECREMENT_INDEX,
   START_CALCULATING_TIME,
   CALCULATING_INTERVAL
-} from "../../constants";
+} from '../../constants';
 import {
   generateLoremIpsum,
   secondstoMillisecond,
@@ -19,13 +19,13 @@ import {
   processTextToArray,
   createIndexWordObjects,
   getRandomNumber
-} from "../../utils/utils";
-import CompletionModal from "../completionModal";
-import ProgressBar from "./progress-bar";
-import isNull from "lodash.isnull";
-import isFinite from "lodash.isfinite";
-import isUndefined from "lodash.isundefined";
-import Snackbar from "material-ui/Snackbar";
+} from '../../utils/utils';
+import CompletionModal from '../completionModal';
+import ProgressBar from './progress-bar';
+import isNull from 'lodash.isnull';
+import isFinite from 'lodash.isfinite';
+import isUndefined from 'lodash.isundefined';
+import Snackbar from 'material-ui/Snackbar';
 
 class Game extends Component {
   constructor(props) {
@@ -34,13 +34,18 @@ class Game extends Component {
     this.startTime = null;
     this.inputRef = React.createRef();
     this.joyride = React.createRef();
+    this.gaugeRef = React.createRef();
     /** INPUT CHNAGE EVENT */
     this.onInputChange = event => {
       /** check if space has been clicked after completing a word. */
       const spaceHasClicked = isLastCharIsSpace(event.target.value);
       if (this.currentWord.isCompleted) {
         if (spaceHasClicked) {
+          if (this.currentWord.isCorrect) {
+            this.animateGauge();
+          }
           this.changeIndex({ changeType: INCREMENT_INDEX });
+
           return;
         } else {
           this.changeSpaceWarningStatus(true);
@@ -148,6 +153,12 @@ class Game extends Component {
   closeSpaceWarning = () => {
     this.changeSpaceWarningStatus(false);
   };
+  animateGauge = () => {
+    this.gaugeRef.current.classList.remove('animate-correctness');
+    setTimeout(() => {
+      this.gaugeRef.current.classList.add('animate-correctness');
+    }, 0);
+  };
   get wordsArray() {
     if (isNull(this.props.customWords)) {
       return generateLoremIpsum();
@@ -208,8 +219,8 @@ class Game extends Component {
   }
   get inputValue() {
     const { currentWord } = this;
-    if (isNull(currentWord)) return "";
-    return this.isGameActive ? this.currentWord.typed : "";
+    if (isNull(currentWord)) return '';
+    return this.isGameActive ? this.currentWord.typed : '';
   }
   get typingStatistcs() {
     return this.state.words.reduce(
@@ -236,7 +247,7 @@ class Game extends Component {
   }
   get wpmNormalized() {
     const wpmScore = this.wpmScore;
-    if (this.isWpmCalculating) return "Calculating ...";
+    if (this.isWpmCalculating) return 'Calculating ...';
     /** while waiting for the game to start - show just 0. */
     if (this.state.gameStatus === AWAITS_TYPING) return 0;
     if (isFinite(wpmScore)) {
@@ -262,7 +273,7 @@ class Game extends Component {
   }
   get specialScoreClass() {
     /** do not show the scoer in the start - it is still not stable ... */
-    if (this.isWpmCalculating) return "calculating";
+    if (this.isWpmCalculating) return 'calculating';
   }
   get correctWordsNumber() {
     const correctWordsArray = this.state.words.filter(currentElement => {
@@ -280,10 +291,10 @@ class Game extends Component {
     return false;
   }
   get inputClasses() {
-    return "input-class";
+    return 'input-class';
   }
   get inputPlaceHolder() {
-    return this.state.gameStatus === GAME_IS_ACTIVE ? "" : "Type to start ...";
+    return this.state.gameStatus === GAME_IS_ACTIVE ? '' : 'Type to start ...';
   }
   get shouldRunJoyride() {
     return false;
@@ -296,6 +307,7 @@ class Game extends Component {
           correctTypedWords={this.correctWordsNumber}
           disabled={this.isWordBoardDisabled}
           specialScoreClass={this.bouncedWpmClassName}
+          wpmRef={this.gaugeRef}
         />
         <div className="input-container">
           <input

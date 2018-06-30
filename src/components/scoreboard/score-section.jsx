@@ -8,13 +8,14 @@ export default function ScoreSection(props) {
     iconClass,
     disabled,
     className,
-    specialScoreClass
+    specialScoreClass,
+    getRef
   } = props;
   return (
     <div className={`score-section transitionable ${disabled} ${className}`}>
       <h3>{title}</h3>
       <div className="row">
-        <i className={`${iconClass} icon`} />
+        <i className={`${iconClass} icon`} ref={getRef} />
         <span className={`metric-score ${specialScoreClass}`}>{score}</span>
       </div>
     </div>

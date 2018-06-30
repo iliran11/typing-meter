@@ -20,6 +20,7 @@
     "npm": "^6.0.0",
     "npm-run-all": "^4.1.2",
     "ow": "^0.5.0",
+    "prettier": "^1.13.7",
     "prop-types": "^15.6.2",
     "random-word": "^2.0.0",
     "random-words": "0.0.1",
@@ -44,7 +45,8 @@
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "lint": "eslint --max-warnings 0 src/**/*.{js,jsx}",
-    "coverage": "npm run test -- --coverage"
+    "coverage": "npm run test -- --coverage",
+    "prettier": "prettier --write src/**/*.{js,jsx,scss}"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

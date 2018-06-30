@@ -5,7 +5,7 @@ import ScoreSection from './score-section';
 import { number, bool } from 'prop-types';
 
 export default function ScoreBoard(props) {
-  const { wpm, disabled, specialScoreClass } = props;
+  const { wpm, disabled, specialScoreClass,wpmRef } = props;
   return (
     <div className="scoreboard-container">
       <Toolbar
@@ -20,6 +20,7 @@ export default function ScoreBoard(props) {
             disabled={disabled}
             className="joyride-step--wpm"
             specialScoreClass={specialScoreClass}
+            getRef={wpmRef}
           />
         </ToolbarGroup>
       </Toolbar>
