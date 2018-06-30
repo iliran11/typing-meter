@@ -28,9 +28,14 @@ export default function AboutMe(props) {
       <Divider style={{ height: 3 }} />
       <section>
         <h1>
-          <img src={contact} /> How to Reach Me
+          <img src={contact} alt={'contact me'} /> How to Reach Me
         </h1>
         <Divider />
+        <p>
+          It would be my pleasure to be contact and discuss anything. from
+          typing fast topics, feature requests to other projects endevours.
+          Please look out for me in the following platforms:
+        </p>
       </section>
       {/* <video
         loop
