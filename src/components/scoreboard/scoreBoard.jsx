@@ -23,7 +23,6 @@ export default function ScoreBoard(props) {
             className="joyride-step--wpm"
             specialScoreClass={specialScoreClass}
             getRef={wpmRef}
-
           />
         </ToolbarGroup>
       </Toolbar>
