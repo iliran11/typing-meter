@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Logo from './logo/logo';
-import tutorial from './play-button.svg'
-
+import Logo from '../logo/logo';
+import tutorial from './play-button.svg';
+import settings from './settings.svg';
+import info from './information.svg';
 
 export default function AppBar(props) {
   const { walkThroughIconStatus, toggleWalkthrough } = props;
@@ -18,7 +19,7 @@ export default function AppBar(props) {
       {/*TODO: Refactor to Bar-Item Component */}
       <div className="right-hand">
         <Link to="/settings" className="bar-item">
-          <i className="fas fa-cog" />
+          <img src={settings} alt={settings} />
           <span>Settings</span>
         </Link>
         <Link to="" className="bar-item">
@@ -31,10 +32,8 @@ export default function AppBar(props) {
           />
           <span>Guide Me</span>
         </Link>
-        <Link to={""} className="bar-item">
-          <i
-            className="fas fa-info-circle"
-          />
+        <Link to={''} className="bar-item">
+          <img src={info} />
           <span>About</span>
         </Link>
       </div>
