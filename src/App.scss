@@ -26,6 +26,7 @@
 @import 'css/result-comparison.scss';
 @import 'css/game-completion.scss';
 @import 'css/score-section.scss';
+@import 'css/about-me.scss';
 html {
   height: 100%;
   font-family: 'Roboto', sans-serif;
@@ -41,7 +42,7 @@ a {
 
 body {
   height: 100%;
-  overflow: auto; /*makes the body non-scrollable (we will add scrolling to the sidebar and main content containers)*/
+  overflow: hidden; /*makes the body non-scrollable (we will add scrolling to the sidebar and main content containers)*/
   margin: 0px; /*removes default style*/
   display: flex; /*enables flex content for its children*/
   box-sizing: border-box;

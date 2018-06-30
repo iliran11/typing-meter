@@ -53,7 +53,7 @@ exports[`\`AppBar\` renders properly 1`] = `
     <Link
       className="bar-item"
       replace={false}
-      to=""
+      to="/about"
     >
       <img
         alt="info"

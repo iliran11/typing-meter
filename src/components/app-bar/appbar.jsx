@@ -32,7 +32,7 @@ export default function AppBar(props) {
           />
           <span>Guide Me</span>
         </Link>
-        <Link to={''} className="bar-item">
+        <Link to={'/about'} className="bar-item">
           <img src={info} alt={'info'} />
           <span>About</span>
         </Link>
