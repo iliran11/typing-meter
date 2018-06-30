@@ -1,5 +1,5 @@
-import { connect } from "react-redux";
-import Game from './game'
+import { connect } from 'react-redux';
+import Game from './game';
 
 const mapStateToProps = state => {
   return {
@@ -8,4 +8,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, null)(Game); 
+export default connect(
+  mapStateToProps,
+  null
+)(Game);

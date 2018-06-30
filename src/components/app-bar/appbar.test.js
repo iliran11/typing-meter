@@ -1,5 +1,5 @@
 import React from 'react';
-import AppBar from './appbar2';
+import AppBar from './appbar';
 import { shallow } from 'enzyme';
 
 function AppBarFactory(walkThroughIconStatus) {

@@ -24,7 +24,8 @@ exports[`\`ScoreBoard\` renders properly 1`] = `
       <ScoreSection
         className="joyride-step--wpm"
         disabled={true}
-        iconClass="fas fa-tachometer-alt"
+        icon="speedometer.svg"
+        iconAlt="speedometer"
         score={23}
         title="Words Per Minute"
       />

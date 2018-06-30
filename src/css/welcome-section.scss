@@ -1,6 +1,5 @@
 @import 'css/colors.scss';
 
-
 .welcome-section {
   display: flex;
   flex-direction: column;
@@ -30,12 +29,11 @@
   button {
     margin-top: auto;
     color: white;
-    font-size:30px;
-    height:10vh;
+    font-size: 30px;
+    height: 10vh;
     background-color: $primary-color;
     font-family: 'Roboto', sans-serif;
-    border:0px;
-
+    border: 0px;
   }
   .keyboard-icon {
     height: 150px;
@@ -48,7 +46,7 @@
     margin-left: 5px;
   }
   .number-svg {
-    height:24px;
-    width:24px;
+    height: 24px;
+    width: 24px;
   }
 }

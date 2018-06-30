@@ -64,15 +64,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  opacity:0.8;
+  opacity: 0.8;
   span {
-    margin-top:5px;
+    margin-top: 5px;
     font-size: 20px;
     @media all and (max-width: 480px) {
-      font-size:12px;
+      font-size: 12px;
     }
     @media all and (max-width: 320px) {
-      font-size:10px;
+      font-size: 10px;
     }
   }
 }

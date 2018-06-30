@@ -1,9 +1,9 @@
 .result-comparison {
-  margin-top:10px;
+  margin-top: 10px;
   width: 100%;
 }
 .small-label {
-  font-size:10px;
+  font-size: 10px;
 }
 .expanding-graph {
   display: flex;
@@ -40,7 +40,7 @@
   transform: translate(-25%, -100%);
   position: absolute;
   padding: 5px 7px;
-  margin-bottom:2px;
+  margin-bottom: 2px;
   @media all and (max-width: 480px) {
     font-size: 16px;
     padding: 2px 6px;
