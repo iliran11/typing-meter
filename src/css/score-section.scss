@@ -25,12 +25,16 @@
     color: $secondary-color;
     opacity: 0.6;
     margin-right: 1rem;
-    height: 60px;
-    width: 60px;
+    height: 45px;
+    width: 45px;
+    @media all and (max-width: 480px) {
+      height: 22px;
+      width: 22px;
+      margin-right:10px;
+    }
   }
   .row {
     margin-top: 5px;
-    align-items: center;
   }
 }
 
