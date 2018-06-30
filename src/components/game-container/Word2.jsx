@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { FAILURE_ANIMATION, SUCCESS_ANIMATION } from '../../constants';
 import LettersList from './LettersList';
-import  focusNode  from '../../utils/focusNode';
+import focusNode from '../../utils/focusNode';
 
 export default class Word extends Component {
   constructor(props) {
@@ -17,7 +17,7 @@ export default class Word extends Component {
     return typedWordsChanged || isGoingActive;
   };
   componentDidMount() {
-    if(this.props.isFirst) {
+    if (this.props.isFirst) {
       this.focusNode();
     }
   }
@@ -54,7 +54,9 @@ export default class Word extends Component {
     return '';
   }
   get containerClasses() {
-    return `word ${this.isWordCorrectClass} ${this.activeClass} ${this.animationClass}`;
+    return `word ${this.isWordCorrectClass} ${this.activeClass} ${
+      this.animationClass
+    }`;
   }
   get letters() {
     return 'hello world';

@@ -6,7 +6,7 @@ export default function Logo() {
     <div className="logo">
       <img alt={'logo'} src={keyboard} />
       <span>
-        TYPING <br/> COACHER
+        TYPING <br /> COACHER
       </span>
     </div>
   );
