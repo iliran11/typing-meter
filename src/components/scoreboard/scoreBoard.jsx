@@ -3,10 +3,10 @@ import { secondaryStyle } from '../../styles';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 import ScoreSection from './score-section';
 import { number, bool } from 'prop-types';
-import speedometer from './speedometer.svg'
+import speedometer from './speedometer.svg';
 
 export default function ScoreBoard(props) {
-  const { wpm, disabled, specialScoreClass,wpmRef } = props;
+  const { wpm, disabled, specialScoreClass, wpmRef } = props;
   return (
     <div className="scoreboard-container">
       <Toolbar

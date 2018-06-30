@@ -1,7 +1,7 @@
 import randomWords from 'random-words';
 import { WORDS_AMOUNT } from '../constants';
 import keyIndex from '../react-key-index';
-import createWordObject from './WordObject'
+import createWordObject from './WordObject';
 // import ow from 'ow';
 
 export function generateLoremIpsum() {
@@ -15,7 +15,7 @@ export function processTextToArray(text) {
     .split(' ')
     .filter(filterEmptyStrings);
 }
-export function createIndexWordObjects(wordsArray,key) {
+export function createIndexWordObjects(wordsArray, key) {
   const indexedWordsArray = keyIndex(wordsArray, key);
   return indexedWordsArray.map(word => {
     return createWordObject({ challenge: word.value, key: word.id });

@@ -2,9 +2,9 @@ import React, { Fragment } from 'react';
 import Word from './Word2';
 
 export default function WordsList(props) {
-  const { words, currentGamePosition,isActive } = props;
-  const disableClass = isActive ? '' : 'disabled'
-  const wordsBoardClasses = `words-container size1 transitionable ${disableClass}`
+  const { words, currentGamePosition, isActive } = props;
+  const disableClass = isActive ? '' : 'disabled';
+  const wordsBoardClasses = `words-container size1 transitionable ${disableClass}`;
   const renderWords = (word, index) => {
     const isActive = index === currentGamePosition;
     return (
@@ -15,7 +15,7 @@ export default function WordsList(props) {
           isCompleted={word.isCompleted}
           isCorrect={word.isCorrect}
           isActive={isActive}
-          isFirst={index===0}
+          isFirst={index === 0}
         />{' '}
       </Fragment>
     );
