@@ -10,8 +10,8 @@ exports[`\`ScoreSection\` renders properly 1`] = `
   <div
     className="row"
   >
-    <i
-      className="undefined icon"
+    <img
+      className="icon"
     />
     <span
       className="metric-score special-class"
