@@ -6,6 +6,7 @@ import AppBar from './components/app-bar/appbar';
 import Settings from './components/game-settings/settingsContainer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import WalkThrough from './components/joyride/joyride';
+import About from './components/about/about.jsx';
 import 'animate.css';
 import './App.css';
 
@@ -52,6 +53,7 @@ class App extends Component {
             />
             <Route exact path="/" component={GameContainer} />
             <Route exact path="/settings" component={Settings} />
+            <Route exact path="/about" component={About} />
           </Fragment>
         </Router>
       </MuiThemeProvider>
