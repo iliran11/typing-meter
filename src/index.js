@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import configureStore from './store/store';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 
 const Index = () => (
   <Provider store={configureStore()}>

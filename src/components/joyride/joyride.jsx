@@ -1,7 +1,6 @@
 import React from 'react';
 import Joyride from 'react-joyride';
 
-
 const steps = [
   {
     title: 'Score Board',
@@ -21,10 +20,7 @@ const steps = [
     selector: '.joyride-step--wpm',
     text: (
       <div className="joyride-box--wpm">
-        <span
-        >
-          The Score of Your Game.
-        </span>
+        <span>The Score of Your Game.</span>
         <br />
         <span>Will update as you type.</span>
         <br />
@@ -43,7 +39,7 @@ const steps = [
     title: 'Start Typing',
     selector: '.joyride-step--input',
     text: 'Start the game by typing in the input!'
-  },
+  }
 ];
 export default function WalkThrough(props) {
   return (

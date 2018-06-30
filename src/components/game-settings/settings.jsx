@@ -31,7 +31,8 @@ class SettingsForm extends React.Component {
     };
   }
   get customTextErrorMessage() {
-    const numbersOfWords = processTextToArray(this.state.customWords || '').length;
+    const numbersOfWords = processTextToArray(this.state.customWords || '')
+      .length;
     if (numbersOfWords < 25) {
       return `Current Number Of words is ${numbersOfWords}. Minimum Allowed is 25`;
     }
@@ -60,8 +61,7 @@ class SettingsForm extends React.Component {
               floatingLabelText="Game Duration"
               value={this.state.gameDuration}
               onChange={this.handleGameDurationChange}
-              fullWidth
-            >
+              fullWidth>
               {GAME_DURATION_OPTIONS.map((option, index) => {
                 const { value, label } = option;
                 return (

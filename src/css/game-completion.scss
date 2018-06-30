@@ -6,18 +6,16 @@
   opacity: 0.6;
   padding: 20px 0px;
   @media all and (max-width: 480px) {
-    height:100px;
-    width:100px;
-    padding:5px 0px;
+    height: 100px;
+    width: 100px;
+    padding: 5px 0px;
   }
   @media all and (max-width: 320px) {
-    height:60px;
-    width:60px;
-    padding:5px 0px;
-    
+    height: 60px;
+    width: 60px;
+    padding: 5px 0px;
   }
 }
-
 
 #completion-content {
   display: flex;
