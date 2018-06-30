@@ -8,7 +8,6 @@ import contact from './assets/contact.svg';
 import facebook from './assets/facebook.svg';
 import linkedin from './assets/linkedin.svg';
 import github from './assets/github.svg';
-import bug from './assets/bug.svg';
 import openSource from './assets/open-source.svg';
 
 export default function AboutMe(props) {
@@ -16,7 +15,8 @@ export default function AboutMe(props) {
     <div id="about-me">
       <section>
         <h1>
-          <Avatar src={'./liran.jpg'} style={{height:null,width:null}} /> Hi, My name is Liran.
+          <Avatar src={'./liran.jpg'} style={{ height: null, width: null }} />{' '}
+          Hi, My name is Liran.
         </h1>
         <Divider />
         <p>
@@ -42,9 +42,9 @@ export default function AboutMe(props) {
           Please look out for me in the following platforms:
         </p>
         <div className="social-grid">
-          <img src={facebook} className="social-item" />
-          <img src={linkedin} className="social-item" />
-          <img src={github} className="social-item" />
+          <img src={facebook} className="social-item" alt="facebook" />
+          <img src={linkedin} className="social-item" alt="linkedin" />
+          <img src={github} className="social-item" alt="github" />
         </div>
       </section>
       <Divider style={{ height: 3 }} />
