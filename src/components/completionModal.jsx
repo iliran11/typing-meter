@@ -6,6 +6,8 @@ import { svgStyle } from '../styles';
 import ResultComparison from './game-statistics/ResultComparison';
 import { delightPicture, resultDescription } from './game-statistics/gameStats';
 import { bool, number, func } from 'prop-types';
+import speedometer from './speedometer.svg';
+import correctIcon from './correct.svg';
 
 const Title = function(props) {
   return (
@@ -45,11 +47,13 @@ export default function CompletionModal(props) {
             title="CORRECT"
             iconClass="fas fa-check-circle"
             score={correctTypedWords}
+            icon={correctIcon}
           />
           <ScoreSection
             title="WPM"
             iconClass="fas fas fa-tachometer-alt"
             score={wpmScore}
+            icon={speedometer}
           />
         </div>
         <h4 className="size2">Try Again?</h4>
