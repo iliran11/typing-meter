@@ -45,9 +45,9 @@ class Game extends Component {
             this.animateGauge();
           }
           this.changeIndex({ changeType: INCREMENT_INDEX });
-
           return;
-        } else {
+          /** if the key wasn't space or return key, show the warning. */
+        } else if (this.returnKeyClicked === false) {
           this.changeSpaceWarningStatus(true);
           return;
         }
@@ -85,9 +85,9 @@ class Game extends Component {
       switch (event.which) {
         case 8:
           /** backspace clicked */
-
+          this.returnKeyClicked = true;
           if (this.currentWord.isEmpty && this.currentIndex > 0) {
-            /** do not proceed to handleChange event. */
+            /** do not proceed to onChange event. */
             event.preventDefault();
             const nextWordsArray = this.state.words.slice(0);
             nextWordsArray[
@@ -100,6 +100,7 @@ class Game extends Component {
           }
           break;
         default:
+          this.returnKeyClicked = false;
           return;
       }
     };
