@@ -30,11 +30,13 @@ exports[`\`CompletionModal\` renders properly 1`] = `
       className="score-report"
     >
       <ScoreSection
+        icon="correct.svg"
         iconClass="fas fa-check-circle"
         score={78}
         title="CORRECT"
       />
       <ScoreSection
+        icon="speedometer.svg"
         iconClass="fas fas fa-tachometer-alt"
         score={10}
         title="WPM"
