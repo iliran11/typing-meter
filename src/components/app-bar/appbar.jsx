@@ -4,6 +4,7 @@ import Logo from '../logo/logo';
 import tutorial from './play-button.svg';
 import settings from './settings.svg';
 import info from './information.svg';
+import FacebookLogin from '../FacebookLogin/FacebookLoginContainer'
 
 export default function AppBar(props) {
   const { walkThroughIconStatus, toggleWalkthrough } = props;
@@ -36,6 +37,7 @@ export default function AppBar(props) {
           <img src={info} alt={'info'} />
           <span>About</span>
         </Link>
+        <FacebookLogin/>
       </div>
     </div>
   );

@@ -18,6 +18,9 @@ class App extends Component {
       walkThroughIconStatus: true
     };
   }
+  componentDidMount() {
+    this.props.loadSdk();
+  }
   toggleWalkthrough = () => {
     this.setState({
       walkthrough: !this.state.walkthrough
