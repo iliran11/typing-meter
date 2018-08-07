@@ -4,7 +4,7 @@ import Logo from '../logo/logo';
 import tutorial from './play-button.svg';
 import settings from './settings.svg';
 import info from './information.svg';
-import FacebookLogin from '../FacebookLogin/FacebookLoginContainer'
+import FacebookLogin from '../Login/Login';
 
 export default function AppBar(props) {
   const { walkThroughIconStatus, toggleWalkthrough } = props;
@@ -19,10 +19,11 @@ export default function AppBar(props) {
       </div>
       {/*TODO: Refactor to Bar-Item Component */}
       <div className="right-hand">
-        <Link to="/settings" className="bar-item">
+        {/* <Link to="/settings" className="bar-item">
           <img src={settings} alt={settings} />
           <span>Settings</span>
-        </Link>
+        </Link> */}
+        <FacebookLogin />
         <Link to="" className="bar-item">
           <img
             className="walkthrough"
@@ -31,13 +32,12 @@ export default function AppBar(props) {
             src={tutorial}
             alt={'guide me'}
           />
-          <span>Guide Me</span>
+          <span>Tour</span>
         </Link>
         <Link to={'/about'} className="bar-item">
           <img src={info} alt={'info'} />
           <span>About</span>
         </Link>
-        <FacebookLogin/>
       </div>
     </div>
   );

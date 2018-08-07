@@ -8,9 +8,15 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  .right-hand,
   .left-hand {
     font-family: 'Shrikhand', cursive;
+    img {
+      margin-right: 10px;
+    }
+  }
+
+  .right-hand,
+  .left-hand {
     opacity: 0.8;
     font-size: 3.75rem;
     color: $secondary-color;
@@ -31,7 +37,6 @@
     }
     img {
       height: 60px;
-      margin-right: 10px;
       @media all and (max-width: 480px) {
         height: 30px;
       }
@@ -47,11 +52,11 @@
     }
   }
   .right-hand {
-    a:not(:first-child) {
-      margin-left: 1.875rem;
-      @media all and (max-width: 480px) {
-        margin-left: 0.625rem;
-      }
+    width: 35%;
+    display: flex;
+    justify-content: space-around;
+    @media all and (max-width: 480px) {
+      width: 50%;
     }
   }
   h1 {
