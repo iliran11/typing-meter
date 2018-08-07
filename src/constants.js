@@ -24,3 +24,8 @@ export const GAME_DURATION_OPTIONS = [
   { value: 50, label: '50' },
   { value: 60, label: '60' }
 ];
+
+export const SDK_LOADED = 'sdk-loaded';
+export const LOGIN_ATTEMPT = 'login-attempt';
+export const LOGOUT_ATTEMPT = 'logout-attempt';
+export const CHECK_STATUS = 'check-status';

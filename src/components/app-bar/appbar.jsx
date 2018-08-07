@@ -4,7 +4,7 @@ import Logo from '../logo/logo';
 import tutorial from './play-button.svg';
 import settings from './settings.svg';
 import info from './information.svg';
-import FacebookLogin from '../Login/Login';
+import FacebookLogin from '../Login/LoginContainer';
 
 export default function AppBar(props) {
   const { walkThroughIconStatus, toggleWalkthrough } = props;
