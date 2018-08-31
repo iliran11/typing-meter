@@ -3,14 +3,15 @@ import { login, logout } from './LoginActions';
 import Login from './Login';
 
 const isConnected = state => {
-  if (state.facebookReducer.status === 'connected') {
+  if (state.login.status === 'connected') {
     return true;
   }
   return false;
 };
 const mapStateToProps = (state, ownProps) => {
   return {
-    isConnected: isConnected(state)
+    isConnected: isConnected(state),
+    profilePicture: state.login.profilePicture
   };
 };
 const mapDispatchToProps = {

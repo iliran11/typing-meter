@@ -29,3 +29,6 @@ export const SDK_LOADED = 'sdk-loaded';
 export const LOGIN_ATTEMPT = 'login-attempt';
 export const LOGOUT_ATTEMPT = 'logout-attempt';
 export const CHECK_STATUS = 'check-status';
+export const LOAD_PROFILE_PIC = 'load-profile-pic';
+export const LOAD_FIRST_NAME = 'load-first-name';
+export const CONNECTED = 'connected';

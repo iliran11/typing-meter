@@ -20,7 +20,7 @@ export default class Login extends PureComponent {
     console.log(this.props.isConnected);
     return (
       <div className="bar-item" onClick={this.onAvatarClick}>
-        <Avatar src={AnonymousUser} style={this.avatarStyle} />
+        <Avatar src={this.props.profilePicture} style={this.avatarStyle} />
         <span>Login</span>
       </div>
     );

@@ -8,7 +8,10 @@ import {
   LOGIN_ATTEMPT,
   LOGOUT_ATTEMPT,
   CHECK_STATUS,
-  SDK_LOADED
+  SDK_LOADED,
+  LOAD_PROFILE_PIC,
+  CONNECTED,
+  LOAD_FIRST_NAME
 } from '../../constants';
 
 export function login() {
@@ -42,10 +45,25 @@ export function loadSdk() {
         return getFbLoginStatus();
       })
       .then(result => {
-        console.log(result);
         dispatch({
           type: CHECK_STATUS,
           payload: result
+        });
+        if (result.status === CONNECTED) {
+          return getUserPicure();
+        }
+      })
+      .then(picture => {
+        dispatch({
+          type: LOAD_PROFILE_PIC,
+          payload: picture
+        });
+        return getFirstName();
+      })
+      .then(firstNameResponse => {
+        dispatch({
+          type: LOAD_FIRST_NAME,
+          payload: firstNameResponse
         });
       });
   };
@@ -55,4 +73,27 @@ export function sdkHasLoaded() {
     type: SDK_LOADED,
     payload: true
   };
+}
+
+function getUserPicure() {
+  return new Promise(resolve => {
+    window.FB.api(
+      '/10155286331682924/picture',
+      'GET',
+      { redirect: false, height: 40 },
+      function(response) {
+        resolve(response);
+      }
+    );
+  });
+}
+function getFirstName() {
+  return new Promise(resolve => {
+    window.FB.api('/10155286331682924/', function(response) {
+      console.log(response)
+      if (response && !response.error) {
+        resolve(response);
+      }
+    });
+  });
 }
