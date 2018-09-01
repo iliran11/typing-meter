@@ -111,6 +111,10 @@ input {
 .letter {
   transition: color 0.6s;
 }
+.empty-space {
+  margin:0px 3px;
+  display:inline-block;
+}
 
 .word {
   color: black;

@@ -1,4 +1,3 @@
-import { isLastCharIsSpace } from '../../utils/utils';
 import {
   AWAITS_TYPING,
   INCREMENT_INDEX,
@@ -7,36 +6,23 @@ import {
 
 export function onInputChange(event) {
   /** check if space has been clicked after completing a word. */
-  const spaceHasClicked = isLastCharIsSpace(event.target.value);
-  if (this.currentWord.isCompleted) {
-    if (spaceHasClicked) {
-      if (this.currentWord.isCorrect) {
-        this.animateGauge();
-      }
-      this.changeIndex({ changeType: INCREMENT_INDEX });
-      return;
-      /** if the key wasn't space or return key, show the warning. */
-    } else if (this.returnKeyClicked === false) {
-      this.changeSpaceWarningStatus(true);
-      return;
-    }
-  }
   const { gameStatus } = this.state;
   if (gameStatus === AWAITS_TYPING) {
     this.onGameStart();
   }
   /** trim and lower case everything the user is typing */
-  const newInputValue = event.target.value
-    .trim()
-    .toLowerCase()
-    .substring(0, this.currentWord.challengeLength);
+  const newInputValue = processInputValue(this.currentWord, event.target.value);
   const nextWordsArray = this.state.words.slice(0);
   /** mutate the current word in next words array */
   nextWordsArray[this.currentIndex].typed = newInputValue;
   const nextCurrentWord = nextWordsArray[this.currentIndex];
+  if (nextCurrentWord.isCompleted) {
+    this.changeIndex({ changeType: INCREMENT_INDEX });
+  }
   this.setState(
     {
-      words: nextWordsArray
+      words: nextWordsArray,
+      [nextCurrentWord.isCompleted && 'index']: this.currentIndex + 1
     },
     () => {
       /** check if this word is completed, and it is the last. if so - complete the game. */
@@ -44,10 +30,19 @@ export function onInputChange(event) {
         /** second if is nested to run the getter only on isCompleted===true word. */
         if (this.isLastWord) {
           this.onGameEnd();
+          return;
         }
       }
     }
   );
+}
+
+function processInputValue(currentWord, inputValue) {
+  if (currentWord.challenge === ' ') return inputValue;
+  return inputValue
+    .trim()
+    .toLowerCase()
+    .substring(0, currentWord.challengeLength);
 }
 
 export function handleKeyPress(event) {
