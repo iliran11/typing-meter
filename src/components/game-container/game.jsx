@@ -22,7 +22,6 @@ import ProgressBar from './progress-bar';
 import isNull from 'lodash.isnull';
 import isFinite from 'lodash.isfinite';
 import isUndefined from 'lodash.isundefined';
-import Snackbar from 'material-ui/Snackbar';
 
 class Game extends Component {
   constructor(props) {
@@ -68,7 +67,7 @@ class Game extends Component {
     });
     this.inputRef.current.blur();
     this.props.createResultRecord({
-      wpmScore: parseInt(this.displayedWpmResult),
+      wpmScore: parseInt(this.displayedWpmResult,10),
       correctTypedWords: this.correctWordsNumber
     });
   };
