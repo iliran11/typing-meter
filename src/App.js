@@ -3,10 +3,10 @@ import 'normalize.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import GameContainer from './components/game-container/gameContainer';
 import AppBar from './components/app-bar/appbar';
-import Settings from './components/game-settings/settingsContainer';
+import Settings from './pages/game-settings/settingsContainer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import WalkThrough from './components/joyride/joyride';
-import About from './components/about/about.jsx';
+import About from './pages/about/about.jsx';
 import 'animate.css';
 import './App.css';
 
