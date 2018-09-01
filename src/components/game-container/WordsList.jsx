@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Word from './Word2';
 import EmptySpace from './emptySpace';
 

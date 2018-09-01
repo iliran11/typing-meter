@@ -1,4 +1,3 @@
-import { isLastCharIsSpace } from '../../utils/utils';
 import {
   AWAITS_TYPING,
   INCREMENT_INDEX,
