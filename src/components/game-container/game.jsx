@@ -18,7 +18,6 @@ import {
   getRandomNumber
 } from '../../utils/utils';
 import { onInputChange, handleKeyPress } from './inputMethods';
-import CompletionModal from '../completionModal';
 import ProgressBar from './progress-bar';
 import isNull from 'lodash.isnull';
 import isFinite from 'lodash.isfinite';
@@ -68,6 +67,10 @@ class Game extends Component {
       gameStatus: RESTART_PENDING
     });
     this.inputRef.current.blur();
+    this.props.createResultRecord({
+      wpmScore: parseInt(this.displayedWpmResult),
+      correctTypedWords: this.correctWordsNumber
+    });
   };
   onGameRestart = () => {
     const nextState = this.initialState;
@@ -267,18 +270,6 @@ class Game extends Component {
           words={this.state.words}
           currentGamePosition={this.currentIndex}
           isActive={this.isGameActive}
-        />
-        <CompletionModal
-          open={this.state.gameStatus === RESTART_PENDING}
-          wpmScore={this.displayedWpmResult}
-          correctTypedWords={this.correctWordsNumber}
-          onRestart={this.onGameRestart}
-        />
-        <Snackbar
-          open={this.state.clickSpaceTip}
-          message="Press Space. Advance To Next Word"
-          autoHideDuration={2000}
-          onRequestClose={this.closeSpaceWarning}
         />
       </Fragment>
     );

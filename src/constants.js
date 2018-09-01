@@ -1,7 +1,7 @@
 export const WPM_NULL = '0';
 export const START_CALCULATING_TIME = 7;
 export const CALCULATING_INTERVAL = 1;
-export const GAME_DURATION = 60;
+export const GAME_DURATION = 1;
 export const METRICS_INTERVAL_DELAY = 500;
 export const DEBUG_MODE = false;
 export const FAILURE_ANIMATION = `animated jello`;
@@ -16,6 +16,8 @@ export const RESTART_PENDING = 3;
 
 export const INCREMENT_INDEX = 1;
 export const DECREMENT_INDEX = -1;
+
+export const CREATE_RESULT_RECORD = 'create-result-record'
 
 export const GAME_DURATION_OPTIONS = [
   { value: 20, label: '20' },

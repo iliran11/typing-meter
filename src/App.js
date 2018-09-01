@@ -2,11 +2,13 @@ import React, { Component, Fragment } from 'react';
 import 'normalize.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import GameContainer from './components/game-container/gameContainer';
+import ResultPageContainer from './pages/result/ResultPageContainer';
 import AppBar from './components/app-bar/appbar';
 import Settings from './pages/game-settings/settingsContainer';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import WalkThrough from './components/joyride/joyride';
 import About from './pages/about/about.jsx';
+import history from './history';
 import 'animate.css';
 import './App.css';
 
@@ -40,7 +42,7 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <Router>
+        <Router history={history}>
           <Fragment>
             <AppBar
               onSettingsClick={this.toggleSettings}
@@ -54,6 +56,7 @@ class App extends Component {
             <Route exact path="/" component={GameContainer} />
             <Route exact path="/settings" component={Settings} />
             <Route exact path="/about" component={About} />
+            <Route exact path="/result" component={ResultPageContainer} />
           </Fragment>
         </Router>
       </MuiThemeProvider>

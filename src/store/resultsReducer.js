@@ -1,17 +1,11 @@
-import { GAME_DURATION } from '../../constants';
+import { CREATE_RESULT_RECORD } from '../constants';
 const initialState = {
-  gameDuration: GAME_DURATION,
-  customWords: null
+  
 };
 export default (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case 'UPDATE_CUSTOM_WORDS':
-      return {
-        ...state,
-        customWords: payload
-      };
-    case 'UPDATE_GAME_DURATION':
+    case CREATE_RESULT_RECORD:
       return {
         ...state,
         [payload.resultId]: payload

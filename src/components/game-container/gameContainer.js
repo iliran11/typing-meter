@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import Game from './game';
+import { createResultRecord } from './resultAction';
 
 const mapStateToProps = state => {
   return {
@@ -8,7 +9,11 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = {
+  createResultRecord
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Game);
