@@ -1,3 +1,18 @@
+@import 'css/colors.scss';
+
 .row {
   display: flex;
+}
+.full-width {
+  width: 100%;
+}
+.background-primary {
+  background-color: $primary-color;
+}
+.text-center {
+  text-align: center;
+}
+.flex-center {
+  display: flex;
+  align-items:center;
 }
