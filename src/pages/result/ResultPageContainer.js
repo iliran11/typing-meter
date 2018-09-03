@@ -4,7 +4,6 @@ import ResultPage from './ResultPage';
 const mapStateToProps = (state, ownProps) => {
   const urlParams = new URLSearchParams(window.location.search);
   const resultId = urlParams.get('resultId');
-  console.log(state.results);
   const { wpmScore, correctTypedWords } = state.results[resultId];
   return {
     wpmScore,
