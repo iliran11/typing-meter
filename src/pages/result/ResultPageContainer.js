@@ -5,7 +5,6 @@ const mapStateToProps = (state, ownProps) => {
   const urlParams = new URLSearchParams(window.location.search);
   const resultId = urlParams.get('resultId');
   const { wpmScore, correctTypedWords, createdDate } = state.results[resultId];
-  console.log(state.results[resultId]);
   return {
     wpmScore,
     correctTypedWords,
