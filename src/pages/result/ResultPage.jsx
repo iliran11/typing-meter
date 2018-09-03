@@ -10,7 +10,7 @@ import {
 import { number, func } from 'prop-types';
 import speedometer from '../../components/speedometer.svg';
 import correctIcon from './correct.svg';
-import history from '../../history'
+import history from '../../history';
 
 const Title = function(props) {
   return (
@@ -32,7 +32,7 @@ export default function ResultPage(props) {
   return (
     <div id="completion-content">
       <Title wpm={wpmScore} />
-      <div className='full-width' style={{padding:'0px 20px'}}>
+      <div className="full-width" style={{ padding: '0px 20px' }}>
         <h4 className="size2" id="your-score">
           {resultDescription(wpmScore)}
         </h4>
@@ -54,9 +54,10 @@ export default function ResultPage(props) {
         <h4 className="size2 text-center">Try Again?</h4>
         <div className="restart">
           <div className="svg-wrapper svg-size1" onClick={onRestart}>
-            <AutoRenew style={svgStyle}/>
+            <AutoRenew style={svgStyle} />
           </div>
         </div>
+        <h5>Play Date: {props.createdDate}</h5>
       </div>
     </div>
   );
