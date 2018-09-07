@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import 'normalize.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import GameContainer from './components/game-container/gameContainer';
-import AppBar from './components/app-bar/appbar';
+import AppBar from './components/app-bar/appBarContainer';
 import Settings from './pages/game-settings/settingsContainer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import WalkThrough from './components/joyride/joyride';

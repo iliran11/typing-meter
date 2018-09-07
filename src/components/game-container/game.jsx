@@ -46,6 +46,7 @@ class Game extends Component {
       () => {
         this.bouncedWpmResult = this.wpmNormalized;
         this.bouncedWpmClassName = this.specialScoreClass;
+        this.props.changeGameStatus(true);
       }
     );
     this.startTime = Date.now();
