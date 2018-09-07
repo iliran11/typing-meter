@@ -26,3 +26,5 @@ export const GAME_DURATION_OPTIONS = [
   { value: 50, label: '50' },
   { value: 60, label: '60' }
 ];
+
+export const CHANGE_GAME_STATUS = 'change-game-status';
