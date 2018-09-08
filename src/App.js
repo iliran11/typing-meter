@@ -9,6 +9,8 @@ import { Router, Route } from 'react-router-dom';
 import WalkThrough from './components/joyride/joyride';
 import About from './pages/about/about.jsx';
 import history from './history';
+import io from 'socket.io-client';
+
 import 'animate.css';
 import './App.css';
 
@@ -19,6 +21,7 @@ class App extends Component {
       walkthrough: false,
       walkThroughIconStatus: true
     };
+    const socket = io('http://localhost:4002');
   }
   toggleWalkthrough = () => {
     this.setState({
