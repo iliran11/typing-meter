@@ -8,7 +8,7 @@ import {
   generateLoremIpsum,
   processTextToArray
 } from '../utils/utils';
-import { WPM_NULL, AWAITS_TYPING } from '../constants';
+import { WPM_NULL, AWAITS_TYPING,CREATE_GAME } from '../constants';
 
 function wordsArray(customWordsState) {
   if (isNull(customWordsState)) {
@@ -36,5 +36,9 @@ export function createGame() {
       gameDuration: state.gameSettings.gameDuration,
       gameStatus: AWAITS_TYPING
     };
+    dispatch({
+      type: CREATE_GAME,
+      payload: initialState
+    });
   };
 }

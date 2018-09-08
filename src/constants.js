@@ -27,4 +27,4 @@ export const GAME_DURATION_OPTIONS = [
   { value: 60, label: '60' }
 ];
 
-export const CHANGE_GAME_STATUS = 'change-game-status';
+export const CREATE_GAME = 'create-game';
