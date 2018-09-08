@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import 'normalize.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import GameContainer from './components/game-container/gameContainer';
+import SinglePageContainer from './pages/single-game-page/SingleGamePageContainer';
 import ResultPageContainer from './pages/result/ResultPageContainer';
 import AppBar from './components/app-bar/appBarContainer';
 import Settings from './pages/game-settings/settingsContainer';
@@ -53,7 +53,7 @@ class App extends Component {
               run={this.state.walkthrough}
               callback={this.walkThroughCallback}
             />
-            <Route exact path="/" component={GameContainer} />
+            <Route exact path="/" component={SinglePageContainer} />
             <Route exact path="/settings" component={Settings} />
             <Route exact path="/about" component={About} />
             <Route exact path="/result" component={ResultPageContainer} />
