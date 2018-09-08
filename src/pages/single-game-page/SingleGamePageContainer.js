@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import SingleGamePage from './SingleGamePage';
-import createGame from './gameActions';
+import {createGame} from '../../store/gameActions';
 
 const mapDisptachToProps = {
   createGame

@@ -7,8 +7,8 @@ import {
   getRandomNumber,
   generateLoremIpsum,
   processTextToArray
-} from '../../utils/utils';
-import { WPM_NULL, AWAITS_TYPING } from '../../constants';
+} from '../utils/utils';
+import { WPM_NULL, AWAITS_TYPING } from '../constants';
 
 function wordsArray(customWordsState) {
   if (isNull(customWordsState)) {
@@ -17,7 +17,7 @@ function wordsArray(customWordsState) {
   return processTextToArray(this.props.customWords);
 }
 
-export default function createGame() {
+export function createGame() {
   return (dispatch, getState) => {
     const state = getState();
     const gameId = `game-${uuid()}`;
@@ -36,6 +36,5 @@ export default function createGame() {
       gameDuration: state.gameSettings.gameDuration,
       gameStatus: AWAITS_TYPING
     };
-    console.log(initialState);
   };
 }

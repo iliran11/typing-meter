@@ -6,16 +6,6 @@ const initialState = {
 export default (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case 'UPDATE_CUSTOM_WORDS':
-      return {
-        ...state,
-        customWords: payload
-      };
-    case 'UPDATE_GAME_DURATION':
-      return {
-        ...state,
-        [payload.resultId]: payload
-      };
     default:
       return state;
   }
