@@ -28,3 +28,4 @@ export const GAME_DURATION_OPTIONS = [
 ];
 
 export const CREATE_GAME = 'create-game';
+export const UPDATE_WORD = 'update-word';

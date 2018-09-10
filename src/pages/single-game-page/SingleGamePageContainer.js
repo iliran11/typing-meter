@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import SingleGamePage from './SingleGamePage';
-
-
+import {updateWord} from '../../store/games/gameActions'
 
 const mapPropsToState = state => {
   return {
@@ -9,7 +8,11 @@ const mapPropsToState = state => {
   };
 };
 
+const mapDispatchToProps = {
+  updateWord
+}
+
 export default connect(
   mapPropsToState,
-  null
+  mapDispatchToProps
 )(SingleGamePage);

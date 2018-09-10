@@ -1,6 +1,7 @@
 import uuid from 'uuid';
 import isNull from 'lodash.isnull';
-import {GAME_DURATION} from '../../constants'
+import isUndefined from 'lodash.isundefined'
+import { GAME_DURATION, UPDATE_WORD } from '../../constants';
 
 import {
   secondstoMillisecond,
@@ -18,20 +19,25 @@ function wordsArray(customWordsState) {
   return processTextToArray(this.props.customWords);
 }
 
-
-export function changeWord(gameId) {
-  return function (dispatch,getState) {
-/*     const state = getState();
- */  }
+export function updateWord(newTypedWord,gameId) {
+  // if undefined it means it will go to 'my game'
+  if (isUndefined) {
+    return {
+      type: UPDATE_WORD,
+      payload: {
+        newTypedWord: newTypedWord,
+        index: 0
+      }
+  }
+  };
 }
+
+export function updateIndex(newIndex) {}
 
 export function createGame() {
   const gameId = `game-${uuid()}`;
   const overallTime = secondstoMillisecond(GAME_DURATION);
-  const words = createIndexWordObjects(
-    wordsArray(null),
-    getRandomNumber()
-  );
+  const words = createIndexWordObjects(wordsArray(null), getRandomNumber());
   return {
     overallTime,
     gameId,
@@ -42,5 +48,4 @@ export function createGame() {
     gameDuration: GAME_DURATION,
     gameStatus: AWAITS_TYPING
   };
-
 }
