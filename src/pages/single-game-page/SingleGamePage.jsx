@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import WordsList from '../../components/game-container/WordsList';
 import TypingBoard from '../../components/game-container/TypingBoard'
 
 class SingleGamePage extends PureComponent {

@@ -9,7 +9,7 @@ import {
   generateLoremIpsum,
   processTextToArray
 } from '../../utils/utils';
-import { WPM_NULL, AWAITS_TYPING,CREATE_GAME } from '../../constants';
+import { WPM_NULL, AWAITS_TYPING } from '../../constants';
 
 function wordsArray(customWordsState) {
   if (isNull(customWordsState)) {
