@@ -1,6 +1,6 @@
 import uuid from 'uuid';
 import isNull from 'lodash.isnull';
-import isUndefined from 'lodash.isundefined'
+import isUndefined from 'lodash.isundefined';
 import { GAME_DURATION, UPDATE_WORD } from '../../constants';
 
 import {
@@ -19,16 +19,15 @@ function wordsArray(customWordsState) {
   return processTextToArray(this.props.customWords);
 }
 
-export function updateWord(newTypedWord,gameId) {
+export function updateWord(newTypedWord, gameId) {
   // if undefined it means it will go to 'my game'
-  if (isUndefined) {
-    return {
-      type: UPDATE_WORD,
-      payload: {
-        newTypedWord: newTypedWord,
-        index: 0
-      }
-  }
+  return {
+    type: UPDATE_WORD,
+    payload: {
+      newTypedWord: newTypedWord,
+      index: 0,
+      gameId
+    }
   };
 }
 

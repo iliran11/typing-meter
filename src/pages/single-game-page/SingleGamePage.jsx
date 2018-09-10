@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import TypingBoard from '../../components/game-container/TypingBoard';
+import { GAME_ID_MY } from '../../constants';
 
 class SingleGamePage extends PureComponent {
   constructor() {
@@ -7,21 +8,19 @@ class SingleGamePage extends PureComponent {
     this.onInputChange = this.onInputChange.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
-  onInputChange (event) {
-    this.props.updateWord(event.target.value)
-
+  onInputChange(event) {
+    this.props.updateWord(event.target.value, GAME_ID_MY);
   }
-  handleKeyPress() {
-  }
+  handleKeyPress() {}
   get inputPlaceHolder() {
-    return 'start ...'
+    return 'start ...';
   }
   render() {
     return (
       <div>
         <input
           autoFocus
-          value ={this.inputValue}
+          value={this.inputValue}
           onChange={this.onInputChange}
           onKeyDown={this.handleKeyPress}
           tabIndex="0"
