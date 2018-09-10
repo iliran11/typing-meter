@@ -1,13 +1,12 @@
 import React, { PureComponent } from 'react';
-import TypingBoard from '../../components/game-container/TypingBoard';
+import WordsList from '../../components/game-container/WordsList';
+import TypingBoard from '../../components/game-container/TypingBoard'
 
 class SingleGamePage extends PureComponent {
   render() {
-    console.log(this.props.createGame)
-    this.props.createGame();
     return (
       <div>
-        <TypingBoard />{' '}
+        <TypingBoard words={this.props.myGame.words}/>
       </div>
     );
   }

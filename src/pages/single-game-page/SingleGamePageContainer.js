@@ -1,11 +1,15 @@
 import { connect } from 'react-redux';
 import SingleGamePage from './SingleGamePage';
-import {createGame} from '../../store/gameActions';
 
-const mapDisptachToProps = {
-  createGame
+
+
+const mapPropsToState = state => {
+  return {
+    myGame: state.myGame
+  };
 };
+
 export default connect(
-  null,
-  mapDisptachToProps
+  mapPropsToState,
+  null
 )(SingleGamePage);
