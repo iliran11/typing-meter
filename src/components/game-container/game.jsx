@@ -102,8 +102,16 @@ class Game extends Component {
     }
     return processTextToArray(this.props.customWords);
   }
+  // pad each word with a space object.
+  get paddedWordsArray() {
+    return this.wordsArray.reduce((accumulator, word, currentIndex) => {
+      const isLastIndex = currentIndex + 1 === this.wordsArray.length;
+      if (isLastIndex) return accumulator;
+      return [...accumulator, word, ' '];
+    }, []);
+  }
   get wordsObjectArray() {
-    return createIndexWordObjects(this.wordsArray, getRandomNumber());
+    return createIndexWordObjects(this.paddedWordsArray, getRandomNumber());
   }
   get initialState() {
     const overallTime = secondstoMillisecond(this.props.gameDuration);

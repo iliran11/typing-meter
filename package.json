@@ -1,10 +1,14 @@
 {
   "name": "type-speed",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "animate.css": "^3.6.1",
+<<<<<<< HEAD
     "date-fns": "^1.29.0",
+=======
+    "classnames": "^2.2.6",
+>>>>>>> master
     "hashids": "^1.1.4",
     "i": "^0.3.6",
     "lodash.countby": "^4.6.0",
