@@ -36,7 +36,7 @@ class SingleGamePage extends PureComponent {
   }
   render() {
     return (
-      <div>
+      <React.Fragment>
         <input
           autoFocus
           value={this.inputValue}
@@ -49,7 +49,7 @@ class SingleGamePage extends PureComponent {
           placeholder={this.inputPlaceHolder}
         />
         <TypingBoard words={this.props.myGame.words} highlightedWordIndex={this.currentIndex} />
-      </div>
+      </React.Fragment>
     );
   }
 }
