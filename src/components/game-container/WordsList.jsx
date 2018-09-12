@@ -3,11 +3,11 @@ import Word from './Word2';
 import EmptySpace from './emptySpace';
 
 export default function WordsList(props) {
-  const { words, currentGamePosition, isActive } = props;
+  const { words, highlightedWordIndex, isActive } = props;
   const disableClass = isActive ? '' : 'disabled';
   const wordsBoardClasses = `words-container size1 transitionable ${disableClass}`;
   const renderWords = (word, index) => {
-    const isActive = index === currentGamePosition;
+    const isActive = index === highlightedWordIndex;
     if (word.challenge === ' ') {
       return <EmptySpace typedLetters={word.typed} key={word.key} />;
     }
