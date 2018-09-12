@@ -1,7 +1,7 @@
 import uuid from 'uuid';
 import isNull from 'lodash.isnull';
 import { GAME_DURATION, UPDATE_WORD } from '../../constants';
-import {padWordsWithSpaces} from '../../utils/utils'
+import {padWordsWithSpaces,getLastCharInString} from '../../utils/utils'
 
 import {
   secondstoMillisecond,
@@ -20,14 +20,27 @@ function wordsArray(customWordsState) {
 }
 
 export function updateWord(newTypedWord, gameId) {
-  // if undefined it means it will go to 'my game'
-  return {
-    type: UPDATE_WORD,
-    payload: {
-      newTypedWord: newTypedWord,
-      index: 0,
-      gameId
-    }
+  return function(dispatch, getState) {
+    const state = getState();
+    
+    const currentIndex = state.games[gameId].index
+    const currentWord = state.games[gameId].words[currentIndex]
+    const nextIndex = currentWord.isCompleted ? currentIndex + 1 : currentIndex;
+    const hasIndexChanged = currentIndex!== nextIndex;
+    /**
+     * if the index has changed it means we are in a new word territory.
+     * so we will take only the last character of the input.
+     * only the last char will be inserted to the word of the new index.
+     */
+    const typedWord = hasIndexChanged ? getLastCharInString(newTypedWord) : newTypedWord 
+    dispatch({
+      type: UPDATE_WORD,
+      payload: {
+        newTypedWord: typedWord,
+        index: nextIndex,
+        gameId
+      }
+    });
   };
 }
 

@@ -40,6 +40,9 @@ export function isLastCharIsSpace(str) {
   // https://stackoverflow.com/questions/3884632/how-to-get-the-last-character-of-a-string?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa  return str.substr(str.length - 1, str.length - 2) === ' ';
   return str.slice(-1) === ' ';
 }
+export function getLastCharInString(str) {
+  return str.substr(str.length - 1)
+}
 export const noop = () => {};
 
 export function getRandomNumber() {

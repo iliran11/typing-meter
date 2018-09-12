@@ -15,6 +15,15 @@ class SingleGamePage extends PureComponent {
   get inputPlaceHolder() {
     return 'start ...';
   }
+  get currentIndex() {
+    return this.props.myGame.index;
+  }
+  get currentWord() {
+    return this.props.myGame.words[this.currentIndex];
+  }
+  get inputValue() {
+    return this.currentWord.typed;
+  }
   render() {
     return (
       <div>

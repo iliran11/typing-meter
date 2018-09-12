@@ -15,7 +15,8 @@ export default (state = initialState, action) => {
         ...state,
         [gameId]: {
           ...state[gameId],
-          words: nextWordsState
+          words: nextWordsState,
+          index
         }
       };
     default:
