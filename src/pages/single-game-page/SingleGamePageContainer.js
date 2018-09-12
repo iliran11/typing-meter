@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import SingleGamePage from './SingleGamePage';
-import {updateWord} from '../../store/games/gameActions'
+import {updateWord,decrementIndex} from '../../store/games/gameActions'
 import { GAME_ID_MY } from '../../constants';
 
 const mapPropsToState = state => {
@@ -10,7 +10,7 @@ const mapPropsToState = state => {
 };
 
 const mapDispatchToProps = {
-  updateWord
+  updateWord,decrementIndex
 }
 
 export default connect(

@@ -11,7 +11,17 @@ class SingleGamePage extends PureComponent {
   onInputChange(event) {
     this.props.updateWord(event.target.value, GAME_ID_MY);
   }
-  handleKeyPress() {}
+  handleKeyPress(event) {
+    switch (event.which) {
+      case 8:
+        if (event.target.value.length === 0) {
+          this.props.decrementIndex(GAME_ID_MY);
+        }
+        break;
+      default:
+        return;
+    }
+  }
   get inputPlaceHolder() {
     return 'start ...';
   }
