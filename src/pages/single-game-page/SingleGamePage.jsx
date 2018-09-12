@@ -48,7 +48,7 @@ class SingleGamePage extends PureComponent {
           }`}
           placeholder={this.inputPlaceHolder}
         />
-        <TypingBoard words={this.props.myGame.words} />
+        <TypingBoard words={this.props.myGame.words} highlightedWordIndex={this.currentIndex} />
       </div>
     );
   }
