@@ -45,3 +45,11 @@ export const noop = () => {};
 export function getRandomNumber() {
   return Math.floor(Math.random() * 200) + 1;
 }
+
+export function padWordsWithSpaces(words) {
+  return words.reduce((accumulator, word, currentIndex) => {
+    const isLastIndex = currentIndex + 1 === words.length;
+    if (isLastIndex) return accumulator;
+    return [...accumulator, word, ' '];
+  }, []);
+}

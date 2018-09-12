@@ -1,7 +1,7 @@
 import uuid from 'uuid';
 import isNull from 'lodash.isnull';
-import isUndefined from 'lodash.isundefined';
 import { GAME_DURATION, UPDATE_WORD } from '../../constants';
+import {padWordsWithSpaces} from '../../utils/utils'
 
 import {
   secondstoMillisecond,
@@ -36,7 +36,8 @@ export function updateIndex(newIndex) {}
 export function createGame() {
   const gameId = `game-${uuid()}`;
   const overallTime = secondstoMillisecond(GAME_DURATION);
-  const words = createIndexWordObjects(wordsArray(null), getRandomNumber());
+  const wordsArrayPaddedWithSpaces = padWordsWithSpaces(wordsArray(null));
+  const words = createIndexWordObjects(wordsArrayPaddedWithSpaces, getRandomNumber());
   return {
     overallTime,
     gameId,
