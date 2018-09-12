@@ -1,43 +1,38 @@
 import React from 'react';
-import Dialog from 'material-ui/Dialog';
 import AutoRenew from 'material-ui/svg-icons/action/autorenew';
-import ScoreSection from './scoreboard/score-section';
-import { svgStyle } from '../styles';
-import ResultComparison from './game-statistics/ResultComparison';
-import { delightPicture, resultDescription } from './game-statistics/gameStats';
-import { bool, number, func } from 'prop-types';
-import speedometer from './speedometer.svg';
+import ScoreSection from '../../components/scoreboard/score-section';
+import { svgStyle } from '../../styles';
+import ResultComparison from '../../components/game-statistics/ResultComparison';
+import {
+  delightPicture,
+  resultDescription
+} from '../../components/game-statistics/gameStats';
+import { number, func } from 'prop-types';
+import speedometer from '../../components/speedometer.svg';
 import correctIcon from './correct.svg';
+import history from '../../history';
 
 const Title = function(props) {
   return (
-    <h1>
+    <div className="full-width background-primary text-center">
       <img
         alt={'Shows emotions about the result'}
         src={delightPicture(props.wpm)}
         className="delight-complete"
       />
-    </h1>
+    </div>
   );
 };
+function onRestart() {
+  history.push(`/`);
+}
+export default function ResultPage(props) {
+  const { correctTypedWords, wpmScore } = props;
 
-export default function CompletionModal(props) {
-  const {
-    modal = false,
-    open = true,
-    correctTypedWords,
-    wpmScore,
-    onRestart
-  } = props;
-  const TitleNode = <Title wpm={wpmScore} />;
   return (
-    <Dialog
-      repositionOnUpdate={false}
-      modal={modal}
-      open={open}
-      title={TitleNode}
-      className="completion-dialog">
-      <div id="completion-content">
+    <div id="completion-content">
+      <Title wpm={wpmScore} />
+      <div className="full-width" style={{ padding: '0px 20px' }}>
         <h4 className="size2" id="your-score">
           {resultDescription(wpmScore)}
         </h4>
@@ -56,20 +51,19 @@ export default function CompletionModal(props) {
             icon={speedometer}
           />
         </div>
-        <h4 className="size2">Try Again?</h4>
-        <div>
-          <div className="svg-wrapper svg-size1 restart" onClick={onRestart}>
+        <h4 className="size2 text-center">Try Again?</h4>
+        <div className="restart">
+          <div className="svg-wrapper svg-size1" onClick={onRestart}>
             <AutoRenew style={svgStyle} />
           </div>
         </div>
+        <h5>Play Date: {props.createdDate}</h5>
       </div>
-    </Dialog>
+    </div>
   );
 }
 
-CompletionModal.propTypes = {
-  modal: bool,
-  repositionOnUpdate: bool,
+ResultPage.propTypes = {
   correctTypedWords: number,
   wpmScore: number,
   onRestart: func

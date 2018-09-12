@@ -1,14 +1,12 @@
 import { connect } from 'react-redux';
-import Game from './game';
+import AppBar from './appbar';
 
 const mapStateToProps = state => {
   return {
-    customWords: state.gameSettings.customWords,
-    gameDuration: state.gameSettings.gameDuration
+    isGameActive: false
   };
 };
-
 export default connect(
   mapStateToProps,
   null
-)(Game);
+)(AppBar);

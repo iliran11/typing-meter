@@ -135,6 +135,8 @@ input {
 
 .restart {
   cursor: pointer;
+  display: flex;
+  justify-content: center;
 }
 .completion-dialog {
   h1 {
