@@ -14,8 +14,6 @@ export const AWAITS_TYPING = 1;
 export const GAME_IS_ACTIVE = 2;
 export const RESTART_PENDING = 3;
 
-export const INCREMENT_INDEX = 1;
-export const DECREMENT_INDEX = -1;
 
 export const CREATE_RESULT_RECORD = 'create-result-record'
 
@@ -27,4 +25,8 @@ export const GAME_DURATION_OPTIONS = [
   { value: 60, label: '60' }
 ];
 
-export const CHANGE_GAME_STATUS = 'change-game-status';
+export const CREATE_GAME = 'create-game';
+export const UPDATE_WORD = 'update-word';
+export const GAME_ID_MY = 'game-id-my'
+export const INCREMENT_INDEX = 'increment-index';
+export const DECREMENT_INDEX = 'decrement-index';

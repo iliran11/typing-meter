@@ -3,7 +3,7 @@ import AppBar from './appbar';
 
 const mapStateToProps = state => {
   return {
-    isGameActive: state.game.isGameActive
+    isGameActive: false
   };
 };
 export default connect(
