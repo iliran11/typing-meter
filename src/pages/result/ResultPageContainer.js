@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import ResultPage from './ResultPage';
+import {resetGame} from '../../store/games/gameActions'
 
 const mapStateToProps = (state, ownProps) => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -11,7 +12,12 @@ const mapStateToProps = (state, ownProps) => {
     createdDate
   };
 };
+
+const mapDispatchToprops = {
+  resetGame
+}
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToprops
 )(ResultPage);

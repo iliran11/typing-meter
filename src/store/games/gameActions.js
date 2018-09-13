@@ -61,6 +61,7 @@ export function resetGame(gameId) {
   return {
     type: RESET_GAME_WORDS,
     payload: {
+      gameId,
       newGameState: createGame()
     }
   }
