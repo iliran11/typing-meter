@@ -38,7 +38,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         [gameId]: {
-          newGameState
+          ...newGameState
         }
       };
 
