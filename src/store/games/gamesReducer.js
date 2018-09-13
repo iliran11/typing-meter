@@ -1,12 +1,18 @@
-import { createGame } from './gameActions';
-import { UPDATE_WORD, GAME_ID_MY, DECREMENT_INDEX } from '../../constants';
-
+import { createGame } from '../../utils/gameUtils';
+import {
+  UPDATE_WORD,
+  GAME_ID_MY,
+  RESET_GAME_WORDS,
+  DECREMENT_INDEX
+} from '../../constants';
 const initialState = {
   [GAME_ID_MY]: createGame()
 };
 
 export default (state = initialState, action) => {
-  const { payload: {index, newTypedWord, gameId} = {} } = action;
+  const {
+    payload: { index, newTypedWord, gameId, newGameState } = {}
+  } = action;
   switch (action.type) {
     case UPDATE_WORD:
       const nextWordsState = [...state[gameId].words];
@@ -19,7 +25,7 @@ export default (state = initialState, action) => {
           index
         }
       };
-    case DECREMENT_INDEX: {
+    case DECREMENT_INDEX:
       return {
         ...state,
         [gameId]: {
@@ -27,7 +33,15 @@ export default (state = initialState, action) => {
           index
         }
       };
-    }
+
+    case RESET_GAME_WORDS:
+      return {
+        ...state,
+        [gameId]: {
+          newGameState
+        }
+      };
+
     default:
       return state;
   }

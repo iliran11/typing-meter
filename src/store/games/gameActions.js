@@ -1,5 +1,6 @@
-import { UPDATE_WORD, DECREMENT_INDEX } from '../../constants';
+import { UPDATE_WORD, DECREMENT_INDEX,RESET_GAME_WORDS } from '../../constants';
 import { getLastCharInString } from '../../utils/utils';
+import { createGame } from '../../utils/gameUtils';
 
 export function updateWord(newTypedWord, gameId) {
   return function(dispatch, getState) {
@@ -54,4 +55,13 @@ export function decrementIndex(gameId) {
       }
     });
   };
+}
+
+export function resetGame(gameId) {
+  return {
+    type: RESET_GAME_WORDS,
+    payload: {
+      newGameState: createGame()
+    }
+  }
 }
