@@ -7,8 +7,13 @@ class MyGame extends PureComponent {
     super();
     this.onInputChange = this.onInputChange.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.gameHasStarted = false;
   }
   onInputChange(event) {
+    if(this.gameHasStarted===false) {
+      this.props.onGameStart();
+    }
+    this.gameHasStarted = true;
     this.props.updateWord(event.target.value, GAME_ID_MY);
   }
   handleKeyPress(event) {

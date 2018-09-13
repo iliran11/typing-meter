@@ -30,3 +30,5 @@ export const UPDATE_WORD = 'update-word';
 export const GAME_ID_MY = 'game-id-my'
 export const INCREMENT_INDEX = 'increment-index';
 export const DECREMENT_INDEX = 'decrement-index';
+export const START_GAME = 'start-game'
+export const END_GAME = 'end-game'
