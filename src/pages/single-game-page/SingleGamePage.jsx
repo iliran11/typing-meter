@@ -1,20 +1,37 @@
 import React, { PureComponent, Fragment } from 'react';
 import MyGameContainer from '../../components/game-container/MyGameContainer';
 import ProgressBar from '../../components/progress-bar/progress-bar';
-import { GAME_DURATION } from '../../constants';
-import ScoreBoard from '../../components/scoreboard/scoreBoard'
+import {
+  GAME_DURATION,
+  START_CALCULATING_TIME,
+  WPM_NULL
+} from '../../constants';
+import ScoreBoard from '../../components/scoreboard/scoreBoard';
 
 class SingleGamePage extends PureComponent {
   constructor() {
     super();
+    this.initiateCountDown = this.initiateCountDown.bind(this);
     this.startGame = this.startGame.bind(this);
     this.state = {
       timeLeft: GAME_DURATION
     };
   }
+  initiateCountDown() {
+    this.countdownIntervalId = window.setInterval(() => {
+      this.setState({
+        timeLeft: this.state.timeLeft - 1
+      });
+    }, 1000);
+  }
   get timePassed() {
     const { timeLeft } = this.state;
     return GAME_DURATION - timeLeft;
+  }
+
+  get timePassedMinutes() {
+    /** returns time passed in minutes. */
+    return this.timePassed / 60;
   }
 
   get typingStatistcs() {
@@ -36,22 +53,37 @@ class SingleGamePage extends PureComponent {
     const errorFactor = wrong / this.timePassedMinutes;
     return grossWpm - errorFactor;
   }
+  get isWpmCalculating() {
+    /** decide if to indicate that there is not enough
+     *  stable data to display about the wpm.
+     */
+    return this.timePassed < START_CALCULATING_TIME && this.props.active;
+  }
+  get wpmNormalized() {
+    const wpmScore = this.wpmScore;
+    if (this.isWpmCalculating) return 'Calculating ...';
+    /** while waiting for the game to start - show just 0. */
+    if (this.props.active === false) return 0;
+    if (isFinite(wpmScore)) {
+      /** if the number is smaller than 0, just return 0. */
+      if (wpmScore < 0) return 0;
+      return Math.round(this.wpmScore);
+    }
+    return WPM_NULL;
+  }
   startGame() {
     this.props.startGame();
+    this.initiateCountDown();
   }
   render() {
-    console.log(this.wpmScore)
     return (
       <Fragment>
         <ScoreBoard
-          wpm={this.displayedWpmResult}
-          correctTypedWords={this.correctWordsNumber}
+          wpm={this.wpmNormalized}
           disabled={this.props.active}
-          specialScoreClass={this.bouncedWpmClassName}
-          wpmRef={this.gaugeRef}
         />
         <ProgressBar
-          animationTime={30}
+          animationTime={GAME_DURATION}
           isProgressCounting={this.props.active}
         />
         <MyGameContainer
