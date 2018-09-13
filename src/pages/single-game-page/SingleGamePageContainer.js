@@ -6,7 +6,13 @@ const mapDispatchToProps = {
   startGame,endGame
 }
 
+const mapStateToProps = (state) => {
+  return {
+    active: state.isGameActive
+  }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SingleGamePage);

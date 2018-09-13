@@ -10,7 +10,7 @@ class MyGame extends PureComponent {
     this.gameHasStarted = false;
   }
   onInputChange(event) {
-    if(this.gameHasStarted===false) {
+    if (this.gameHasStarted === false) {
       this.props.onGameStart();
     }
     this.gameHasStarted = true;
@@ -53,7 +53,11 @@ class MyGame extends PureComponent {
           }`}
           placeholder={this.inputPlaceHolder}
         />
-        <WordsList words={this.props.myGame.words} highlightedWordIndex={this.currentIndex} />
+        <WordsList
+          words={this.props.myGame.words}
+          highlightedWordIndex={this.currentIndex}
+          active={this.props.active}
+        />
       </React.Fragment>
     );
   }

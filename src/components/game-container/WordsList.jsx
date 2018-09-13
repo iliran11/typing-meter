@@ -3,8 +3,8 @@ import Word from './Word2';
 import EmptySpace from './emptySpace';
 
 export default function WordsList(props) {
-  const { words, highlightedWordIndex, isActive } = props;
-  const disableClass = isActive ? '' : 'disabled';
+  const { words, highlightedWordIndex, active } = props;
+  const disableClass = active ? '' : 'disabled';
   const wordsBoardClasses = `words-container size1 transitionable ${disableClass}`;
   const renderWords = (word, index) => {
     const isActive = index === highlightedWordIndex;

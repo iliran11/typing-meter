@@ -12,7 +12,7 @@ class SingleGamePage extends PureComponent {
   }
   render() {
     return (
-      <MyGameContainer onGameStart={this.startGame}/>
+      <MyGameContainer onGameStart={this.startGame} active ={this.props.active}/>
     );
   }
 }
