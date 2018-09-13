@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import SingleGamePage from './SingleGamePage';
 import {startGame,endGame} from '../../store/isGameActive/isGameActiveActions'
+import {createResultRecord} from '../../components/game-container/resultAction'
 import {GAME_ID_MY} from '../../constants'
 
 const mapDispatchToProps = {
-  startGame,endGame
+  startGame,endGame, createResultRecord
 }
 
 const mapStateToProps = (state) => {

@@ -13,15 +13,29 @@ class SingleGamePage extends PureComponent {
     super();
     this.initiateCountDown = this.initiateCountDown.bind(this);
     this.startGame = this.startGame.bind(this);
+    this.onGameEnd = this.onGameEnd.bind(this);
     this.state = {
       timeLeft: GAME_DURATION
     };
+  }
+  componentWillUnmount() {
+    window.clearTimeout(this.countdownIntervalId);
+  }
+  onGameEnd() {
+    this.props.createResultRecord({
+      wpmScore: this.wpmNormalized,
+      correctTypedWords: 10
+    });
+    this.props.endGame();
   }
   initiateCountDown() {
     this.countdownIntervalId = window.setInterval(() => {
       this.setState({
         timeLeft: this.state.timeLeft - 1
       });
+      if (this.state.timeLeft === 0) {
+        this.onGameEnd();
+      }
     }, 1000);
   }
   get timePassed() {
@@ -78,10 +92,7 @@ class SingleGamePage extends PureComponent {
   render() {
     return (
       <Fragment>
-        <ScoreBoard
-          wpm={this.wpmNormalized}
-          disabled={this.props.active}
-        />
+        <ScoreBoard wpm={this.wpmNormalized} disabled={this.props.active} />
         <ProgressBar
           animationTime={GAME_DURATION}
           isProgressCounting={this.props.active}
