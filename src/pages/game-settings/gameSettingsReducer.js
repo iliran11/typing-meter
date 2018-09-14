@@ -4,18 +4,8 @@ const initialState = {
   customWords: null
 };
 export default (state = initialState, action) => {
-  const { type, payload } = action;
+  const { type } = action;
   switch (type) {
-    case 'UPDATE_CUSTOM_WORDS':
-      return {
-        ...state,
-        customWords: payload
-      };
-    case 'UPDATE_GAME_DURATION':
-      return {
-        ...state,
-        [payload.resultId]: payload
-      };
     default:
       return state;
   }

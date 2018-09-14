@@ -3,6 +3,7 @@
 exports[`\`AppBar\` renders properly 1`] = `
 <div
   className="app-bar"
+  style={Object {}}
 >
   <div
     className="left-hand"
@@ -38,7 +39,6 @@ exports[`\`AppBar\` renders properly 1`] = `
       <img
         alt="guide me"
         className="walkthrough"
-        onClick={null}
         src="play-button.svg"
         style={
           Object {
