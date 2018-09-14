@@ -11,6 +11,7 @@ import { number, func } from 'prop-types';
 import speedometer from '../../components/speedometer.svg';
 import correctIcon from './correct.svg';
 import history from '../../history';
+import { GAME_ID_MY } from '../../constants';
 
 const Title = function(props) {
   return (
@@ -23,8 +24,11 @@ const Title = function(props) {
     </div>
   );
 };
-function onRestart() {
-  history.push(`/`);
+function onRestart(resetGame) {
+  return () => {
+    resetGame(GAME_ID_MY);
+    history.push(`/`);
+  };
 }
 export default function ResultPage(props) {
   const { correctTypedWords, wpmScore } = props;
@@ -53,7 +57,9 @@ export default function ResultPage(props) {
         </div>
         <h4 className="size2 text-center">Try Again?</h4>
         <div className="restart">
-          <div className="svg-wrapper svg-size1" onClick={onRestart}>
+          <div
+            className="svg-wrapper svg-size1"
+            onClick={onRestart(props.resetGame)}>
             <AutoRenew style={svgStyle} />
           </div>
         </div>

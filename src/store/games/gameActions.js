@@ -1,23 +1,6 @@
-import uuid from 'uuid';
-import isNull from 'lodash.isnull';
-import { GAME_DURATION, UPDATE_WORD, DECREMENT_INDEX } from '../../constants';
-import { padWordsWithSpaces, getLastCharInString } from '../../utils/utils';
-
-import {
-  secondstoMillisecond,
-  createIndexWordObjects,
-  getRandomNumber,
-  generateLoremIpsum,
-  processTextToArray
-} from '../../utils/utils';
-import { WPM_NULL, AWAITS_TYPING } from '../../constants';
-
-function wordsArray(customWordsState) {
-  if (isNull(customWordsState)) {
-    return generateLoremIpsum();
-  }
-  return processTextToArray(this.props.customWords);
-}
+import { UPDATE_WORD, DECREMENT_INDEX,RESET_GAME_WORDS } from '../../constants';
+import { getLastCharInString } from '../../utils/utils';
+import { createGame } from '../../utils/gameUtils';
 
 export function updateWord(newTypedWord, gameId) {
   return function(dispatch, getState) {
@@ -52,25 +35,7 @@ export function updateWord(newTypedWord, gameId) {
 
 export function updateIndex(newIndex) {}
 
-export function createGame() {
-  const gameId = `game-${uuid()}`;
-  const overallTime = secondstoMillisecond(GAME_DURATION);
-  const wordsArrayPaddedWithSpaces = padWordsWithSpaces(wordsArray(null));
-  const words = createIndexWordObjects(
-    wordsArrayPaddedWithSpaces,
-    getRandomNumber()
-  );
-  return {
-    overallTime,
-    gameId,
-    index: 0,
-    scrollIndex: 0,
-    words,
-    wpm: WPM_NULL,
-    gameDuration: GAME_DURATION,
-    gameStatus: AWAITS_TYPING
-  };
-}
+
 /**
  * There is no correspond IncrementIndex action.
  * updateWordAction is also incrementing when it detects the word has been completed
@@ -90,4 +55,14 @@ export function decrementIndex(gameId) {
       }
     });
   };
+}
+
+export function resetGame(gameId) {
+  return {
+    type: RESET_GAME_WORDS,
+    payload: {
+      gameId,
+      newGameState: createGame()
+    }
+  }
 }
