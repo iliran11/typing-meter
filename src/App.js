@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import 'normalize.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import SingleGamePageContainer from './pages/single-game-page/SingleGamePageContainer';
+import MultiPlayerGamePageContainer from './pages/multiplayer-game-page/MultiPlayerGamePageContainer.js';
 import ResultPageContainer from './pages/result/ResultPageContainer';
 import AppBar from './components/app-bar/appBarContainer';
 import Settings from './pages/game-settings/settingsContainer';
@@ -9,7 +9,6 @@ import { Router, Route } from 'react-router-dom';
 import WalkThrough from './components/joyride/joyride';
 import About from './pages/about/about.jsx';
 import history from './history';
-import io from 'socket.io-client';
 
 import 'animate.css';
 import './App.css';
@@ -21,7 +20,6 @@ class App extends Component {
       walkthrough: false,
       walkThroughIconStatus: true
     };
-    const socket = io('http://localhost:4002');
   }
   toggleWalkthrough = () => {
     this.setState({
@@ -55,8 +53,8 @@ class App extends Component {
             <WalkThrough
               run={this.state.walkthrough}
               callback={this.walkThroughCallback}
-            />
-            <Route exact path="/" component={SingleGamePageContainer} />
+              />
+            <Route exact path="/" component={MultiPlayerGamePageContainer} />
             <Route exact path="/settings" component={Settings} />
             <Route exact path="/about" component={About} />
             <Route exact path="/result" component={ResultPageContainer} />
