@@ -54,7 +54,9 @@
     "lint": "eslint --max-warnings 0 src/**/*.{js,jsx}",
     "coverage": "npm run test -- --coverage",
     "prettier": "prettier --write src/**/*.{js,jsx,scss}",
-    "build-shared-code": "webpack --config sharedCodeBuild.js"
+    "build-shared-code": "webpack --config sharedCodeBuild.js",
+    "server": "nodemon --inspect ./server/server.js",
+    "build-server-client": "webpack --config ./server-client-build.js"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
