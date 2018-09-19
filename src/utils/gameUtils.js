@@ -32,7 +32,6 @@ export function createGame() {
     scrollIndex: 0,
     words,
     wpm: WPM_NULL,
-    gameDuration: GAME_DURATION,
-    gameStatus: AWAITS_TYPING
+    gameDuration: GAME_DURATION
   };
 }

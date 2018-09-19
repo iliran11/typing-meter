@@ -1,4 +1,9 @@
-import { UPDATE_WORD, DECREMENT_INDEX,RESET_GAME_WORDS } from '../../constants';
+import {
+  UPDATE_WORD,
+  DECREMENT_INDEX,
+  RESET_GAME_WORDS,
+  CREATE_MY_GAME
+} from '../../constants';
 import { getLastCharInString } from '../../utils/utils';
 import { createGame } from '../../utils/gameUtils';
 
@@ -35,14 +40,13 @@ export function updateWord(newTypedWord, gameId) {
 
 export function updateIndex(newIndex) {}
 
-
 /**
  * There is no correspond IncrementIndex action.
  * updateWordAction is also incrementing when it detects the word has been completed
  * and there is a need to automatically increment the index.
- *  
+ *
  */
- 
+
 export function decrementIndex(gameId) {
   return function(dispatch, getState) {
     const state = getState();
@@ -64,5 +68,14 @@ export function resetGame(gameId) {
       gameId,
       newGameState: createGame()
     }
-  }
+};
+}
+
+export function createMyGame(gameState, dispatch) {
+  dispatch({
+    type: CREATE_MY_GAME,
+    payload: {
+      gameState
+    }
+  });
 }

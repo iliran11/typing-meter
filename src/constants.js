@@ -32,3 +32,4 @@ export const DECREMENT_INDEX = 'decrement-index';
 export const START_GAME = 'start-game';
 export const END_GAME = 'end-game';
 export const RESET_GAME_WORDS = 'reset-game-words';
+export const CREATE_MY_GAME = 'create-my-game'

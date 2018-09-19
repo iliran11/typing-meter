@@ -1,13 +1,11 @@
 import React, { PureComponent } from 'react';
-import io from 'socket.io-client';
+import {initSocket} from '../../utils/socketHandler'
 
 class MultiPlayerGamePage extends PureComponent {
-  constructor() {
-    super();
-    this.socket = io('http://localhost:4000');
-    this.socket.emit('ferret', 'tobi', (data) => {
-      console.log(data); // data will be 'woot'
-    });
+  constructor(props) {
+    super(props);
+    initSocket(props.dispatch)
+
   }
   render() {
     return <div>hi</div>;
