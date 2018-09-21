@@ -3,7 +3,8 @@ import {
   GAME_ID_MY,
   RESET_GAME_WORDS,
   DECREMENT_INDEX,
-  CREATE_MY_GAME
+  CREATE_MY_GAME,
+  CREATE_COMPETITOR_GAME
 } from '../../constants';
 const initialState = {};
 
@@ -43,6 +44,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         [GAME_ID_MY]: {
+          ...gameState
+        }
+      };
+    case CREATE_COMPETITOR_GAME:
+      return {
+        ...state,
+        [gameState.gameId]: {
           ...gameState
         }
       };

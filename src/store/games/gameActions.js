@@ -2,7 +2,8 @@ import {
   UPDATE_WORD,
   DECREMENT_INDEX,
   RESET_GAME_WORDS,
-  CREATE_MY_GAME
+  CREATE_MY_GAME,
+  CREATE_COMPETITOR_GAME
 } from '../../constants';
 import { getLastCharInString } from '../../utils/utils';
 import { createGame } from '../../utils/gameUtils';
@@ -68,12 +69,21 @@ export function resetGame(gameId) {
       gameId,
       newGameState: createGame()
     }
-};
+  };
 }
 
 export function createMyGame(gameState, dispatch) {
   dispatch({
     type: CREATE_MY_GAME,
+    payload: {
+      gameState
+    }
+  });
+}
+
+export function createCompetitorGame(gameState, dispatch) {
+  dispatch({
+    type: CREATE_COMPETITOR_GAME,
     payload: {
       gameState
     }

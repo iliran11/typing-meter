@@ -159,8 +159,12 @@ const END_GAME = 'end-game';
 const RESET_GAME_WORDS = 'reset-game-words';
 /* harmony export (immutable) */ __webpack_exports__["RESET_GAME_WORDS"] = RESET_GAME_WORDS;
 
-const CREATE_MY_GAME = 'create-my-game'
+const CREATE_MY_GAME = 'create-my-game';
 /* harmony export (immutable) */ __webpack_exports__["CREATE_MY_GAME"] = CREATE_MY_GAME;
+
+const CREATE_COMPETITOR_GAME = 'create-competitor-game';
+/* harmony export (immutable) */ __webpack_exports__["CREATE_COMPETITOR_GAME"] = CREATE_COMPETITOR_GAME;
+
 
 
 /***/ }),
