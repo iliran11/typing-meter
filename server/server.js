@@ -1,32 +1,12 @@
-const io = require('socket.io'),
-  server = io.listen(4000);
-const sharedCode = require('../client-server-code/client-server-code').default;
-
-let sequenceNumberByClient = new Map();
+const io = require('socket.io');
+const server = io.listen(4000);
+const clients = require('./clients');
+const onConnect = require('./onConnect');
 
 // event fired every time a new client connects:
-server.on('connection', socket => {
-  console.info(`Client connected [id=${socket.id}]`);
-  // initialize this client's sequence number
-  sequenceNumberByClient.set(socket, 1);
-  const gameObject = sharedCode.createGame();
-  socket.emit(sharedCode.constants.CREATE_GAME, gameObject);
-  socket.broadcast.emit(
-    sharedCode.constants.CREATE_COMPETITOR_GAME,
-    gameObject
-  );
-  // when socket disconnects, remove it from the list:
-  socket.on('disconnect', () => {
-    sequenceNumberByClient.delete(socket);
-    console.info(`Client gone [id=${socket.id}]`);
-  });
-});
+server.on('connection', onConnect);
 
 // sends each client its current sequence number
 setInterval(() => {
-  for (const [client, sequenceNumber] of sequenceNumberByClient.entries()) {
-    // console.log(client)
-    // client.emit('se9q-num', sequenceNumber);
-    sequenceNumberByClient.set(client, sequenceNumber + 1);
-  }
+  clients.printClients();
 }, 1000);
