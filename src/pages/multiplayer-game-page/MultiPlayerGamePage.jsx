@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react';
-import {initSocket} from '../../utils/socketHandler'
+import { initSocket } from '../../utils/socketHandler';
+import MyGameContainer from '../../components/game-container/MyGameContainer';
 
 class MultiPlayerGamePage extends PureComponent {
   constructor(props) {
     super(props);
-    initSocket(props.dispatch)
-
+    initSocket(props.dispatch);
   }
   render() {
-    return <div>hi</div>;
+    return <div>{this.props.myGame && <MyGameContainer />}</div>;
   }
 }
 

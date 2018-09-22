@@ -62,5 +62,7 @@ class MyGame extends PureComponent {
     );
   }
 }
-
+MyGame.defaultProps = {
+  onGameStart : () => {}
+}
 export default MyGame;

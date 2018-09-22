@@ -250,6 +250,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   createGame: __WEBPACK_IMPORTED_MODULE_0__gameUtils__["a" /* createGame */],
+  createRandomWordsArray: __WEBPACK_IMPORTED_MODULE_0__gameUtils__["b" /* createRandomWordsArray */],
   constants: __WEBPACK_IMPORTED_MODULE_1__constants__
 });
 
@@ -259,6 +260,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["b"] = createRandomWordsArray;
 /* harmony export (immutable) */ __webpack_exports__["a"] = createGame;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_uuid__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_uuid__);
@@ -277,21 +279,18 @@ function wordsArray(customWordsState) {
   }
   return Object(__WEBPACK_IMPORTED_MODULE_3__utils__["e" /* processTextToArray */])(this.props.customWords);
 }
-
-function createGame() {
-  const gameId = `game-${__WEBPACK_IMPORTED_MODULE_0_uuid___default()()}`;
+function createRandomWordsArray() {
+  return Object(__WEBPACK_IMPORTED_MODULE_3__utils__["d" /* padWordsWithSpaces */])(wordsArray(null));
+}
+function createGame(gameId, wordsArray) {
   const overallTime = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["f" /* secondstoMillisecond */])(__WEBPACK_IMPORTED_MODULE_2__constants__["GAME_DURATION"]);
-  const wordsArrayPaddedWithSpaces = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["d" /* padWordsWithSpaces */])(wordsArray(null));
-  const words = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["a" /* createIndexWordObjects */])(
-    wordsArrayPaddedWithSpaces,
-    Object(__WEBPACK_IMPORTED_MODULE_3__utils__["c" /* getRandomNumber */])()
-  );
+  const wordObjects = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["a" /* createIndexWordObjects */])(wordsArray, Object(__WEBPACK_IMPORTED_MODULE_3__utils__["c" /* getRandomNumber */])());
   return {
     overallTime,
     gameId,
     index: 0,
     scrollIndex: 0,
-    words,
+    words: wordObjects,
     wpm: __WEBPACK_IMPORTED_MODULE_2__constants__["WPM_NULL"],
     gameDuration: __WEBPACK_IMPORTED_MODULE_2__constants__["GAME_DURATION"]
   };

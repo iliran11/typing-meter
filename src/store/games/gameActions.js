@@ -72,7 +72,8 @@ export function resetGame(gameId) {
   };
 }
 
-export function createMyGame(gameState, dispatch) {
+export function createMyGame(serverData, dispatch) {
+  const gameState = createGame(serverData.gameId, serverData.words);
   dispatch({
     type: CREATE_MY_GAME,
     payload: {

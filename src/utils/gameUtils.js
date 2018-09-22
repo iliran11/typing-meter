@@ -16,21 +16,18 @@ function wordsArray(customWordsState) {
   }
   return processTextToArray(this.props.customWords);
 }
-
-export function createGame() {
-  const gameId = `game-${uuid()}`;
+export function createRandomWordsArray() {
+  return padWordsWithSpaces(wordsArray(null));
+}
+export function createGame(gameId, wordsArray) {
   const overallTime = secondstoMillisecond(GAME_DURATION);
-  const wordsArrayPaddedWithSpaces = padWordsWithSpaces(wordsArray(null));
-  const words = createIndexWordObjects(
-    wordsArrayPaddedWithSpaces,
-    getRandomNumber()
-  );
+  const wordObjects = createIndexWordObjects(wordsArray, getRandomNumber());
   return {
     overallTime,
     gameId,
     index: 0,
     scrollIndex: 0,
-    words,
+    words: wordObjects,
     wpm: WPM_NULL,
     gameDuration: GAME_DURATION
   };
