@@ -14,7 +14,7 @@ function addPlayer(socket) {
   const words = createRandomWordsArray();
   const gameId = `game-${uuid()}`;
   const gameObject = createGame(gameId, words);
-  clients.setClient(socket, 1);
+  clients.setClient(socket, { game: gameObject });
   socket.emit(CREATE_GAME, { words, gameId });
   socket.broadcast.emit(CREATE_COMPETITOR_GAME, gameObject);
   clients.printClients();

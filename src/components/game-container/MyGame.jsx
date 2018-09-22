@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import WordsList from '../../components/game-container/WordsList';
 import { GAME_ID_MY } from '../../constants';
+import socketHandler from '../../utils/socketHandler'
 
 class MyGame extends PureComponent {
   constructor() {
