@@ -8,7 +8,11 @@ class MultiPlayerGamePage extends PureComponent {
     socketHandler.initSocket(props.dispatch);
   }
   render() {
-    return <div>{this.props.myGame && <MyGameContainer />}</div>;
+    return (
+      <div>
+        {this.props.myGameId && <MyGameContainer gameId={this.props.myGameId} />}
+      </div>
+    );
   }
 }
 

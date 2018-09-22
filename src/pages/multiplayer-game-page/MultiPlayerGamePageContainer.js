@@ -3,8 +3,12 @@ import MultiPlayerGamePage from './MultiPlayerGamePage';
 import { GAME_ID_MY } from '../../constants';
 
 const mapPropsToState = state => {
+  const gameObject = Object.values(state.games).find(
+    gameObject => gameObject.myGame
+  );
+
   return {
-    myGame: state.games[GAME_ID_MY]
+    myGameId: gameObject ? gameObject.gameId : null
   };
 };
 
