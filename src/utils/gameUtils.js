@@ -1,6 +1,6 @@
 import uuid from 'uuid';
 import isNull from 'lodash.isnull';
-import {WPM_NULL, AWAITS_TYPING, GAME_DURATION } from '../constants';
+import { WPM_NULL, GAME_DURATION } from '../constants';
 import {
   padWordsWithSpaces,
   secondstoMillisecond,
