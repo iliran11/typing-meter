@@ -43,15 +43,17 @@ export default (state = initialState, action) => {
     case CREATE_MY_GAME:
       return {
         ...state,
-        [GAME_ID_MY]: {
-          ...gameState
+        [gameState.gameId]: {
+          ...gameState,
+          myGame: true
         }
       };
     case CREATE_COMPETITOR_GAME:
       return {
         ...state,
         [gameState.gameId]: {
-          ...gameState
+          ...gameState,
+          myGame: false
         }
       };
 

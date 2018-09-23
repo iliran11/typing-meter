@@ -6,35 +6,15 @@ import {
   CREATE_COMPETITOR_GAME
 } from '../../constants';
 import { getLastCharInString } from '../../utils/utils';
-import { createGame } from '../../utils/gameUtils';
+import { createGame, updateWordNextStatus } from '../../utils/gameUtils';
 
 export function updateWord(newTypedWord, gameId) {
   return function(dispatch, getState) {
     const state = getState();
-
-    const currentIndex = state.games[gameId].index;
-    const currentWord = state.games[gameId].words[currentIndex];
-    const isDeletionEvent = currentWord.typed.length > newTypedWord.length;
-    const nextIndex =
-      currentWord.isCompleted && !isDeletionEvent
-        ? currentIndex + 1
-        : currentIndex;
-    const hasIndexChanged = currentIndex !== nextIndex;
-    /**
-     * if the index has changed it means we are in a new word territory.
-     * so we will take only the last character of the input.
-     * only the last char will be inserted to the word of the new index.
-     */
-    const typedWord = hasIndexChanged
-      ? getLastCharInString(newTypedWord)
-      : newTypedWord;
+    const payload = updateWordNextStatus(newTypedWord, state.games[gameId]);
     dispatch({
       type: UPDATE_WORD,
-      payload: {
-        newTypedWord: typedWord,
-        index: nextIndex,
-        gameId
-      }
+      payload
     });
   };
 }

@@ -34,3 +34,4 @@ export const END_GAME = 'end-game';
 export const RESET_GAME_WORDS = 'reset-game-words';
 export const CREATE_MY_GAME = 'create-my-game';
 export const CREATE_COMPETITOR_GAME = 'create-competitor-game';
+export const PLAYER_TYPING = 'player-typing'

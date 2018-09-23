@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import WordsList from '../../components/game-container/WordsList';
-import { GAME_ID_MY } from '../../constants';
-import socketHandler from '../../utils/socketHandler'
+import { GAME_ID_MY, PLAYER_TYPING,DECREMENT_INDEX } from '../../constants';
+import socketHandler from '../../utils/socketHandler';
 
 class MyGame extends PureComponent {
   constructor() {
@@ -15,13 +15,15 @@ class MyGame extends PureComponent {
       this.props.onGameStart();
     }
     this.gameHasStarted = true;
-    this.props.updateWord(event.target.value, GAME_ID_MY);
+    this.props.updateWord(event.target.value, this.props.gameId);
+    socketHandler.emitEvent(PLAYER_TYPING, event.target.value);
   }
   handleKeyPress(event) {
     switch (event.which) {
       case 8:
         if (event.target.value.length === 0) {
-          this.props.decrementIndex(GAME_ID_MY);
+          this.props.decrementIndex(this.props.gameId);
+          socketHandler.emitEvent(DECREMENT_INDEX)
         }
         break;
       default:
@@ -64,6 +66,6 @@ class MyGame extends PureComponent {
   }
 }
 MyGame.defaultProps = {
-  onGameStart : () => {}
-}
+  onGameStart: () => {}
+};
 export default MyGame;

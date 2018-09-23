@@ -8,5 +8,5 @@ server.on('connection', onConnect);
 
 // sends each client its current sequence number
 setInterval(() => {
-  clients.printClients();
+  // clients.printClients();
 }, 1000);

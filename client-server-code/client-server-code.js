@@ -165,6 +165,9 @@ const CREATE_MY_GAME = 'create-my-game';
 const CREATE_COMPETITOR_GAME = 'create-competitor-game';
 /* harmony export (immutable) */ __webpack_exports__["CREATE_COMPETITOR_GAME"] = CREATE_COMPETITOR_GAME;
 
+const PLAYER_TYPING = 'player-typing'
+/* harmony export (immutable) */ __webpack_exports__["PLAYER_TYPING"] = PLAYER_TYPING;
+
 
 
 /***/ }),
@@ -250,6 +253,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   createGame: __WEBPACK_IMPORTED_MODULE_0__gameUtils__["a" /* createGame */],
+  updateWordNextStatus: __WEBPACK_IMPORTED_MODULE_0__gameUtils__["c" /* updateWordNextStatus */],
   createRandomWordsArray: __WEBPACK_IMPORTED_MODULE_0__gameUtils__["b" /* createRandomWordsArray */],
   constants: __WEBPACK_IMPORTED_MODULE_1__constants__
 });
@@ -262,6 +266,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["b"] = createRandomWordsArray;
 /* harmony export (immutable) */ __webpack_exports__["a"] = createGame;
+/* harmony export (immutable) */ __webpack_exports__["c"] = updateWordNextStatus;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_uuid__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_uuid__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_isnull__ = __webpack_require__(8);
@@ -277,14 +282,14 @@ function wordsArray(customWordsState) {
   if (__WEBPACK_IMPORTED_MODULE_1_lodash_isnull___default()(customWordsState)) {
     return Object(__WEBPACK_IMPORTED_MODULE_3__utils__["b" /* generateLoremIpsum */])();
   }
-  return Object(__WEBPACK_IMPORTED_MODULE_3__utils__["e" /* processTextToArray */])(this.props.customWords);
+  return Object(__WEBPACK_IMPORTED_MODULE_3__utils__["f" /* processTextToArray */])(this.props.customWords);
 }
 function createRandomWordsArray() {
-  return Object(__WEBPACK_IMPORTED_MODULE_3__utils__["d" /* padWordsWithSpaces */])(wordsArray(null));
+  return Object(__WEBPACK_IMPORTED_MODULE_3__utils__["e" /* padWordsWithSpaces */])(wordsArray(null));
 }
 function createGame(gameId, wordsArray) {
-  const overallTime = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["f" /* secondstoMillisecond */])(__WEBPACK_IMPORTED_MODULE_2__constants__["GAME_DURATION"]);
-  const wordObjects = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["a" /* createIndexWordObjects */])(wordsArray, Object(__WEBPACK_IMPORTED_MODULE_3__utils__["c" /* getRandomNumber */])());
+  const overallTime = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["g" /* secondstoMillisecond */])(__WEBPACK_IMPORTED_MODULE_2__constants__["GAME_DURATION"]);
+  const wordObjects = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["a" /* createIndexWordObjects */])(wordsArray, Object(__WEBPACK_IMPORTED_MODULE_3__utils__["d" /* getRandomNumber */])());
   return {
     overallTime,
     gameId,
@@ -294,6 +299,30 @@ function createGame(gameId, wordsArray) {
     wpm: __WEBPACK_IMPORTED_MODULE_2__constants__["WPM_NULL"],
     gameDuration: __WEBPACK_IMPORTED_MODULE_2__constants__["GAME_DURATION"]
   };
+}
+
+function updateWordNextStatus(newTypedWord, gameState) {
+  const currentIndex = gameState.index;
+  const currentWord = gameState.words[currentIndex];
+  const isDeletionEvent = currentWord.typed.length > newTypedWord.length;
+  const nextIndex =
+    currentWord.isCompleted && !isDeletionEvent
+      ? currentIndex + 1
+      : currentIndex;
+  const hasIndexChanged = currentIndex !== nextIndex;
+  /**Y territory.
+   * so we will take only the last character of the input.
+   * only the last char will be inserted to the word of the new index.
+   */
+  const typedWord = hasIndexChanged
+    ? Object(__WEBPACK_IMPORTED_MODULE_3__utils__["c" /* getLastCharInString */])(newTypedWord)
+    : newTypedWord;
+  return {
+    newTypedWord: typedWord,
+    index: nextIndex,
+    gameId: gameState.gameId
+
+  }
 }
 
 
@@ -503,16 +532,16 @@ module.exports = isNull;
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["b"] = generateLoremIpsum;
-/* harmony export (immutable) */ __webpack_exports__["e"] = processTextToArray;
+/* harmony export (immutable) */ __webpack_exports__["f"] = processTextToArray;
 /* harmony export (immutable) */ __webpack_exports__["a"] = createIndexWordObjects;
-/* harmony export (immutable) */ __webpack_exports__["f"] = secondstoMillisecond;
+/* harmony export (immutable) */ __webpack_exports__["g"] = secondstoMillisecond;
 /* unused harmony export millisecondsToSeconds */
 /* unused harmony export filterEmptyStrings */
 /* unused harmony export replaceLineBreaks */
 /* unused harmony export isLastCharIsSpace */
-/* unused harmony export getLastCharInString */
-/* harmony export (immutable) */ __webpack_exports__["c"] = getRandomNumber;
-/* harmony export (immutable) */ __webpack_exports__["d"] = padWordsWithSpaces;
+/* harmony export (immutable) */ __webpack_exports__["c"] = getLastCharInString;
+/* harmony export (immutable) */ __webpack_exports__["d"] = getRandomNumber;
+/* harmony export (immutable) */ __webpack_exports__["e"] = padWordsWithSpaces;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_random_words__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_random_words___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_random_words__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__(0);

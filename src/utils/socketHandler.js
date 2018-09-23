@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 import { CREATE_GAME, CREATE_COMPETITOR_GAME } from '../constants';
 import { createMyGame, createCompetitorGame } from '../store/games/gameActions';
 
-const socketHandler =  {
+const socketHandler = {
   initSocket(dispatch) {
     this.socket = io('http://localhost:4000');
     this.socket.on(CREATE_GAME, data => {
@@ -13,7 +13,7 @@ const socketHandler =  {
     });
   },
   emitEvent(eventName, data) {
-    this.socket(eventName, data);
+    this.socket.emit(eventName, data);
   }
-}
+};
 export default socketHandler;
