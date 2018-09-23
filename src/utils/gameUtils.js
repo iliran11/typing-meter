@@ -1,4 +1,3 @@
-import uuid from 'uuid';
 import isNull from 'lodash.isnull';
 import { WPM_NULL, GAME_DURATION } from '../constants';
 import {

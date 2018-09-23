@@ -5,7 +5,6 @@ import {
   CREATE_MY_GAME,
   CREATE_COMPETITOR_GAME
 } from '../../constants';
-import { getLastCharInString } from '../../utils/utils';
 import { createGame, updateWordNextStatus } from '../../utils/gameUtils';
 
 export function updateWord(newTypedWord, gameId) {
