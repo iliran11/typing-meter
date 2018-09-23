@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import WordsList from '../../components/game-container/WordsList';
-import { GAME_ID_MY, PLAYER_TYPING,DECREMENT_INDEX } from '../../constants';
+import { PLAYER_TYPING, DECREMENT_INDEX } from '../../constants';
 import socketHandler from '../../utils/socketHandler';
 
 class MyGame extends PureComponent {
@@ -21,9 +21,9 @@ class MyGame extends PureComponent {
   handleKeyPress(event) {
     switch (event.which) {
       case 8:
-        if (event.target.value.length === 0) {
+        if (event.target.value.length === 0 && this.props.myGame.index > 0) {
           this.props.decrementIndex(this.props.gameId);
-          socketHandler.emitEvent(DECREMENT_INDEX)
+          socketHandler.emitEvent(DECREMENT_INDEX);
         }
         break;
       default:
