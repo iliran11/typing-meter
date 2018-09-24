@@ -38,7 +38,7 @@ export function updateWordNextStatus(newTypedWord, gameState) {
   const currentWord = gameState.words[currentIndex];
   const isDeletionEvent = currentWord.typed.length > newTypedWord.length;
   const nextIndex =
-    currentWord.isCompleted && !isDeletionEvent
+    currentWord.isCorrect && !isDeletionEvent
       ? currentIndex + 1
       : currentIndex;
   const hasIndexChanged = currentIndex !== nextIndex;

@@ -35,7 +35,12 @@ export default function createWordObject({ challenge = '', typed = '', key }) {
     get removeLastTypedLetter() {
       return this.typed.slice(0, -1);
     },
-
+    get hasWrongLetter() {
+      if(this.typedArray.length===0) return false;
+      return this.typedArray.some((letter, index) => {
+        return letter !== this.challenegeArray[index];
+      });
+    },
     get numberOfCorrectEntities() {
       return this.typedArray.reduce(
         (accumulator, currentValue, currentIndex) => {

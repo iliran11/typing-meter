@@ -31,6 +31,10 @@ input {
   padding-left: 2%;
   border-radius: 10px;
   outline: none;
+  &.incorrect {
+    background-color:red;
+    color:white;
+  }
 }
 .metric-score {
   font-family: 'Fredoka One', cursive;

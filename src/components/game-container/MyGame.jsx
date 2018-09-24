@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import WordsList from '../../components/game-container/WordsList';
 import { PLAYER_TYPING, DECREMENT_INDEX } from '../../constants';
-import socketHandler from '../../utils/socketHandler';
 
 class MyGame extends PureComponent {
   constructor() {
@@ -16,14 +15,12 @@ class MyGame extends PureComponent {
     }
     this.gameHasStarted = true;
     this.props.updateWord(event.target.value, this.props.gameId);
-    socketHandler.emitEvent(PLAYER_TYPING, event.target.value);
   }
   handleKeyPress(event) {
     switch (event.which) {
       case 8:
         if (event.target.value.length === 0 && this.props.myGame.index > 0) {
           this.props.decrementIndex(this.props.gameId);
-          socketHandler.emitEvent(DECREMENT_INDEX);
         }
         break;
       default:
@@ -42,6 +39,9 @@ class MyGame extends PureComponent {
   get inputValue() {
     return this.currentWord.typed;
   }
+  get isCurrentWordIncorrect() {
+    return this.props.myGame.words[this.props.myGame.index].hasWrongLetter;
+  }
   render() {
     return (
       <React.Fragment>
@@ -53,7 +53,7 @@ class MyGame extends PureComponent {
           tabIndex="0"
           className={`input is-large is-primary size3 joyride-step--input ${
             this.inputClasses
-          }`}
+          } ${this.isCurrentWordIncorrect ? 'incorrect' : null}`}
           placeholder={this.inputPlaceHolder}
         />
         <WordsList

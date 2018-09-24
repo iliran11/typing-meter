@@ -17,7 +17,7 @@ const {
 
 function addPlayer(socket) {
   // console.info(`Client connected [id=${socket.id}]`);
-  const words = createRandomWordsArray();
+  const words = ['hello', ' ', 'bye'];
   const gameId = `game-${uuid()}`;
   const gameObject = createGame(gameId, words);
   clients.setClient(socket, { game: gameObject });

@@ -3,12 +3,15 @@ import {
   DECREMENT_INDEX,
   RESET_GAME_WORDS,
   CREATE_MY_GAME,
-  CREATE_COMPETITOR_GAME
+  CREATE_COMPETITOR_GAME,
+  PLAYER_TYPING
 } from '../../constants';
 import { createGame, updateWordNextStatus } from '../../utils/gameUtils';
+import socketHandler from '../../utils/socketHandler';
 
 export function updateWord(newTypedWord, gameId) {
   return function(dispatch, getState) {
+    socketHandler.emitEvent(PLAYER_TYPING, newTypedWord);
     const state = getState();
     const payload = updateWordNextStatus(newTypedWord, state.games[gameId]);
     dispatch({
@@ -30,6 +33,7 @@ export function updateIndex(newIndex) {}
 export function decrementIndex(gameId) {
   return function(dispatch, getState) {
     const state = getState();
+    socketHandler.emitEvent(DECREMENT_INDEX);
     const currentIndex = state.games[gameId].index;
     dispatch({
       type: DECREMENT_INDEX,
