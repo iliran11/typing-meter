@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import WordsList from '../../components/game-container/WordsList';
-import { PLAYER_TYPING, DECREMENT_INDEX } from '../../constants';
 
 class MyGame extends PureComponent {
   constructor() {
