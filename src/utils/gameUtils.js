@@ -37,8 +37,9 @@ export function updateWordNextStatus(newTypedWord, gameState) {
   const currentIndex = gameState.index;
   const currentWord = gameState.words[currentIndex];
   const isDeletionEvent = currentWord.typed.length > newTypedWord.length;
+  const isLastWord = gameState.words.length === currentIndex + 1;
   const nextIndex =
-    currentWord.isCorrect && !isDeletionEvent
+    currentWord.isCorrect && !isDeletionEvent & !isLastWord
       ? currentIndex + 1
       : currentIndex;
   const hasIndexChanged = currentIndex !== nextIndex;
@@ -53,6 +54,5 @@ export function updateWordNextStatus(newTypedWord, gameState) {
     newTypedWord: typedWord,
     index: nextIndex,
     gameId: gameState.gameId
-
-  }
+  };
 }
