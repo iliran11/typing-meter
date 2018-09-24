@@ -11,10 +11,22 @@ const {
     },
     createGame,
     createRandomWordsArray,
-    updateWordNextStatus
+    updateWordNextStatus,
+    wpmScore
   }
 } = sharedCode;
-
+const gameTimer = require('./gameTimer');
+function calculatePlayersScores() {
+  const scoresArray = [];
+  clients.forEachClient((key, value) => {
+    const clientId = key.client.id;
+    scoresArray.push(wpmScore(value.game.words, gameTimer.getMinutesPassed()));
+  });
+  console.log(scoresArray);
+}
+function broadcastScores() {
+  // setInterval(calculatePlayersScores, 1000);
+}
 function addPlayer(socket) {
   // console.info(`Client connected [id=${socket.id}]`);
   const words = ['hello', ' ', 'bye'];
@@ -50,6 +62,8 @@ function onConnect(socket) {
   onPlayerDisconnection(socket);
   onTyping(socket);
   onDecrementIndex(socket);
+  broadcastScores(socket);
+  gameTimer.startTimer();
 }
 
 module.exports = onConnect;

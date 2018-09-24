@@ -15,9 +15,14 @@ exports.deleteClient = function deleteClient(key) {
 };
 
 exports.getEntries = function getEntries() {
-  return clients.entries()
-}
+  return clients.entries();
+};
+exports.forEachClient = function forEachClient(callback) {
+  for (const [key, value] of clients.entries()) {
+    callback(key, value);
+  }
+};
 
 exports.printClients = function printClients() {
-  console.log(clients)
-}
+  console.log(clients);
+};

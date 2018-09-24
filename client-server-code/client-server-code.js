@@ -178,6 +178,7 @@ const PLAYER_TYPING = 'player-typing'
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__gameUtils__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wpmCalculations__ = __webpack_require__(9);
 
 
 
@@ -185,7 +186,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   createGame: __WEBPACK_IMPORTED_MODULE_0__gameUtils__["a" /* createGame */],
   updateWordNextStatus: __WEBPACK_IMPORTED_MODULE_0__gameUtils__["c" /* updateWordNextStatus */],
   createRandomWordsArray: __WEBPACK_IMPORTED_MODULE_0__gameUtils__["b" /* createRandomWordsArray */],
-  constants: __WEBPACK_IMPORTED_MODULE_1__constants__
+  constants: __WEBPACK_IMPORTED_MODULE_1__constants__,
+  wpmScore: __WEBPACK_IMPORTED_MODULE_2__wpmCalculations__["a" /* wpmScore */]
 });
 
 
@@ -1168,6 +1170,33 @@ function createWordObject({ challenge = '', typed = '', key }) {
       );
     }
   };
+}
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = wpmScore;
+function typingStatistcs(words) {
+  return words.reduce(
+    (accumulator, currentValue) => {
+      const resultObject = currentValue.numberOfCorrectEntities;
+      accumulator.correct += resultObject.correct;
+      accumulator.wrong += resultObject.wrong;
+      return accumulator;
+    },
+    { correct: 0, wrong: 0 }
+  );
+}
+function wpmScore(words, timePassedMinutes) {
+  /**http://indiatyping.com/index.php/typing-tips/typing-speed-calculation-formula */
+  /** returns an object of total number of correct and wrong chars */
+  const { correct, wrong } = typingStatistcs(words);
+  const grossWpm = (correct + wrong) / 5 / timePassedMinutes;
+  const errorFactor = wrong / timePassedMinutes;
+  return grossWpm - errorFactor;
 }
 
 
