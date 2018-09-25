@@ -4,7 +4,10 @@ import {
   RESET_GAME_WORDS,
   CREATE_MY_GAME,
   CREATE_COMPETITOR_GAME,
-  PLAYER_TYPING
+  PLAYER_TYPING,
+  BROADCAST_NAME,
+  INITIALIZE_PLAYERS,
+  COMPETITOR_JOINED_GAME
 } from '../../constants';
 import { createGame, updateWordNextStatus } from '../../utils/gameUtils';
 import socketHandler from '../../utils/socketHandler';
@@ -55,21 +58,28 @@ export function resetGame(gameId) {
   };
 }
 
-export function createMyGame(serverData, dispatch) {
-  const gameState = createGame(serverData.gameId, serverData.words);
+export function createMyGame(options, dispatch) {
+  const { gameId, words, players } = options;
+  const gameState = createGame(gameId, words);
   dispatch({
     type: CREATE_MY_GAME,
     payload: {
       gameState
     }
   });
+  dispatch({
+    type: INITIALIZE_PLAYERS,
+    payload: players
+  });
 }
 
-export function createCompetitorGame(gameState, dispatch) {
+export function addCompetitor(playperObject, dispatch) {
   dispatch({
-    type: CREATE_COMPETITOR_GAME,
-    payload: {
-      gameState
-    }
+    type: COMPETITOR_JOINED_GAME,
+    payload: playperObject
   });
+}
+
+export function broadcastMyName(name) {
+  socketHandler.emitEvent(BROADCAST_NAME, name);
 }

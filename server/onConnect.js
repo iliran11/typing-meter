@@ -1,18 +1,12 @@
 const clients = require('./clients');
+const gamesModule = require('./games');
 const sharedCode = require('../client-server-code/client-server-code');
 const uuid = require('uuid');
 const {
   default: {
-    constants: {
-      CREATE_GAME,
-      DECREMENT_INDEX,
-      CREATE_COMPETITOR_GAME,
-      PLAYER_TYPING
-    },
-    createGame,
-    createRandomWordsArray,
+    constants: { DECREMENT_INDEX, PLAYER_TYPING, BROADCAST_NAME },
     updateWordNextStatus,
-    wpmScore
+    wpmScore,
   }
 } = sharedCode;
 const gameTimer = require('./gameTimer');
@@ -20,22 +14,19 @@ function calculatePlayersScores() {
   const scoresArray = [];
   clients.forEachClient((key, value) => {
     const clientId = key.client.id;
-    scoresArray.push(wpmScore(value.game.words, gameTimer.getMinutesPassed()));
+    const score = wpmScore(value.game.words, gameTimer.getMinutesPassed());
+    scoresArray.push({ score, name: value.name });
   });
   console.log(scoresArray);
 }
 function broadcastScores() {
-  // setInterval(calculatePlayersScores, 1000);
+  setInterval(calculatePlayersScores, 1000);
 }
+
 function addPlayer(socket) {
-  // console.info(`Client connected [id=${socket.id}]`);
-  const words = ['hello', ' ', 'bye'];
-  const gameId = `game-${uuid()}`;
-  const gameObject = createGame(gameId, words);
-  clients.setClient(socket, { game: gameObject });
-  socket.emit(CREATE_GAME, { words, gameId });
-  socket.broadcast.emit(CREATE_COMPETITOR_GAME, gameObject);
-  clients.printClients();
+  socket.on(BROADCAST_NAME, name => {
+    gamesModule.addPlayerToGame(socket, name);
+  });
 }
 function onTyping(socket) {
   socket.on(PLAYER_TYPING, data => {

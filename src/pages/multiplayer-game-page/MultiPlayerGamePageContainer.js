@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import MultiPlayerGamePage from './MultiPlayerGamePage';
+import { broadcastMyName } from '../../store/games/gameActions';
 
 const mapPropsToState = state => {
   const gameObject = Object.values(state.games).find(
@@ -7,7 +8,8 @@ const mapPropsToState = state => {
   );
 
   return {
-    myGameId: gameObject ? gameObject.gameId : null
+    myGameId: gameObject ? gameObject.gameId : null,
+    broadcastMyName
   };
 };
 
