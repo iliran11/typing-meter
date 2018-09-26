@@ -39,3 +39,5 @@ export const BROADCAST_NAME = 'broadcast-name';
 export const COMPETITOR_JOINED_GAME = 'player-joined-game';
 export const YOU_JOINED_ROOM = 'you-joined-room';
 export const INITIALIZE_PLAYERS= 'initialize-players'
+
+export const SCORES_BROADCAST = 'scores-broadcast'

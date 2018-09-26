@@ -177,6 +177,13 @@ const COMPETITOR_JOINED_GAME = 'player-joined-game';
 const YOU_JOINED_ROOM = 'you-joined-room';
 /* harmony export (immutable) */ __webpack_exports__["YOU_JOINED_ROOM"] = YOU_JOINED_ROOM;
 
+const INITIALIZE_PLAYERS= 'initialize-players'
+/* harmony export (immutable) */ __webpack_exports__["INITIALIZE_PLAYERS"] = INITIALIZE_PLAYERS;
+
+
+const SCORES_BROADCAST = 'scores-broadcast'
+/* harmony export (immutable) */ __webpack_exports__["SCORES_BROADCAST"] = SCORES_BROADCAST;
+
 
 
 /***/ }),
@@ -190,7 +197,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__wpmCalculations__ = __webpack_require__(9);
 
 
-const liran = __WEBPACK_IMPORTED_MODULE_0__gameUtils__["a" /* createGame */]
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -199,7 +205,6 @@ const liran = __WEBPACK_IMPORTED_MODULE_0__gameUtils__["a" /* createGame */]
   constants: __WEBPACK_IMPORTED_MODULE_1__constants__,
   wpmScore: __WEBPACK_IMPORTED_MODULE_2__wpmCalculations__["a" /* wpmScore */],
   createGame: __WEBPACK_IMPORTED_MODULE_0__gameUtils__["a" /* createGame */],
-  liran
 });
 
 

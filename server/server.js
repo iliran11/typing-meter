@@ -4,7 +4,9 @@ const clients = require('./clients');
 const onConnect = require('./onConnect');
 
 // event fired every time a new client connects:
-server.on('connection', onConnect);
+server.on('connection', (socket) => {
+  onConnect(socket,server);
+});
 
 // sends each client its current sequence number
 setInterval(() => {

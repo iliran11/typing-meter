@@ -8,64 +8,90 @@ const {
 } = sharedCode;
 
 const words = ['hello', 'bye'];
-let currentOpenGame = 1310;
-const games = new Map();
-const gamesStatus = new Map();
+const rooms = new Map();
 const gamesPlayers = new Map();
 const maximumPlayersPerGame = 2;
-let gameId = 1310;
+let gameIdPointer = 1113;
 
-// initialize
-gamesPlayers.set(currentOpenGame, []);
-gamesStatus.set(currentOpenGame, true);
-games.set(currentOpenGame, createGame(1, words));
-
-function createGameObject() {
-  gameId++;
-  currentOpenGame++;
-  const nextGameWords = [...words, [`GameId${gameId}`]];
-  const gameObject = createGame(gameId, nextGameWords);
-  gamesStatus.set(gameId, true);
-  games.set(gameId, gameObject);
-  gamesPlayers.set(gameId, []);
-  return nextGameWords;
-}
-function createPlayerObject(socket, name) {
-  return {
-    id: name,
-    name
-  };
-}
+rooms.set(gameIdPointer, []);
 
 exports.addPlayerToGame = function addPlayerToGame(socket, name) {
   // tell the player which game room he has joined.
   updateGameInfo();
   const playerObject = createPlayerObject(socket, name);
-  setPlayerInCurrentGame(playerObject);
+  const roomName = gameIdPointer;
+  setPlayerInCurrentGame(playerObject, socket);
+  socket.join(roomName);
   socket.emit(YOU_JOINED_ROOM, {
-    gameId: currentOpenGame,
+    gameId: gameIdPointer,
     players: getPlayersInCurrentGame(),
-    words: [...words, `gameId:${currentOpenGame}`]
+    words: [...words, `gameId:${gameIdPointer}`]
   });
-  socket.broadcast.emit(COMPETITOR_JOINED_GAME, playerObject);
+  socket.to(roomName).emit(COMPETITOR_JOINED_GAME, playerObject);
+};
+exports.getGame = getGame;
+
+exports.getGamesInRooms = function getGamesInRooms() {
+  const gamesByRooms = {};
+  for (const [roomId, players] of rooms.entries()) {
+    const gamesInRoom = players.map(socket => {
+      return { game: getGame(socket), playerId: getPlayerId(socket) };
+    });
+    gamesByRooms[roomId] = gamesInRoom;
+  }
+  return gamesByRooms;
 };
 
 exports.printGames = function printGames() {
   debugger;
 };
+function getGame(socket) {
+  return gamesPlayers.get(socket).game;
+}
+function getPlayerId(socket) {
+  return gamesPlayers.get(socket).id;
+}
+function createGameObject() {
+  const nextGameWords = [...words, [`GameId${gameIdPointer}`]];
+  const gameObject = createGame(gameIdPointer, nextGameWords);
+  return gameObject;
+}
+
+function getCurrentGameId() {
+  return;
+}
+
+function createPlayerObject(socket, name) {
+  return {
+    id: name,
+    name,
+    game: createGameObject()
+  };
+}
 
 function updateGameInfo() {
   if (isRoomFull()) {
-    createGameObject();
+    createNewRoom();
   }
 }
 function getPlayersInCurrentGame() {
-  return gamesPlayers.get(currentOpenGame);
+  const players = rooms.get(gameIdPointer);
+  return players.map(socket => {
+    const { name, id } = gamesPlayers.get(socket);
+    return { name, id };
+  });
 }
-function setPlayerInCurrentGame(playerObject) {
-  gamesPlayers.set(currentOpenGame, [...getPlayersInCurrentGame(), playerObject]);
+function setPlayerInCurrentGame(playerObject, socket) {
+  gamesPlayers.set(socket, playerObject);
+  const currentPlayersInRoom = rooms.get(gameIdPointer);
+  rooms.set(gameIdPointer, [...currentPlayersInRoom, socket]);
 }
 function isRoomFull() {
-  const playersInCurrentGame = gamesPlayers.get(currentOpenGame);
+  const playersInCurrentGame = rooms.get(gameIdPointer);
   return playersInCurrentGame.length === maximumPlayersPerGame;
+}
+
+function createNewRoom() {
+  gameIdPointer++;
+  rooms.set(gameIdPointer, []);
 }
