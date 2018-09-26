@@ -9,7 +9,8 @@ const mapPropsToState = state => {
 
   return {
     myGameId: gameObject ? gameObject.gameId : null,
-    broadcastMyName
+    broadcastMyName,
+    competitors: state.players
   };
 };
 

@@ -41,3 +41,4 @@ export const YOU_JOINED_ROOM = 'you-joined-room';
 export const INITIALIZE_PLAYERS= 'initialize-players'
 
 export const SCORES_BROADCAST = 'scores-broadcast'
+export const SCORES_UPDATE = 'scores-update'

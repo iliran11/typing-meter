@@ -3,7 +3,7 @@ import {
   DECREMENT_INDEX,
   RESET_GAME_WORDS,
   CREATE_MY_GAME,
-  CREATE_COMPETITOR_GAME,
+  SCORES_UPDATE,
   PLAYER_TYPING,
   BROADCAST_NAME,
   INITIALIZE_PLAYERS,
@@ -14,7 +14,7 @@ import socketHandler from '../../utils/socketHandler';
 
 export function updateWord(newTypedWord, gameId) {
   return function(dispatch, getState) {
-    socketHandler.emitEvent(PLAYER_TYPING, newTypedWord);
+    socketHandler.emitEvent(PLAYER_TYPING, { newTypedWord, gameId });
     const state = getState();
     const payload = updateWordNextStatus(newTypedWord, state.games[gameId]);
     dispatch({
@@ -82,4 +82,11 @@ export function addCompetitor(playperObject, dispatch) {
 
 export function broadcastMyName(name) {
   socketHandler.emitEvent(BROADCAST_NAME, name);
+}
+
+export function updateScores(scores, dispatch) {
+  dispatch({
+    type: SCORES_UPDATE,
+    payload: scores
+  });
 }

@@ -4,9 +4,14 @@ import {
   CREATE_COMPETITOR_GAME,
   PLAYER_JOINED_GAME,
   YOU_JOINED_ROOM,
-  COMPETITOR_JOINED_GAME
+  COMPETITOR_JOINED_GAME,
+  SCORES_BROADCAST
 } from '../constants';
-import { createMyGame, addCompetitor } from '../store/games/gameActions';
+import {
+  createMyGame,
+  addCompetitor,
+  updateScores
+} from '../store/games/gameActions';
 
 const socketHandler = {
   initSocket(dispatch) {
@@ -17,9 +22,12 @@ const socketHandler = {
         dispatch
       );
     });
-    this.socket.on(COMPETITOR_JOINED_GAME,playerObject=>{
-      addCompetitor(playerObject,dispatch)
-    })
+    this.socket.on(COMPETITOR_JOINED_GAME, playerObject => {
+      addCompetitor(playerObject, dispatch);
+    });
+    this.socket.on(SCORES_BROADCAST, data => {
+      updateScores(data, dispatch);
+    });
   },
   emitEvent(eventName, data) {
     this.socket.emit(eventName, data);

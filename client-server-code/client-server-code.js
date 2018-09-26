@@ -184,6 +184,9 @@ const INITIALIZE_PLAYERS= 'initialize-players'
 const SCORES_BROADCAST = 'scores-broadcast'
 /* harmony export (immutable) */ __webpack_exports__["SCORES_BROADCAST"] = SCORES_BROADCAST;
 
+const SCORES_UPDATE = 'scores-update'
+/* harmony export (immutable) */ __webpack_exports__["SCORES_UPDATE"] = SCORES_UPDATE;
+
 
 
 /***/ }),

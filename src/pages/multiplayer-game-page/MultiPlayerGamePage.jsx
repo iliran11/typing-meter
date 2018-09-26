@@ -25,6 +25,7 @@ class MultiPlayerGamePage extends PureComponent {
           open={this.state.isNameModalOpen}
           onSubmit={this.onNameSubmit}
         />
+        <div>hello world</div>
         {this.props.myGameId && (
           <MyGameContainer gameId={this.props.myGameId} />
         )}

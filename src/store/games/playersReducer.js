@@ -1,11 +1,7 @@
 import {
-  UPDATE_WORD,
-  RESET_GAME_WORDS,
-  DECREMENT_INDEX,
-  CREATE_MY_GAME,
-  CREATE_COMPETITOR_GAME,
   INITIALIZE_PLAYERS,
-  COMPETITOR_JOINED_GAME
+  COMPETITOR_JOINED_GAME,
+  SCORES_UPDATE
 } from '../../constants';
 const initialState = {};
 
@@ -21,6 +17,13 @@ export default (state = initialState, action) => {
         ...state,
         [action.payload.id]: action.payload
       };
+    case SCORES_UPDATE:
+      const nextState = { ...state };
+      action.payload.forEach(value => {
+        const { score, playerId } = value;
+        nextState[playerId].score = score;
+      });
+      return nextState;
     default:
       return state;
   }
