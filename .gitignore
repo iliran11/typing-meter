@@ -5,3 +5,5 @@
 /build
 /coverage
 /isomoprhic-code
+/server-ts/node_modules
+/server-ts/dist

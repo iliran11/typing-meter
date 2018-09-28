@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "private": true,
   "dependencies": {
+    "@types/socket.io": "^1.4.38",
     "animate.css": "^3.6.1",
     "classnames": "^2.2.6",
     "date-fns": "^1.29.0",
@@ -40,6 +41,8 @@
     "scroll-into-view": "^1.9.3",
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.1",
     "uuid": "^3.3.2",
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.0"
