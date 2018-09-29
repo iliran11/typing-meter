@@ -1,13 +1,13 @@
-import * as socketIo from "socket.io";
-const server = socketIo.listen(4000);
-import * as onConnect from "./onConnect";
+import Room from "./classes/Room";
+import Player from "./classes/Player";
+import RoomServer from "./classes/RoomServer";
 
-// event fired every time a new client connects:
-server.on("connection", (socket: number) => {
-  onConnect.onConnect();
-});
+const roomServer = RoomServer.getInstance();
+const player1 = new Player("adi");
+const player2 = new Player("liran");
+const player3 = new Player("lior3");
 
-// sends each client its current sequence number
-setInterval(() => {
-  // clients.printClients();
-}, 1000);
+roomServer.addPlayer(player1);
+roomServer.addPlayer(player2);
+roomServer.addPlayer(player3);
+3;
