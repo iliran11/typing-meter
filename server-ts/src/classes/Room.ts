@@ -18,7 +18,7 @@ export default class Room {
   }
   addPlayer(player: Player): void {
     this.players.push(player);
-    player.createGame(this.gameWords, this.roomId);
+    player.createGame(this.roomId, this.gameWords);
   }
   get isRoomFull(): boolean {
     return this.players.length === this.maxPlayersInRoom;

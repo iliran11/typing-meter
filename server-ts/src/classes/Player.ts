@@ -1,4 +1,5 @@
 import * as socketIo from "socket.io";
+import Game from "./Game";
 // import Game from "./Game";
 
 export default class Player {
@@ -10,8 +11,8 @@ export default class Player {
   constructor(name: string) {
     this.name = name;
   }
-  createGame(game: any, gameId: number) {
-    this.game = game;
+  createGame(gameId: number, words: string[]) {
     this.gameId = gameId;
+    this.game = new Game(gameId, words);
   }
 }
