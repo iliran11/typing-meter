@@ -6,12 +6,26 @@ export default class RoomManager {
   private static instance: RoomManager;
   static words = ["hello", "goodbye"];
   rooms: Map<number, Room>;
-  openRoomsIds: number[];
 
   private constructor() {
     this.rooms = new Map();
     // create first new room;
     this.createNewRoom();
+  }
+  addPlayer(player: Player): void {
+    if (this.openRooms > 0) {
+      this.addPlayerToExistingRoom(player);
+    } else {
+      this.addPlayerToNewRoom(player);
+    }
+  }
+  removePlayer(player: Player): void {
+    const roomId: number = player.roomId;
+    const room = this.getRoom(roomId);
+    room.deletePlayer(player);
+  }
+  getRoom(roomId: number): Room {
+    return this.rooms.get(roomId);
   }
   private get openRooms(): number {
     if (this.openRoomsIds.length > 0) {
@@ -22,30 +36,30 @@ export default class RoomManager {
   private get availableRoomNumber(): number {
     return this.openRoomsIds[0];
   }
-  addPlayer(player: Player): void {
-    if (this.openRooms > 0) {
-      this.addPlayerToExistingRoom(player);
-    } else {
-      this.addPlayerToNewRoom(player);
-    }
-  }
   private addPlayerToExistingRoom(player: Player): void {
     const selectedRoom: Room = this.rooms.get(this.availableRoomNumber);
     selectedRoom.addPlayer(player);
-    if (selectedRoom.isRoomFull) {
-      this.openRoomsIds.pop();
-    }
     return;
   }
   private createNewRoom(): Room {
     const room = new Room(RoomManager.words);
     this.rooms.set(room.roomId, room);
-    this.openRoomsIds = [room.roomId];
     return room;
   }
   private addPlayerToNewRoom(player: Player): void {
     const room = this.createNewRoom();
     room.addPlayer(player);
+  }
+  get openRoomsIds(): number[] {
+    const openRooms: number[] = [];
+    this.rooms.forEach(
+      (room: Room): void => {
+        if (room.isRoomFull===false) {
+          openRooms.push(room.roomId);
+        }
+      }
+    );
+    return openRooms;
   }
   static getInstance() {
     if (!RoomManager.instance) {

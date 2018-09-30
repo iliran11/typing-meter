@@ -21,4 +21,10 @@ export default class Player {
   getSocket(): io.Socket {
     return this.socket;
   }
+  get playerId(): string {
+    return this.name;
+  }
+  get roomId(): number {
+    return this.gameId;
+  }
 }

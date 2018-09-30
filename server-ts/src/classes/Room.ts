@@ -1,4 +1,6 @@
 import Player from "./Player";
+import PlayerManager from "./PlayerManager";
+import { isObject } from "util";
 
 export default class Room {
   private static globalRoomCounter: number = 1;
@@ -19,6 +21,15 @@ export default class Room {
   addPlayer(player: Player): void {
     this.players.push(player);
     player.createGame(this.roomId, this.gameWords);
+  }
+  deletePlayer(player: Player): void {
+    const index = this.getPlayerIndex(player.playerId);
+    this.players.splice(index, 1);
+  }
+  private getPlayerIndex(playerId: string): number {
+    return this.players.findIndex((player: Player) => {
+      return player.playerId === playerId;
+    });
   }
   get isRoomFull(): boolean {
     return this.players.length === this.maxPlayersInRoom;

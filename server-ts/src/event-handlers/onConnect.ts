@@ -11,5 +11,8 @@ export default function onConnect(socket: io.Socket): void {
   const player = new Player(socket);
   roomManager.addPlayer(player);
   playerManager.addPlayer(player);
-  socket.on("disconnect", onDisconnect);
+  console.log(`connect - ${socket.client.id}`)
+  socket.on("disconnect", () => {
+    onDisconnect(socket);
+  });
 }
