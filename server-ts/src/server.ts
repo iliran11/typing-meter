@@ -1,13 +1,7 @@
-import Room from "./classes/Room";
-import Player from "./classes/Player";
-import RoomServer from "./classes/RoomServer";
+import sharedCode from "../../client-server-code/client-server-code.js";
+import * as io from "socket.io";
+import onConnect from "./event-handlers/onConnect";
 
-const roomServer = RoomServer.getInstance();
-const player1 = new Player("adi");
-const player2 = new Player("liran");
-const player3 = new Player("lior3");
+const server: any = io.listen(4000);
 
-roomServer.addPlayer(player1);
-roomServer.addPlayer(player2);
-roomServer.addPlayer(player3);
-3;
+server.on("connection", onConnect);

@@ -2,8 +2,8 @@ import Room from "./Room";
 import * as socketIo from "socket.io";
 import Player from "./Player";
 
-export default class RoomServer {
-  private static instance: RoomServer;
+export default class RoomManager {
+  private static instance: RoomManager;
   static words = ["hello", "goodbye"];
   rooms: Map<number, Room>;
   openRoomsIds: number[];
@@ -38,7 +38,7 @@ export default class RoomServer {
     return;
   }
   private createNewRoom(): Room {
-    const room = new Room(RoomServer.words);
+    const room = new Room(RoomManager.words);
     this.rooms.set(room.roomId, room);
     this.openRoomsIds = [room.roomId];
     return room;
@@ -48,9 +48,9 @@ export default class RoomServer {
     room.addPlayer(player);
   }
   static getInstance() {
-    if (!RoomServer.instance) {
-      RoomServer.instance = new RoomServer();
+    if (!RoomManager.instance) {
+      RoomManager.instance = new RoomManager();
     }
-    return RoomServer.instance;
+    return RoomManager.instance;
   }
 }
