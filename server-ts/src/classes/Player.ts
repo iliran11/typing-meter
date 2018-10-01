@@ -39,4 +39,7 @@ export default class Player {
   get gameWords(): string[] {
     return this.words;
   }
+  get playerGame() {
+    return this.game;
+  }
 }
