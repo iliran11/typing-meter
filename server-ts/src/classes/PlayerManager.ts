@@ -4,7 +4,7 @@ import Player from "../classes/Player";
 export default class PlayerManager {
   private static instance: PlayerManager;
   private players: Map<io.Socket, Player>;
-  constructor() {
+  private constructor() {
     this.players = new Map();
   }
   addPlayer(player: Player): void {

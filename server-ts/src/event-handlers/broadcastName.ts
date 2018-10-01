@@ -12,6 +12,7 @@ const roomManager = RoomManager.getInstance();
 export default function broadcastName(socket: io.Socket, playerName: string) {
   const player = playerManager.getPlayer(socket);
   player.setName(playerName);
+  roomManager.addPlayer(player);
   const room = roomManager.getRoom(player.roomId);
   socket.join(room.roomName);
   socket.emit(YOU_JOINED_ROOM, {

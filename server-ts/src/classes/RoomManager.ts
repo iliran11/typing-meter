@@ -54,7 +54,7 @@ export default class RoomManager {
     const openRooms: number[] = [];
     this.rooms.forEach(
       (room: Room): void => {
-        if (room.isRoomFull===false) {
+        if (!room.isClosed) {
           openRooms.push(room.roomId);
         }
       }

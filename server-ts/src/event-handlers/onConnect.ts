@@ -17,7 +17,6 @@ const playerManager = PlayerManager.getInstance();
 export default function onConnect(socket: io.Socket): void {
   console.log(`connect - ${socket.client.id}`);
   const player = new Player(socket);
-  roomManager.addPlayer(player);
   playerManager.addPlayer(player);
 
   socket.on("disconnect", () => {
