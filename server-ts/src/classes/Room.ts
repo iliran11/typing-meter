@@ -15,6 +15,7 @@ export default class Room {
   private gameWords: string[];
   private timerId: any;
   private timePassed: number;
+  private timeIncrement: number;
   isClosed: boolean;
   roomId: number;
 
@@ -24,6 +25,8 @@ export default class Room {
     this.players = [];
     this.gameWords = words;
     this.isClosed = false;
+    this.timePassed = 0;
+    this.timeIncrement = 1000;
   }
   addPlayer(player: Player): void {
     this.players.push(player);
@@ -35,6 +38,9 @@ export default class Room {
     }
   }
   deletePlayer(player: Player): void {
+    if (this.isRoomFull) {
+      clearTimeout(this.timerId);
+    }
     const index = this.getPlayerIndex(player.playerId);
     this.players.splice(index, 1);
   }
@@ -58,13 +64,13 @@ export default class Room {
     return this.players.map((player: Player) => {
       return {
         playerId: player.playerId,
-        score: wpmScore(player.playerGame.gameObject.words, 1000)
+        score: wpmScore(player.playerGame.gameObject.words, this.timePassedMinutes)
       };
     });
   }
 
-  private gameTick(incrementValue: number): void {
-    this.timePassed += incrementValue;
+  private gameTick(): void {
+    this.timePassed += this.timeIncrement;
     const serverInstance = ServerManager.getInstance().serverObject;
     serverInstance.in(this.roomName).emit(SCORES_BROADCAST, this.scoresStats);
     // console.log(`${this.roomName}-tick!`);
@@ -73,6 +79,9 @@ export default class Room {
     const intervalTime: number = 1000;
     this.timerId = setInterval(this.gameTick.bind(this), intervalTime);
     // io.to(this.roomName)
+  }
+  private get timePassedMinutes(): number {
+    return this.timePassed / 60000;
   }
   private endGame() {}
 }

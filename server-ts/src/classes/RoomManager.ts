@@ -21,8 +21,10 @@ export default class RoomManager {
   }
   removePlayer(player: Player): void {
     const roomId: number = player.roomId;
-    const room = this.getRoom(roomId);
-    room.deletePlayer(player);
+    if (roomId) {
+      const room = this.getRoom(roomId);
+      room.deletePlayer(player);
+    }
   }
   getRoom(roomId: number): Room {
     return this.rooms.get(roomId);

@@ -11,12 +11,12 @@ export default class Player {
   // private game: Game;
   constructor(socket: io.Socket) {
     this.socket = socket;
+    this.name = "";
   }
   createGame(gameId: number, words: string[]) {
     this.gameId = gameId;
     this.game = new Game(gameId, words);
     this.words = words;
-    this.name = "";
   }
   setName(name: string) {
     this.name = name;
