@@ -39,6 +39,9 @@ export default class Room {
   get isRoomFull(): boolean {
     return this.players.length === this.maxPlayersInRoom;
   }
+  get roomName(): string {
+    return `room-${this.roomId}`;
+  }
   private incrementTimePassed(incrementValue: number): void {
     this.timePassed += incrementValue;
   }

@@ -13,10 +13,11 @@ export default function broadcastName(socket: io.Socket, playerName: string) {
   const player = playerManager.getPlayer(socket);
   player.setName(playerName);
   const room = roomManager.getRoom(player.roomId);
+  socket.join(room.roomName);
   socket.emit(YOU_JOINED_ROOM, {
     gameId: player.roomId,
     players: room.playersInRoom,
     words: player.gameWords
   });
-  socket.broadcast.emit(COMPETITOR_JOINED_GAME, player.serializable);
+  socket.to(room.roomName).emit(COMPETITOR_JOINED_GAME, player.serializable);
 }
