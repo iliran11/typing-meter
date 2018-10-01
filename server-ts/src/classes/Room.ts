@@ -31,6 +31,11 @@ export default class Room {
       return player.playerId === playerId;
     });
   }
+  get playersInRoom() {
+    return this.players.map((player: Player) => {
+      return player.serializable;
+    });
+  }
   get isRoomFull(): boolean {
     return this.players.length === this.maxPlayersInRoom;
   }

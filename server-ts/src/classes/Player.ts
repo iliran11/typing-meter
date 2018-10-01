@@ -7,6 +7,7 @@ export default class Player {
   private socket: io.Socket;
   private game: any;
   private gameId: number;
+  private words: string[];
   // private game: Game;
   constructor(socket: io.Socket) {
     this.socket = socket;
@@ -14,7 +15,8 @@ export default class Player {
   createGame(gameId: number, words: string[]) {
     this.gameId = gameId;
     this.game = new Game(gameId, words);
-    this.name=""
+    this.words = words;
+    this.name = "";
   }
   setName(name: string) {
     this.name = name;
@@ -22,10 +24,19 @@ export default class Player {
   getSocket(): io.Socket {
     return this.socket;
   }
+  get serializable() {
+    return {
+      name: this.name,
+      id: this.name
+    };
+  }
   get playerId(): string {
     return this.name;
   }
   get roomId(): number {
     return this.gameId;
+  }
+  get gameWords(): string[] {
+    return this.words;
   }
 }
