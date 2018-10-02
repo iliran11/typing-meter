@@ -1,7 +1,8 @@
-import React, { PureComponent } from 'react';
-import socketHandler from '../../utils/socketHandler';
-import MyGameContainer from '../../components/game-container/MyGameContainer';
-import EnterNameModal from './EnterNameModal';
+import React, { PureComponent } from "react";
+import socketHandler from "../../utils/socketHandler";
+import MyGameContainer from "../../components/game-container/MyGameContainer";
+import EnterNameModal from "./EnterNameModal";
+import RoomInfo from "./roomInfo";
 
 class MultiPlayerGamePage extends PureComponent {
   constructor(props) {
@@ -25,7 +26,12 @@ class MultiPlayerGamePage extends PureComponent {
           open={this.state.isNameModalOpen}
           onSubmit={this.onNameSubmit}
         />
-        <div>hello world</div>
+        {this.props.myGameId && (
+          <RoomInfo
+            gameId={this.props.myGameId}
+            players={this.props.competitors}
+          />
+        )}
         {this.props.myGameId && (
           <MyGameContainer gameId={this.props.myGameId} />
         )}
