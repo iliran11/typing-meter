@@ -24,7 +24,7 @@ export default function createWordObject({ challenge = '', typed = '', key }) {
       return this.challenge.split('');
     },
     get typedArray() {
-      return this.typed.split('');
+      return this.typed.split('').slice(0,this.challenegeArray.length);
     },
     get challenegeArray() {
       return this.challenge.split('');
